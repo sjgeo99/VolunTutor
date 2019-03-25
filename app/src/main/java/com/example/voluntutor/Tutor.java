@@ -2,7 +2,7 @@ package com.example.voluntutor;
 
 import java.util.ArrayList;
 import java.util.Date;
-//This class represents a tutor in the VolunTutor Application.
+//This class represents a tutor in the VolunTutor Application
 public class Tutor {
     //data
     private String name;
