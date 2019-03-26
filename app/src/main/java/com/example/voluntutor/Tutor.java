@@ -45,7 +45,7 @@ public class Tutor {
         return school;
     }
     /**
-     * Sets the name of the tutor.
+     * Sets the school of the tutor/student.
      */
     public void setSchool(String school) {
         this.school = school;
@@ -66,22 +66,20 @@ public class Tutor {
         return timeSlots;
     }
     /**
-     * Gets the name of the tutor.
-     * @return String representation
+     * Adds a timeslot to the original timeslot array.
+     * @return ArrayList of Dates, representing times the tutor is available.
      */
     public void addTimeSlots(ArrayList<Date> timeSlots) {
         this.timeSlots = timeSlots;
     }
     /**
-     * Gets the name of the tutor.
-     * @return String representation
+     * Gets the subjects the tutor is teaching.
      */
     public ArrayList<String> getSubjects() {
         return subjects;
     }
     /**
-     * Gets the name of the tutor.
-     * @return String representation
+     * Sets the the subjects variable to the subjects in the ArrayList.
      */
     public void setSubjects(ArrayList<String> subjects) {
         this.subjects = subjects;
