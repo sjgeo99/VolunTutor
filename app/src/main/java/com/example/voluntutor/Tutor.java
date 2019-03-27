@@ -8,7 +8,7 @@ import java.util.Date;
 //We should also start adding sorting methods as private methods and automatically call them from
 //other methods
 //Should we have a "don't verify" method? To let student or tutor say that the session actually didn't
-//happen.
+//happen
 public class Tutor {
     //data
     private String name;
