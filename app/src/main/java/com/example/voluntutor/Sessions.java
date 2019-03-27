@@ -5,7 +5,7 @@ import java.util.Date;
 /**
  * Stores information about a tutoring session (date, location, length, verified status, tutor, and tutee)
  */
-public class Sessions {
+public class Sessions implements Comparable<Sessions> {
     //data
     private Date date;
     private String location;
@@ -28,7 +28,21 @@ public class Sessions {
         this.tutee = tutee;
     }
     //methods
-
+    /**
+     * Adds a comparator method for sorting lists
+     */
+    @Override
+    public int compareTo(Sessions o) {
+        return date.compareTo(o.getDate());
+    }
+    /**
+     * An override for the toString method
+     */
+    @Override
+    public String toString() {
+        return "Session is at " + location + ", begins at " + date + ", lasts " + length +
+                " minutes, and takes place between " + tutor + " and " + tutee;
+    }
     /**
      * Gets whether the session happened (note: by default, the happened boolean is true. It only
      * becomes false if one of the participants (tutor or student) changes it.
