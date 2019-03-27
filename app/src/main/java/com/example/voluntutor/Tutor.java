@@ -2,6 +2,8 @@ package com.example.voluntutor;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 //This class represents a tutor in the VolunTutor Application
 
@@ -88,6 +90,7 @@ public class Tutor {
                 i--;
             }
         }
+        Collections.sort(psessions);
     }
     /**
      * If any of the pending sessions have been fully verified, this method will move them to
@@ -105,6 +108,7 @@ public class Tutor {
                 psessions.remove(i);
             }
         }
+        Collections.sort(vsessions);
     }
     /**
      * Gets the sessions that are upcoming
@@ -127,6 +131,7 @@ public class Tutor {
      */
     public void addSession(Sessions s) {
         usessions.add(s);
+        Collections.sort(usessions);
     }
     /**
      * Gets the Time Slots of the tutor.

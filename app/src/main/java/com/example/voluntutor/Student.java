@@ -2,6 +2,7 @@ package com.example.voluntutor;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 
 /**
  * This class stores information about a student from the VolunTutor application
@@ -53,6 +54,7 @@ public class Student {
      */
     public void addSession(Sessions s) {
         usessions.add(s);
+        Collections.sort(usessions);
     }
     /**
      * Checks through the upcoming sessions to see if they have already passed. If they have
@@ -68,6 +70,7 @@ public class Student {
                 i--;
             }
         }
+        Collections.sort(psessions);
     }
     /**
      * If any of the pending sessions have been fully verified, this method will delete them. If it
@@ -75,11 +78,10 @@ public class Student {
      */
     public void checkPending() {
         for(int i = 0; i < psessions.size(); i++) {
-            if(psessions.get(i).getVerified()) {
+            if (psessions.get(i).getVerified()) {
                 psessions.remove(i);
                 i--;
-            }
-            else if(psessions.get(i).isHappened() != true) {
+            } else if (psessions.get(i).isHappened() != true) {
                 psessions.remove(i);
             }
         }
