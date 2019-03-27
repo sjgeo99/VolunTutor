@@ -28,7 +28,16 @@ public class Sessions {
         this.tutee = tutee;
     }
     //methods
+
+    /**
+     * Gets whether the session happened (note: by default, the happened boolean is true. It only
+     * becomes false if one of the participants (tutor or student) changes it.
+     * @return whether the session happened or not (as a boolean)
+     */
     public boolean isHappened() { return happened; }
+    /**
+     * Sets the happened boolean to false. This would be used if a booked session did not happen.
+     */
     public void noVerify() { happened = false; }
     /**
      * Gets the date of the session
