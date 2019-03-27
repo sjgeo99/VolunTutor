@@ -11,15 +11,17 @@ public class Sessions {
     private String location;
     // length of session in minutes
     private int length;
-    private boolean verified;
+    private boolean sverified;
+    private boolean tverified;
     private String tutor;
     private String tutee;
     //constructor(s)
     public Sessions(Date d, String l, int len, String tutor, String tutee) {
         date = d;
         location = l;
-        len = length;
-        verified = false;
+        length = len;
+        sverified = false;
+        tverified = false;
         this.tutor = tutor;
         this.tutee = tutee;
     }
@@ -47,7 +49,7 @@ public class Sessions {
      * Gets whether the session is verified
      * @return whether the session is verified
      */
-    public boolean getVerified() {return verified;}
+    public boolean getVerified() {return sverified && tverified;}
 
     /**
      * Gets the name of the tutor
@@ -62,10 +64,14 @@ public class Sessions {
     public String getTutee() {return tutee;}
 
     /**
-     * Sets verified status to true
+     * Sets verified status to true for the tutor
      */
-    public void verify() {verified = true;}
+    public void tverify() {tverified = true;}
 
+    /**
+     * Sets the verified status to true for the student
+     */
+    public void sverify() {sverified = true;}
     /**
      * Sets the date of the session
      * @param d the date of the session
