@@ -4,11 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 //This class represents a tutor in the VolunTutor Application
-//We should probably consider changing timeSlots to Strings (ie "Monday,2:00 p.m.)
-//We should also start adding sorting methods as private methods and automatically call them from
-//other methods
-//Should we have a "don't verify" method? To let student or tutor say that the session actually didn't
-//happen
+
 public class Tutor {
     //data
     private String name;
@@ -16,7 +12,7 @@ public class Tutor {
     private ArrayList<Sessions> psessions;
     private ArrayList<Sessions> usessions;
     private ArrayList<Sessions> vsessions;
-    private ArrayList<Date> timeSlots;
+    private ArrayList<String> timeSlots;
     private ArrayList<String> subjects;
     //constructor(s)
     public Tutor(String n, String s) {
@@ -26,6 +22,7 @@ public class Tutor {
         usessions = new ArrayList<Sessions>();
         vsessions = new ArrayList<Sessions>();
         subjects = new ArrayList<String>();
+        timeSlots = new ArrayList<String>();
     }
     //methods
 
@@ -94,7 +91,7 @@ public class Tutor {
     }
     /**
      * If any of the pending sessions have been fully verified, this method will move them to
-     * the vsessions arraylist
+     * the vsessions arraylist. If one of the pending sessions has not occurred, it get deleted.
      */
     public void checkPending() {
         for(int i = 0; i < psessions.size(); i++) {
@@ -103,6 +100,9 @@ public class Tutor {
                 psessions.remove(i);
                 vsessions.add(s);
                 i--;
+            }
+            else if(psessions.get(i).isHappened() != true) {
+                psessions.remove(i);
             }
         }
     }
@@ -132,13 +132,13 @@ public class Tutor {
      * Gets the Time Slots of the tutor.
      * @return ArrayList of Dates the tutor is available
      */
-    public ArrayList<Date> getTimeSlots() {
+    public ArrayList<String> getTimeSlots() {
         return timeSlots;
     }
     /**
      * Adds a time slot during which the tutor is available
      */
-    public void addTimeSlots(Date t) {
+    public void addTimeSlots(String t) {
         timeSlots.add(t);
     }
     /**

@@ -70,14 +70,17 @@ public class Student {
         }
     }
     /**
-     * If any of the pending sessions have been fully verified, this method will delete them
+     * If any of the pending sessions have been fully verified, this method will delete them. If it
+     * has not happened, it is also deleted.
      */
     public void checkPending() {
         for(int i = 0; i < psessions.size(); i++) {
             if(psessions.get(i).getVerified()) {
-                Sessions s = psessions.get(i);
                 psessions.remove(i);
                 i--;
+            }
+            else if(psessions.get(i).isHappened() != true) {
+                psessions.remove(i);
             }
         }
     }

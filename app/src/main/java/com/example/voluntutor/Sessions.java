@@ -13,6 +13,7 @@ public class Sessions {
     private int length;
     private boolean sverified;
     private boolean tverified;
+    private boolean happened;
     private String tutor;
     private String tutee;
     //constructor(s)
@@ -22,11 +23,13 @@ public class Sessions {
         length = len;
         sverified = false;
         tverified = false;
+        happened = true;
         this.tutor = tutor;
         this.tutee = tutee;
     }
     //methods
-
+    public boolean isHappened() { return happened; }
+    public void noVerify() { happened = false; }
     /**
      * Gets the date of the session
      * @return the date of the session
