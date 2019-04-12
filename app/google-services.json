@@ -1,0 +1,44 @@
+{
+  "project_info": {
+    "project_number": "1052252093748",
+    "firebase_url": "https://voluntutor-d6678.firebaseio.com",
+    "project_id": "voluntutor-d6678",
+    "storage_bucket": "voluntutor-d6678.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1052252093748:android:03eb2c75a231613f",
+        "android_client_info": {
+          "package_name": "com.example.voluntutor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1052252093748-j66fkdosq9m673jt5p8ra0q8uhjn5tfo.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.voluntutor",
+            "certificate_hash": "ef13c413bce95d1d2330f33db0ef14005e3de060"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4NOZEeIP3v1JCMXn1VySS5qaSj82DTBU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1052252093748-vsvjeosjv9eft2nk6e2cme23mlv4d2h4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
