@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 
 public class SettingsFragment extends Fragment {
 
-    //initializes a settings fragment
+    //initializes the handmade Settings Fragment
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
