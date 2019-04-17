@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     /**
-     * This method allows the bottom navigation bar to be acessed on each screen, and
+     * This method allows the bottom navigation bar to be accessed on each screen, and
      * allows for the chosen screens to be displayed
      */
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
@@ -93,7 +93,9 @@ public class MainActivity extends AppCompatActivity {
                         case R.id.nav_hours:
                             selectedFragment = new HoursFragment();
                             break;
-
+                        case R.id.nav_settings:
+                            selectedFragment = new SettingsFragment();
+                            break;
                     }
 
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
