@@ -21,6 +21,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 
 /**
  * This class allows for the UI to run in compliance with the individual fragments and the bottom navigation bar
@@ -48,7 +53,8 @@ public class MainActivity extends AppCompatActivity {
 
     //SETTINGS BUTTON
     private Button button;
-
+    //ArrayList to Store Tutors
+    List<Tutor> tutors = new ArrayList<Tutor>();
     /**
      * This method sets the content views, opens the settings button, sets the content views
      * @param savedInstanceState
@@ -77,20 +83,31 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+        Tutor evan = new Tutor("Evan Gaus", "Hopedale");
 
-        // Write a message to the database
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("message");
-        myRef.setValue("Hello?");
+            // Write a message to the database
+            final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        for(int i = 0; i<3; i++) {
+            DatabaseReference myRef = database.getReference("tutors");
+
+            DatabaseReference usersRef = myRef.child(evan.getName());
+
+            usersRef.push().setValue(evan);
+            evan.setName("New Name " + i);
+        }
+            DatabaseReference ref = database.getReference("tutors/Gaus");
 
         // Read from the database
-        myRef.addValueEventListener(new ValueEventListener() {
+        ref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                String value = dataSnapshot.getValue(String.class);
-                Log.d("SaquethTag","the message is: " + value);
+                // whenever data at this location is updated
+                for(DataSnapshot ds: dataSnapshot.getChildren()){
+                    Tutor tutor = ds.getValue(Tutor.class);
+                    Log.d("SaquethTag",tutor.toString());
+                }
+
             }
 
             @Override
@@ -99,7 +116,6 @@ public class MainActivity extends AppCompatActivity {
                 Log.w(TAG, "Failed to read value.", error.toException());
             }
         });
-
 
     }
 

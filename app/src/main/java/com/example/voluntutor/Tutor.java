@@ -26,6 +26,16 @@ public class Tutor {
         subjects = new ArrayList<String>();
         timeSlots = new ArrayList<String>();
     }
+
+    public Tutor(){
+        name = "default";
+        school = "defaultSchool";
+        psessions = new ArrayList<Sessions>();
+        usessions = new ArrayList<Sessions>();
+        vsessions = new ArrayList<Sessions>();
+        subjects = new ArrayList<String>();
+        timeSlots = new ArrayList<String>();
+    }
     //methods
 
     /**
@@ -153,4 +163,8 @@ public class Tutor {
     public ArrayList<String> getSubjects() {
         return subjects;
     }
+    @Override
+    public String toString() {
+        return "Tutor: " + name + " School: " + school; }
+
 }
