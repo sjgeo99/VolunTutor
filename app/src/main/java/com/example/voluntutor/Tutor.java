@@ -1,6 +1,7 @@
 package com.example.voluntutor;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
@@ -14,7 +15,7 @@ public class Tutor {
     private ArrayList<Sessions> psessions;
     private ArrayList<Sessions> usessions;
     private ArrayList<Sessions> vsessions;
-    private ArrayList<String> timeSlots;
+    private ArrayList<TimeSlot> timeSlots;
     private ArrayList<String> subjects;
     //constructor(s)
     public Tutor(String n, String s) {
@@ -24,7 +25,7 @@ public class Tutor {
         usessions = new ArrayList<Sessions>();
         vsessions = new ArrayList<Sessions>();
         subjects = new ArrayList<String>();
-        timeSlots = new ArrayList<String>();
+        timeSlots = new ArrayList<TimeSlot>();
     }
     //methods
 
@@ -137,13 +138,13 @@ public class Tutor {
      * Gets the Time Slots of the tutor.
      * @return ArrayList of Dates the tutor is available
      */
-    public ArrayList<String> getTimeSlots() {
+    public ArrayList<TimeSlot> getTimeSlots() {
         return timeSlots;
     }
     /**
      * Adds a time slot during which the tutor is available
      */
-    public void addTimeSlots(String t) {
+    public void addTimeSlots(TimeSlot t) {
         timeSlots.add(t);
     }
     /**
@@ -152,5 +153,15 @@ public class Tutor {
      */
     public ArrayList<String> getSubjects() {
         return subjects;
+    }
+
+    /**
+     * toString method that prints info about the tutor
+     * @return informaiton about the tutor
+     */
+    @Override
+    public String toString() {
+        return name + " from " + school + " with time slot(s) at " + Arrays.toString(timeSlots.toArray())
+                + " tutoring in " + Arrays.toString(subjects.toArray());
     }
 }

@@ -7,6 +7,7 @@
     <string name="sample_search_text">Search for different subjects</string>
     <string name="title_settings">Settings</string>
     <string name="title_activity_settings_preference">Settings</string>
+    <string name="title_make_user">Make user</string>
 
     <!-- Strings related to Settings -->
     <string name="settings">Settings</string>
@@ -93,4 +94,13 @@
     <string name="remove_slot_str">Remove slot:</string>
     <string name="add_subj_label">Add subject:</string>
     <string name="rem_subj_str">Remove subject:</string>
+    <string name="welcome">Welcome!</string>
+    <string name="login_directions">Please put information into all the fields below and then click OK at the bottom.</string>
+    <string name="School_descr">School:</string>
+    <string name="Session_descr">Session:</string>
+    <string name="Session_descr2">Enter a day when you are available to tutor below:</string>
+    <string name="Start_time_hint">Enter start time</string>
+    <string name="End_time_hint" />
+    <string name="End_time_hint2">Enter end time</string>
+    <string name="Subjects_descr">Enter the subjects you want to tutor in, separated by commas</string>
 </resources>

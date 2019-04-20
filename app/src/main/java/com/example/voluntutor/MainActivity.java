@@ -96,6 +96,9 @@ public class MainActivity extends AppCompatActivity {
                         case R.id.nav_settings:
                             selectedFragment = new SettingsFragment();
                             break;
+                        case R.id.nav_make_user:
+                            selectedFragment = new MakeUserFragment();
+                            break;
                     }
 
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
