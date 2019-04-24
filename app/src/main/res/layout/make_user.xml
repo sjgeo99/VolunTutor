@@ -26,6 +26,7 @@
         android:layout_marginRight="10dp"
         android:text="@string/login_directions"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/greeting" />
 
@@ -57,7 +58,7 @@
         android:ems="10"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/name_label" />
 
@@ -67,7 +68,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="342dp"
         android:layout_marginRight="342dp"
         android:text="@string/School_descr"
@@ -85,6 +86,8 @@
         android:layout_marginLeft="10dp"
         android:ems="10"
         android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/school_label" />
 
@@ -116,54 +119,58 @@
         android:hint="Enter day of the week"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/session_label" />
 
-    <EditText
-        android:id="@+id/enter_session_start"
-        android:layout_width="190dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginEnd="211dp"
-        android:layout_marginRight="211dp"
-        android:ems="10"
-        android:hint="@string/Start_time_hint"
-        android:inputType="textPersonName"
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="392dp"
+        android:layout_height="47dp"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enter_session_day" />
+        app:layout_constraintTop_toBottomOf="@+id/enter_session_day">
 
-    <EditText
-        android:id="@+id/enter_session_end"
-        android:layout_width="190dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginLeft="12dp"
-        android:layout_marginEnd="9dp"
-        android:layout_marginRight="9dp"
-        android:ems="10"
-        android:hint="@string/End_time_hint2"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/enter_session_start"
-        app:layout_constraintTop_toBottomOf="@+id/enter_session_day" />
+        <EditText
+            android:id="@+id/enter_session_start"
+            android:layout_width="181dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="@string/Start_time_hint"
+            android:inputType="textPersonName"
+            tools:layout_editor_absoluteX="26dp"
+            tools:layout_editor_absoluteY="519dp" />
+
+        <EditText
+            android:id="@+id/enter_session_end"
+            android:layout_width="190dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginEnd="211dp"
+            android:layout_marginRight="211dp"
+            android:ems="10"
+            android:hint="@string/End_time_hint2"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/enter_session_day" />
+
+    </LinearLayout>
 
     <TextView
         android:id="@+id/subjects_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginEnd="342dp"
-        android:layout_marginRight="342dp"
+        android:layout_marginTop="20dp"
         android:text="@string/Subjects_descr"
+        app:layout_constraintBottom_toTopOf="@+id/enter_subjects"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.59"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enter_session_start" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
 
     <EditText
         android:id="@+id/enter_subjects"
@@ -172,7 +179,7 @@
         android:ems="10"
         android:inputType="textPersonName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.526"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/subjects_label" />
 
@@ -180,10 +187,27 @@
         android:id="@+id/make_user_obj"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="92dp"
+        android:layout_marginBottom="132dp"
         android:text="OK"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/enter_subjects" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="10dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="205dp" />
 
 </android.support.constraint.ConstraintLayout>
