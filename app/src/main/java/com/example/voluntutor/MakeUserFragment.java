@@ -4,26 +4,20 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class MakeUserFragment extends Fragment {
     public static String id;
 
-    /**
-     * Updates the path to the object
-     * @param s the new path name
-     */
-    public static void setID(String s) {
-        id = s;
-    }
     /**
      * returns the path to the tutor object of the person
      * @return the path
@@ -52,9 +46,9 @@ public class MakeUserFragment extends Fragment {
                 String school = txtSchool.getText().toString();
                 String DOW = txtDOW.getText().toString();
                 String start = txtStart.getText().toString();
-                StringTokenizer st = new StringTokenizer(start, ":");
-                int startHr = Integer.parseInt(st.nextToken());
-                int startMin = Integer.parseInt(st.nextToken());
+                String[] startTime = start.split(":");
+                int startHr = Integer.parseInt(startTime[0]);
+                int startMin = Integer.parseInt(startTime[1]);
                 String end = txtEnd.getText().toString();
                 StringTokenizer str = new StringTokenizer(end, ":");
                 int endHr = Integer.parseInt(str.nextToken());
@@ -73,12 +67,14 @@ public class MakeUserFragment extends Fragment {
                     }
                 }
                 else t.addSubject(subjects);
+                Log.d("timeslot I", Arrays.toString(t.getTimeSlots().toArray()));
 
                 FirebaseDatabase fb = FirebaseDatabase.getInstance();
-                DatabaseReference ref = fb.getReference("tutors");
+                DatabaseReference ref = fb.getReference("/tutors");
                 DatabaseReference nRef = ref.push();
                 nRef.setValue(t);
                 id = nRef.getKey();
+
             }
         });
         return view;

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -83,6 +84,68 @@ public class SettingsFragment extends Fragment {
 
                 nameRef.push().setValue(new TimeSlot(splitted[0], Integer.parseInt(splitted[1]), Integer.parseInt(splitted[2]),
                         Integer.parseInt(splitted[3]), Integer.parseInt(splitted[4])));
+            }
+        });
+
+        Button buttonRemSubj = (Button) view.findViewById(R.id.rem_subj_confirm);
+        buttonRemSubj.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                FirebaseDatabase fb = FirebaseDatabase.getInstance();
+                final DatabaseReference ref = fb.getReference("tutors");
+                DatabaseReference mySubs = ref.child(MakeUserFragment.getID()).getRef().child("subjects");
+                mySubs.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for(DataSnapshot ds: dataSnapshot.getChildren()) {
+                            String subj = ds.getValue(String.class);
+                            EditText et = (EditText) view.findViewById(R.id.rem_subj_field);
+                            String toRemove = et.getText().toString();
+                            if(subj.equals(toRemove)) ds.getRef().removeValue();
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+            }
+        });
+
+        Button buttonRemSlot = (Button) view.findViewById(R.id.remove_slot_confirm);
+        buttonRemSlot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseDatabase fb = FirebaseDatabase.getInstance();
+                DatabaseReference ref = fb.getReference("/tutors");
+                DatabaseReference mySlots = ref.child(MakeUserFragment.getID()).getRef().child("timeSlots");
+
+                EditText et = (EditText) view.findViewById(R.id.remove_slot_field);
+                String slotString = et.getText().toString();
+                String[] split = slotString.split(", |:|-");
+                final TimeSlot ts = new TimeSlot(split[0], Integer.parseInt(split[1]), Integer.parseInt(split[2]), Integer.parseInt(split[3]),
+                        Integer.parseInt(split[4]));
+                Log.d("this is being removed", ts.toString());
+
+                mySlots.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for(DataSnapshot ds: dataSnapshot.getChildren()) {
+                            TimeSlot check = ds.getValue(TimeSlot.class);
+                            Log.d("these are the ts's", check.toString());
+                            if(check.equals(ts)) {
+                                ds.getRef().removeValue();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
             }
         });
 

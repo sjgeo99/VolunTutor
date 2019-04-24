@@ -23,9 +23,19 @@ public class Sessions implements Comparable<Sessions> {
         length = len;
         sverified = false;
         tverified = false;
-        happened = true;
+        happened = false;
         this.tutor = tutor;
         this.tutee = tutee;
+    }
+    /**
+     * Empty constructor
+     */
+    public Sessions() {
+        date = new Date();
+        location = "";
+        length = 0;
+        tutor = "";
+        tutee = "";
     }
     //methods
     /**
@@ -44,15 +54,11 @@ public class Sessions implements Comparable<Sessions> {
                 " minutes, and takes place between " + tutor + " and " + tutee;
     }
     /**
-     * Gets whether the session happened (note: by default, the happened boolean is true. It only
-     * becomes false if one of the participants (tutor or student) changes it.
+     * Gets whether the session happened (note: by default, the happened boolean is false). It only
+     * becomes true if one of the participants (tutor or student) changes it.
      * @return whether the session happened or not (as a boolean)
      */
     public boolean isHappened() { return happened; }
-    /**
-     * Sets the happened boolean to false. This would be used if a booked session did not happen.
-     */
-    public void noVerify() { happened = false; }
     /**
      * Gets the date of the session
      * @return the date of the session
@@ -127,4 +133,14 @@ public class Sessions implements Comparable<Sessions> {
      * @param s the name of the tutee
      */
     public void setTutee(String s) {tutee = s;}
+
+    /**
+     * equals method for sessions
+     * @param s the other session to compare to
+     * @return if the 2 objects are the same
+     */
+    public boolean equals(Sessions s) {
+        return date.equals(s.date) && location.equals(s.getLoc()) && length == s.getLength() && (sverified && tverified) == s.getVerified()
+                && happened == s.isHappened() && tutor.equals(s.getTutor()) && tutee.equals(s.getTutee());
+    }
 }
