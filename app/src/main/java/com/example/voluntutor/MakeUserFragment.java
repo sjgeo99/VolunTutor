@@ -1,5 +1,7 @@
 package com.example.voluntutor;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -15,9 +17,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.Arrays;
 import java.util.StringTokenizer;
 
+import static android.content.Context.MODE_PRIVATE;
+
 public class MakeUserFragment extends Fragment {
     public static String id;
-
     /**
      * returns the path to the tutor object of the person
      * @return the path
@@ -25,6 +28,8 @@ public class MakeUserFragment extends Fragment {
     public static String getID() {
         return id;
     }
+
+    public static void setID(String s) { id = s; }
     //initializes the Settings Fragment
     @Nullable
     @Override

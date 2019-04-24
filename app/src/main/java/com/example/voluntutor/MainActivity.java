@@ -2,12 +2,14 @@ package com.example.voluntutor;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -47,7 +49,12 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        loadFragment(new HomeFragment());
+        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.shared_pref_name), 0);
+        MakeUserFragment.setID(sharedPref.getString(getString(R.string.path), null));
+        Log.d("Set path?", sharedPref.getString(getString(R.string.path), ""));
+
+        if(sharedPref.getBoolean(getString(R.string.inFireBase), false)) { loadFragment(new HomeFragment()); }
+        else { loadFragment(new MakeUserFragment()); }
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
@@ -61,8 +68,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-    }
 
+
+    }
+    @Override
+    protected void onPause() {
+        super.onPause();
+        SharedPreferences sharedPref = getSharedPreferences(getString(R.string.shared_pref_name), 0);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(getString(R.string.path), MakeUserFragment.getID());
+        editor.putBoolean(getString(R.string.inFireBase), MakeUserFragment.getID() != null);
+        editor.commit();
+    }
     /**
      * This method opens the settings preference screen
      */
