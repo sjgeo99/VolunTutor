@@ -29,7 +29,7 @@
         android:id="@+id/change_name_label"
         android:layout_width="387dp"
         android:layout_height="25dp"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="50dp"
         android:layout_marginBottom="658dp"
         android:text="@string/change_name_str"
         android:textColor="@android:color/black"
@@ -146,7 +146,7 @@
         android:layout_height="40dp"
         android:layout_marginBottom="360dp"
         android:ems="10"
-        android:hint="DayOfWeek, HH:MM"
+        android:hint="DayOfWeek, HH:MM-HH:MM"
         android:inputType="text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -169,7 +169,7 @@
         app:layout_constraintVertical_bias="0.04" />
 
     <TextView
-        android:id="@+id/rem_slot_label"
+        android:id="@+id/remove_slot_label"
         android:layout_width="387dp"
         android:layout_height="25dp"
         android:layout_marginBottom="292dp"
@@ -184,21 +184,21 @@
         app:layout_constraintVertical_bias="0.0" />
 
     <EditText
-        android:id="@+id/rem_slot_field"
+        android:id="@+id/remove_slot_field"
         android:layout_width="387dp"
         android:layout_height="40dp"
         android:layout_marginBottom="252dp"
         android:ems="10"
-        android:hint="DayOfWeek, HH:MM"
+        android:hint="DayOfWeek, HH:MM-HH:MM"
         android:inputType="text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rem_slot_label"
+        app:layout_constraintTop_toBottomOf="@+id/remove_slot_label"
         app:layout_constraintVertical_bias="0.0" />
 
     <Button
-        android:id="@+id/rem_slot_confirm"
+        android:id="@+id/remove_slot_confirm"
         android:layout_width="92dp"
         android:layout_height="35dp"
         android:layout_marginBottom="208dp"
@@ -208,23 +208,24 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rem_slot_field"
+        app:layout_constraintTop_toBottomOf="@+id/remove_slot_field"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/add_subj_label"
         android:layout_width="387dp"
         android:layout_height="25dp"
-        android:layout_marginBottom="176dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginBottom="252dp"
         android:text="@string/add_subj_label"
         android:textColor="@android:color/black"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.666"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rem_slot_confirm"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/remove_slot_confirm" />
 
     <EditText
         android:id="@+id/add_subj_field"
@@ -244,15 +245,13 @@
         android:id="@+id/add_subj_confirm"
         android:layout_width="92dp"
         android:layout_height="35dp"
-        android:layout_marginBottom="92dp"
         android:text="@string/ok"
         android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/rem_subj_label"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_subj_field"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/add_subj_field" />
 
     <TextView
         android:id="@+id/rem_subj_label"
@@ -266,8 +265,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_subj_confirm"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/add_subj_confirm" />
 
     <EditText
         android:id="@+id/rem_subj_field"
@@ -287,14 +285,13 @@
         android:id="@+id/rem_subj_confirm"
         android:layout_width="92dp"
         android:layout_height="35dp"
-        android:layout_marginBottom="64dp"
+        android:layout_marginBottom="77dp"
         android:text="@string/ok"
         android:textSize="12sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rem_subj_field"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/rem_subj_field" />
 
 </android.support.constraint.ConstraintLayout>

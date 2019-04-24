@@ -1,6 +1,7 @@
 package com.example.voluntutor;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Collections;
@@ -14,7 +15,7 @@ public class Tutor {
     private ArrayList<Sessions> psessions;
     private ArrayList<Sessions> usessions;
     private ArrayList<Sessions> vsessions;
-    private ArrayList<String> timeSlots;
+    private ArrayList<TimeSlot> timeSlots;
     private ArrayList<String> subjects;
     //constructor(s)
     public Tutor(String n, String s) {
@@ -24,20 +25,28 @@ public class Tutor {
         usessions = new ArrayList<Sessions>();
         vsessions = new ArrayList<Sessions>();
         subjects = new ArrayList<String>();
-        timeSlots = new ArrayList<String>();
+        timeSlots = new ArrayList<TimeSlot>();
     }
 
-    public Tutor(){
-        name = "default";
-        school = "defaultSchool";
+    /**
+     * Empty constructor
+     */
+    public Tutor() {
+        name = "";
+        school = "";
         psessions = new ArrayList<Sessions>();
         usessions = new ArrayList<Sessions>();
         vsessions = new ArrayList<Sessions>();
         subjects = new ArrayList<String>();
-        timeSlots = new ArrayList<String>();
+        timeSlots = new ArrayList<TimeSlot>();
     }
     //methods
 
+    /**
+     * removes a specific time slot from the tutor's time slot
+     * @param s the time slot
+     */
+    public void removeSlot(TimeSlot s) { timeSlots.remove(s); }
     /**
      * Adds a subject to the list of subjects this person tutors in
      * @param s the subject to be added
@@ -52,6 +61,7 @@ public class Tutor {
     public void removeSubject(String s) {
         subjects.remove(s.toLowerCase());
     }
+
     /**
      * Gets the name of the tutor.
      * @return String representation of the tutor's name
@@ -82,7 +92,7 @@ public class Tutor {
      * Gets the pending sessions of the tutor.
      * @return ArrayList of Sessions that are pending
      */
-    public ArrayList<Sessions> getPSessions() {
+    public ArrayList<Sessions> getPsessions() {
         return psessions;
     }
 
@@ -140,20 +150,23 @@ public class Tutor {
      * @param s the session
      */
     public void addSession(Sessions s) {
-        usessions.add(s);
-        Collections.sort(usessions);
+        Calendar cal = Calendar.getInstance();
+        if(s.getDate().after(cal.getTime())) {
+            usessions.add(s);
+            Collections.sort(usessions);
+        }
     }
     /**
      * Gets the Time Slots of the tutor.
      * @return ArrayList of Dates the tutor is available
      */
-    public ArrayList<String> getTimeSlots() {
+    public ArrayList<TimeSlot> getTimeSlots() {
         return timeSlots;
     }
     /**
      * Adds a time slot during which the tutor is available
      */
-    public void addTimeSlots(String t) {
+    public void addTimeSlots(TimeSlot t) {
         timeSlots.add(t);
     }
     /**
@@ -163,8 +176,24 @@ public class Tutor {
     public ArrayList<String> getSubjects() {
         return subjects;
     }
+
+    /**
+     * toString method that prints info about the tutor
+     * @return informaiton about the tutor
+     */
     @Override
     public String toString() {
-        return "Tutor: " + name + " School: " + school; }
+        return name + " from " + school + " with time slot(s) at " + Arrays.toString(timeSlots.toArray())
+                + " tutoring in " + Arrays.toString(subjects.toArray());
+    }
 
+    /**
+     * Equals method for tutors
+     * @param t the other tutor
+     * @return if the tutors are the same
+     */
+    public boolean equals(Tutor t) {
+        return name.equals(t.getName()) && school.equals(t.getSchool()) && psessions.equals(t.getPsessions()) && usessions.equals(t.getUsessions())
+                && vsessions.equals(t.getVsessions()) && timeSlots.equals(t.getTimeSlots()) && subjects.equals(t.getSubjects());
+    }
 }

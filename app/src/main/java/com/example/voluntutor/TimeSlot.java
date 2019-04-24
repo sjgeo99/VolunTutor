@@ -8,8 +8,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
-//add a comparator method to allow timeSlots to be sorted based on day of week first, then time (time works but not
-//day of week)
 
 public class TimeSlot implements Comparable<TimeSlot>{
     private String dayOfWeek;
@@ -27,6 +25,16 @@ public class TimeSlot implements Comparable<TimeSlot>{
         sMinute = sm;
         eHour = eh;
         eMinute = em;
+    }
+    /**
+     * Empty constructor
+     */
+    public TimeSlot() {
+        dayOfWeek = "";
+        sHour = 0;
+        sMinute = 0;
+        eHour = 0;
+        eMinute = 0;
     }
     //methods
     /**
@@ -59,39 +67,80 @@ public class TimeSlot implements Comparable<TimeSlot>{
 
         return onDay && startWithin && endWithin;
     }
+
+    /**
+     * Sets the day of the week
+     * @param dayOfWeek string describing the day of the week
+     */
+    public void setDayOfWeek(String dayOfWeek) {
+        this.dayOfWeek = dayOfWeek;
+    }
+
+    /**
+     * Sets the start hour
+     * @param sHour an integer
+     */
+    public void setsHour(int sHour) {
+        this.sHour = sHour;
+    }
+
+    /**
+     * Sets the start minute
+     * @param sMinute the start minute as an int
+     */
+    public void setsMinute(int sMinute) {
+        this.sMinute = sMinute;
+    }
+
+    /**
+     * Sets the end hour
+     * @param eHour the end hour as an int
+     */
+    public void seteHour(int eHour) {
+        this.eHour = eHour;
+    }
+
+    /**
+     * Sets the end minute
+     * @param eMinute the end minute as an int
+     */
+    public void seteMinute(int eMinute) {
+        this.eMinute = eMinute;
+    }
+
     /**
      * Returns the day of the week of the slot (as a string)
      * @return day of the week of the slot
      */
-    public String getDay() {
+    public String getDayOfWeek() {
         return dayOfWeek;
     }
     /**
      * Returns the hour that the slot begins
      * @return the start hour
      */
-    public int startHour() {
+    public int getsHour() {
         return sHour;
     }
     /**
      * Returns the minute that the slot begins
      * @return the start minute
      */
-    public int startMinute() {
+    public int getsMinute() {
         return sMinute;
     }
     /**
      * Returns the hour that the slot ends
      * @return the end hour
      */
-    public int eHour() {
+    public int geteHour() {
         return eHour;
     }
     /**
      * Returns the minute that the slot ends
      * @return the end minute
      */
-    public int eMinute() {
+    public int geteMinute() {
         return eMinute;
     }
     /**
@@ -107,10 +156,20 @@ public class TimeSlot implements Comparable<TimeSlot>{
      */
     @Override
     public int compareTo(TimeSlot o) {
-        int hourCompare = Integer.compare(o.startHour(), sHour);
+        int hourCompare = Integer.compare(o.getsHour(), sHour);
         if(hourCompare != 0) {
             return -1*hourCompare;
         }
-        return -1*Integer.compare(o.startMinute(), sMinute);
+        return -1*Integer.compare(o.getsMinute(), sMinute);
+    }
+
+    /**
+     * Equals method for two time slots
+     * @param ts the other time slot
+     * @return if the two slots are the same
+     */
+    public boolean equals(TimeSlot ts) {
+        return dayOfWeek.equals(ts.getDayOfWeek()) && sHour == ts.getsHour() && sMinute == ts.getsMinute() && eHour == ts.geteHour()
+                && eMinute == ts.geteMinute();
     }
 }
