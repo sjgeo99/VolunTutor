@@ -107,10 +107,6 @@ public class TimeSlot implements Comparable<TimeSlot>{
      */
     @Override
     public int compareTo(TimeSlot o) {
-        int dayCompare = o.getDay().compareTo(dayOfWeek);
-        if(dayCompare != 0) {
-            return -1*dayCompare;
-        }
         int hourCompare = Integer.compare(o.startHour(), sHour);
         if(hourCompare != 0) {
             return -1*hourCompare;

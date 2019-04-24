@@ -9,6 +9,7 @@
     <string name="title_activity_settings_preference">Settings</string>
 
     <!-- Strings related to Settings -->
+    <string name="settings">Settings</string>
 
     <!-- Example General settings -->
     <string name="pref_header_general">General</string>
@@ -83,4 +84,13 @@
     <string name="hours_hint">Enter your hours here.</string>
     <string name="nav_home_text">Home</string>
     <string name="nav_search_text">Search</string>
+    <string name="change_name_str">Change name:</string>
+    <string name="Name_descr">Name:</string>
+    <string name="auto_name">John Doe</string>
+    <string name="ok">OK</string>
+    <string name="change_school_str">Change school:</string>
+    <string name="add_slot_str">Add slot:</string>
+    <string name="remove_slot_str">Remove slot:</string>
+    <string name="add_subj_label">Add subject:</string>
+    <string name="rem_subj_str">Remove subject:</string>
 </resources>

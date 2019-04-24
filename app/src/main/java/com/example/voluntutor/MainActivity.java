@@ -1,5 +1,6 @@
 package com.example.voluntutor;
 
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
@@ -7,31 +8,14 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-
-//import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 
 /**
  * This class allows for the UI to run in compliance with the individual fragments and the bottom navigation bar
  */
 public class MainActivity extends AppCompatActivity {
-    private static final String TAG = "MainActivity";
 
     /**
      * This method allows the GUI to load individual fragments and switch between views
@@ -53,20 +37,15 @@ public class MainActivity extends AppCompatActivity {
 
     //SETTINGS BUTTON
     private Button button;
-    //ArrayList to Store Tutors
-    List<Tutor> tutors = new ArrayList<Tutor>();
+
     /**
      * This method sets the content views, opens the settings button, sets the content views
      * @param savedInstanceState
      */
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         loadFragment(new HomeFragment());
 
@@ -82,48 +61,12 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-        Tutor evan = new Tutor("Evan Gaus", "Hopedale");
-
-            // Write a message to the database
-            final FirebaseDatabase database = FirebaseDatabase.getInstance();
-        for(int i = 0; i<3; i++) {
-            DatabaseReference myRef = database.getReference("tutors");
-
-            DatabaseReference usersRef = myRef.child(evan.getName());
-
-            usersRef.push().setValue(evan);
-            evan.setName("New Name " + i);
-        }
-            DatabaseReference ref = database.getReference("tutors/Gaus");
-
-        // Read from the database
-        ref.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated
-                for(DataSnapshot ds: dataSnapshot.getChildren()){
-                    Tutor tutor = ds.getValue(Tutor.class);
-                    Log.d("SaquethTag",tutor.toString());
-                }
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
-            }
-        });
-
     }
-
 
     /**
      * This method opens the settings preference screen
      */
-   public void openSettings ()
+    public void openSettings ()
     {
         Intent intent = new Intent(this, SettingsPreference.class);
         startActivity(intent);
@@ -131,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     /**
-     * This method allows the bottom navigation bar to be acessed on each screen, and
+     * This method allows the bottom navigation bar to be accessed on each screen, and
      * allows for the chosen screens to be displayed
      */
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
@@ -150,7 +93,9 @@ public class MainActivity extends AppCompatActivity {
                         case R.id.nav_hours:
                             selectedFragment = new HoursFragment();
                             break;
-
+                        case R.id.nav_settings:
+                            selectedFragment = new SettingsFragment();
+                            break;
                     }
 
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
@@ -159,7 +104,6 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 }
             };
-
 
     /**
      * This creates a new instance of the preference fragment class for the settings preference fragment
