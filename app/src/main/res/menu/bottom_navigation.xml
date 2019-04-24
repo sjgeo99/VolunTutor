@@ -22,10 +22,5 @@
         android:icon="@drawable/ic_settings_black_24dp"
         android:title="@string/settings" />
 
-    <item
-        android:id="@+id/nav_make_user"
-        android:icon="@drawable/ic_person_add_black_24dp"
-        android:title="@string/title_make_user"/>
-
 
 </menu>
