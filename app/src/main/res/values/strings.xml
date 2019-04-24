@@ -107,4 +107,5 @@
     <string name="End_time_hint2">Enter end time</string>
     <string name="Subjects_descr">Enter the subjects you want to tutor in, separated by commas</string>
     <string name="add_session_str">Add session</string>
+    <string name="updateMyHours">Update</string>
 </resources>

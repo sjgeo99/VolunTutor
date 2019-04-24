@@ -7,6 +7,15 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 /**
  * This class provides the tools accessed by the Hours Page fragment
@@ -27,6 +36,36 @@ public class HoursFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        final View view = inflater.inflate(R.layout.settingsfragment, container, false);
+
+        Button buttonName = (Button) view.findViewById(R.id.update_hours);
+        buttonName.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FirebaseDatabase fb = FirebaseDatabase.getInstance();
+                DatabaseReference ref = fb.getReference("tutors");
+                DatabaseReference nameRef = ref.child(MakeUserFragment.getID()).getRef().child("vsessions").getRef();
+                nameRef.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        int count = 0;
+                        for(DataSnapshot ds: dataSnapshot.getChildren()) {
+                            Sessions s = ds.getValue(Sessions.class);
+                            count += s.getLength();
+                            TextView t = view.findViewById(R.id.showHours);
+                            t.setText(count);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+            }
+        });
+
         return inflater.inflate(R.layout.hoursfragment, container, false);
+
     }
 }
