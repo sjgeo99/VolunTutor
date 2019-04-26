@@ -11,6 +11,7 @@
     <string name="shared_pref_name">Startup info</string>
     <string name="path">Path name</string>
     <string name="inFireBase">inFireBase</string>
+    <string name="isTutor">isTutor</string>
 
     <!-- Strings related to Settings -->
     <string name="settings">Settings</string>
@@ -108,4 +109,5 @@
     <string name="Subjects_descr">Enter the subjects you want to tutor in, separated by commas</string>
     <string name="add_session_str">Add session</string>
     <string name="updateMyHours">Update</string>
+    <string name="Student_hours_error">Oops! You don\'t have access to this page since you\'re a student.</string>
 </resources>

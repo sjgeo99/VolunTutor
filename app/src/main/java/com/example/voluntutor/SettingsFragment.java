@@ -25,7 +25,7 @@ public class SettingsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable final Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.settingsfragment, container, false);
 
-        Button buttonName = (Button) view.findViewById(R.id.name_change_confirm);
+        Button buttonName = (Button) view.findViewById(R.id.name_change_student_confirm);
         buttonName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -33,14 +33,14 @@ public class SettingsFragment extends Fragment {
                 DatabaseReference ref = fb.getReference("tutors");
                 DatabaseReference nameRef = ref.child(MakeUserFragment.getID()).getRef().child("name").getRef();
 
-                EditText et = (EditText) view.findViewById(R.id.change_name_field);
+                EditText et = (EditText) view.findViewById(R.id.change_name_student_field);
                 String newName = et.getText().toString();
 
                 nameRef.setValue(newName);
             }
         });
 
-        Button buttonSchool = (Button) view.findViewById(R.id.school_change_confirm);
+        Button buttonSchool = (Button) view.findViewById(R.id.school_change_student_confirm);
         buttonSchool.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -48,7 +48,7 @@ public class SettingsFragment extends Fragment {
                 DatabaseReference ref = fb.getReference("tutors");
                 DatabaseReference nameRef = ref.child(MakeUserFragment.getID()).getRef().child("school").getRef();
 
-                EditText et = (EditText) view.findViewById(R.id.change_school_field);
+                EditText et = (EditText) view.findViewById(R.id.change_school_student_field);
                 String newSchool = et.getText().toString();
 
                 nameRef.setValue(newSchool);

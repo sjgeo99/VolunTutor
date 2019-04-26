@@ -9,7 +9,6 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -50,8 +49,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         SharedPreferences sharedPref = getSharedPreferences(getString(R.string.shared_pref_name), 0);
+        SharedPreferences.Editor editor = sharedPref.edit();
         MakeUserFragment.setID(sharedPref.getString(getString(R.string.path), null));
-        Log.d("Set path?", sharedPref.getString(getString(R.string.path), ""));
+
 
         if(sharedPref.getBoolean(getString(R.string.inFireBase), false)) { loadFragment(new HomeFragment()); }
         else { loadFragment(new MakeUserFragment()); }
@@ -108,10 +108,16 @@ public class MainActivity extends AppCompatActivity {
                             selectedFragment = new SearchFragment();
                             break;
                         case R.id.nav_hours:
-                            selectedFragment = new HoursFragment();
+                            SharedPreferences sharedPref = getSharedPreferences(getString(R.string.shared_pref_name), 0);
+                            boolean isTutor = sharedPref.getBoolean(getString(R.string.isTutor), true);
+                            if(isTutor) { selectedFragment = new HoursFragment(); }
+                            else { selectedFragment = new HoursFragmentStudent(); }
                             break;
                         case R.id.nav_settings:
-                            selectedFragment = new SettingsFragment();
+                            SharedPreferences sharedPref2 = getSharedPreferences(getString(R.string.shared_pref_name), 0);
+                            boolean isTutor2 = sharedPref2.getBoolean(getString(R.string.isTutor), true);
+                            if(isTutor2) { selectedFragment = new SettingsFragment(); }
+                            else { selectedFragment = new SettingsFragmentStudent(); }
                             break;
                     }
 

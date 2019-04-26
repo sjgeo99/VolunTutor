@@ -26,7 +26,7 @@
         android:layout_marginRight="10dp"
         android:text="@string/login_directions"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/greeting" />
 
@@ -92,12 +92,50 @@
         app:layout_constraintTop_toBottomOf="@+id/school_label" />
 
     <TextView
+        android:id="@+id/student_or_tutor_dir"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="100dp"
+        android:layout_marginRight="100dp"
+        android:text="I want to be (select one):"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.013"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/enter_school" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout4"
+        android:layout_width="392dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/student_or_tutor_dir">
+
+        <Button
+            android:id="@+id/student_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="A student" />
+
+        <Button
+            android:id="@+id/tutor_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="A tutor" />
+    </LinearLayout>
+
+    <TextView
         android:id="@+id/session_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginLeft="10dp"
-        android:layout_marginTop="15dp"
         android:layout_marginEnd="342dp"
         android:layout_marginRight="342dp"
         android:text="@string/Session_descr2"
@@ -105,7 +143,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enter_school" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
 
     <EditText
         android:id="@+id/enter_session_day"
@@ -196,18 +234,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/enter_subjects" />
 
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline2"
+    <TextView
+        android:id="@+id/proceed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="10dp" />
-
-    <android.support.constraint.Guideline
-        android:id="@+id/guideline3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        app:layout_constraintGuide_begin="205dp" />
+        android:layout_marginTop="16dp"
+        android:text="Proceed using the navigation bar below"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/make_user_obj" />
 
 </android.support.constraint.ConstraintLayout>

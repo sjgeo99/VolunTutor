@@ -35,7 +35,7 @@ public class Student {
      * Gets and returns the school of the chosen student
      * @return the school (String) of the chosen student
      */
-    public String getSchool() {return name;}
+    public String getSchool() {return school;}
 
     /**
      * Gets and returns the pending sessions
