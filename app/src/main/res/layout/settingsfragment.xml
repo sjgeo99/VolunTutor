@@ -17,7 +17,7 @@
         android:text="@string/title_settings"
         android:textColor="@android:color/black"
         android:textColorHighlight="@color/colorPrimaryDark"
-        android:textSize="30sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         android:typeface="normal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -25,273 +25,330 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/change_name_student_label"
-        android:layout_width="387dp"
-        android:layout_height="25dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginBottom="658dp"
-        android:text="@string/change_name_str"
-        android:textColor="@android:color/black"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="698dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.666"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/settings_label">
 
-    <EditText
-        android:id="@+id/change_name_student_field"
-        android:layout_width="387dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="612dp"
-        android:autofillHints=""
-        android:ems="10"
-        android:hint="@string/auto_name"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/change_name_student_label"
-        app:layout_constraintVertical_bias="0.0" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
 
-    <Button
-        android:id="@+id/name_change_student_confirm"
-        android:layout_width="92dp"
-        android:layout_height="35dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginBottom="568dp"
-        android:text="@string/ok"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/change_name_student_field"
-        app:layout_constraintVertical_bias="0.0" />
+            <TextView
+                android:id="@+id/change_name_student_label"
+                android:layout_width="392dp"
+                android:layout_height="25dp"
+                android:layout_weight="1"
+                android:text="@string/change_name_str"
+                android:textColor="@android:color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                tools:layout_editor_absoluteX="10dp"
+                tools:layout_editor_absoluteY="33dp" />
 
-    <TextView
-        android:id="@+id/change_school_student_label"
-        android:layout_width="387dp"
-        android:layout_height="25dp"
-        android:layout_marginBottom="520dp"
-        android:text="@string/change_school_str"
-        android:textColor="@android:color/black"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.666"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/name_change_student_confirm"
-        app:layout_constraintVertical_bias="0.0" />
+            <EditText
+                android:id="@+id/change_name_student_field"
+                android:layout_width="387dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:autofillHints=""
+                android:ems="10"
+                android:hint="@string/auto_name"
+                android:inputType="textPersonName"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="58dp" />
 
-    <EditText
-        android:id="@+id/change_school_student_field"
-        android:layout_width="387dp"
-        android:layout_height="40dp"
-        android:layout_marginBottom="494dp"
-        android:ems="10"
-        android:hint="_____ High School"
-        android:inputType="text"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.666"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/change_school_student_label"
-        app:layout_constraintVertical_bias="0.0" />
+            <Button
+                android:id="@+id/name_change_student_confirm"
+                android:layout_width="92dp"
+                android:layout_height="35dp"
+                android:layout_weight="1"
+                android:text="@string/ok"
+                android:textSize="12sp"
+                tools:layout_editor_absoluteX="159dp"
+                tools:layout_editor_absoluteY="98dp" />
 
-    <Button
-        android:id="@+id/school_change_student_confirm"
-        android:layout_width="92dp"
-        android:layout_height="35dp"
-        android:layout_marginBottom="452dp"
-        android:text="@string/ok"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/change_school_student_field"
-        app:layout_constraintVertical_bias="0.0" />
+            <TextView
+                android:id="@+id/change_school_student_label"
+                android:layout_width="387dp"
+                android:layout_height="25dp"
+                android:layout_weight="1"
+                android:text="@string/change_school_str"
+                android:textColor="@android:color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="133dp" />
 
-    <TextView
-        android:id="@+id/add_slot_label"
-        android:layout_width="387dp"
-        android:layout_height="25dp"
-        android:layout_marginBottom="416dp"
-        android:text="@string/add_slot_str"
-        android:textColor="@android:color/black"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/school_change_student_confirm"
-        app:layout_constraintVertical_bias="0.0" />
+            <EditText
+                android:id="@+id/change_school_student_field"
+                android:layout_width="387dp"
+                android:layout_height="40dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="_____ High School"
+                android:inputType="text"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="158dp" />
 
-    <EditText
-        android:id="@+id/add_slot_field"
-        android:layout_width="387dp"
-        android:layout_height="40dp"
-        android:layout_marginBottom="360dp"
-        android:ems="10"
-        android:hint="DayOfWeek, HH:MM-HH:MM"
-        android:inputType="text"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_slot_label"
-        app:layout_constraintVertical_bias="0.0" />
+            <Button
+                android:id="@+id/school_change_student_confirm"
+                android:layout_width="92dp"
+                android:layout_height="35dp"
+                android:layout_weight="1"
+                android:text="@string/ok"
+                android:textSize="12sp"
+                tools:layout_editor_absoluteX="160dp"
+                tools:layout_editor_absoluteY="198dp" />
 
-    <Button
-        android:id="@+id/add_slot_confirm"
-        android:layout_width="92dp"
-        android:layout_height="35dp"
-        android:layout_marginBottom="324dp"
-        android:text="@string/ok"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_slot_field"
-        app:layout_constraintVertical_bias="0.04" />
+            <TextView
+                android:id="@+id/add_slot_label"
+                android:layout_width="387dp"
+                android:layout_height="25dp"
+                android:layout_weight="1"
+                android:text="@string/add_slot_str"
+                android:textColor="@android:color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                tools:layout_editor_absoluteX="12dp"
+                tools:layout_editor_absoluteY="234dp" />
 
-    <TextView
-        android:id="@+id/remove_slot_label"
-        android:layout_width="387dp"
-        android:layout_height="25dp"
-        android:layout_marginBottom="292dp"
-        android:text="@string/remove_slot_str"
-        android:textColor="@android:color/black"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_slot_confirm"
-        app:layout_constraintVertical_bias="0.0" />
+            <Spinner
+                android:id="@+id/spinnerDOWA"
+                android:layout_width="392dp"
+                android:layout_height="30dp"
+                android:layout_weight="1" />
 
-    <EditText
-        android:id="@+id/remove_slot_field"
-        android:layout_width="387dp"
-        android:layout_height="40dp"
-        android:layout_marginBottom="252dp"
-        android:ems="10"
-        android:hint="DayOfWeek, HH:MM-HH:MM"
-        android:inputType="text"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/remove_slot_label"
-        app:layout_constraintVertical_bias="0.0" />
+            <LinearLayout
+                android:id="@+id/linearLayout3"
+                android:layout_width="392dp"
+                android:layout_height="38dp"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                tools:layout_editor_absoluteX="10dp"
+                tools:layout_editor_absoluteY="299dp">
 
-    <Button
-        android:id="@+id/remove_slot_confirm"
-        android:layout_width="92dp"
-        android:layout_height="35dp"
-        android:layout_marginBottom="208dp"
-        android:text="@string/ok"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/remove_slot_field"
-        app:layout_constraintVertical_bias="0.0" />
+                <TextView
+                    android:id="@+id/startDescr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center|left"
+                    android:text="Start time:" />
 
-    <TextView
-        android:id="@+id/add_subj_label"
-        android:layout_width="387dp"
-        android:layout_height="25dp"
-        android:layout_marginTop="1dp"
-        android:layout_marginBottom="252dp"
-        android:text="@string/add_subj_label"
-        android:textColor="@android:color/black"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.666"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/remove_slot_confirm" />
+                <Spinner
+                    android:id="@+id/spinnerSHAdd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
 
-    <EditText
-        android:id="@+id/add_subj_field"
-        android:layout_width="387dp"
-        android:layout_height="40dp"
-        android:layout_marginBottom="136dp"
-        android:ems="10"
-        android:hint="SubjectName"
-        android:inputType="text"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_subj_label"
-        app:layout_constraintVertical_bias="0.0" />
+                <Spinner
+                    android:id="@+id/spinnerSMAdd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
 
-    <Button
-        android:id="@+id/add_subj_confirm"
-        android:layout_width="92dp"
-        android:layout_height="35dp"
-        android:text="@string/ok"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toTopOf="@+id/rem_subj_label"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_subj_field" />
+            </LinearLayout>
 
-    <TextView
-        android:id="@+id/rem_subj_label"
-        android:layout_width="387dp"
-        android:layout_height="25dp"
-        android:layout_marginBottom="152dp"
-        android:text="@string/rem_subj_str"
-        android:textColor="@android:color/black"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_subj_confirm" />
+            <LinearLayout
+                android:layout_width="392dp"
+                android:layout_height="38dp"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                tools:layout_editor_absoluteX="10dp"
+                tools:layout_editor_absoluteY="299dp">
 
-    <EditText
-        android:id="@+id/rem_subj_field"
-        android:layout_width="387dp"
-        android:layout_height="40dp"
-        android:layout_marginBottom="20dp"
-        android:ems="10"
-        android:hint="SubjectName"
-        android:inputType="text"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rem_subj_label"
-        app:layout_constraintVertical_bias="0.0" />
+                <TextView
+                    android:id="@+id/end_descr"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center|left"
+                    android:text="End time:" />
 
-    <Button
-        android:id="@+id/rem_subj_confirm"
-        android:layout_width="92dp"
-        android:layout_height="35dp"
-        android:layout_marginBottom="77dp"
-        android:text="@string/ok"
-        android:textSize="12sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/rem_subj_field" />
+                <Spinner
+                    android:id="@+id/spinnerEHAdd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <Spinner
+                    android:id="@+id/spinnerEMAdd"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/add_slot_confirm"
+                android:layout_width="92dp"
+                android:layout_height="35dp"
+                android:layout_weight="1"
+                android:text="@string/ok"
+                android:textSize="12sp"
+                tools:layout_editor_absoluteX="160dp"
+                tools:layout_editor_absoluteY="363dp" />
+
+            <TextView
+                android:id="@+id/remove_slot_label"
+                android:layout_width="387dp"
+                android:layout_height="25dp"
+                android:layout_weight="1"
+                android:text="@string/remove_slot_str"
+                android:textColor="@android:color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                tools:layout_editor_absoluteX="12dp"
+                tools:layout_editor_absoluteY="398dp" />
+
+            <Spinner
+                android:id="@+id/spinnerDOWR"
+                android:layout_width="392dp"
+                android:layout_height="30dp"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:id="@+id/linearLayout4"
+                android:layout_width="392dp"
+                android:layout_height="38dp"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                tools:layout_editor_absoluteX="10dp"
+                tools:layout_editor_absoluteY="299dp">
+
+                <TextView
+                    android:id="@+id/startDescription"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center|left"
+                    android:text="Start time:" />
+
+                <Spinner
+                    android:id="@+id/spinnerSHRem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <Spinner
+                    android:id="@+id/spinnerSMRem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="392dp"
+                android:layout_height="38dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/end_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center|left"
+                    android:text="End time:" />
+
+                <Spinner
+                    android:id="@+id/spinnerEHRem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+
+                <Spinner
+                    android:id="@+id/spinnerEMRem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <Button
+                android:id="@+id/remove_slot_confirm"
+                android:layout_width="92dp"
+                android:layout_height="35dp"
+                android:layout_weight="1"
+                android:text="@string/ok"
+                android:textSize="12sp"
+                tools:layout_editor_absoluteX="160dp"
+                tools:layout_editor_absoluteY="464dp" />
+
+            <TextView
+                android:id="@+id/add_subj_label"
+                android:layout_width="387dp"
+                android:layout_height="25dp"
+                android:layout_weight="1"
+                android:text="@string/add_subj_label"
+                android:textColor="@android:color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="504dp" />
+
+            <EditText
+                android:id="@+id/add_subj_field"
+                android:layout_width="387dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="SubjectName"
+                android:inputType="text"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/add_subj_label"
+                app:layout_constraintVertical_bias="0.0" />
+
+            <Button
+                android:id="@+id/add_subj_confirm"
+                android:layout_width="92dp"
+                android:layout_height="35dp"
+                android:layout_weight="1"
+                android:text="@string/ok"
+                android:textSize="12sp"
+                tools:layout_editor_absoluteX="160dp"
+                tools:layout_editor_absoluteY="569dp" />
+
+            <TextView
+                android:id="@+id/rem_subj_label"
+                android:layout_width="387dp"
+                android:layout_height="25dp"
+                android:layout_weight="1"
+                android:text="@string/rem_subj_str"
+                android:textColor="@android:color/black"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                tools:layout_editor_absoluteX="12dp"
+                tools:layout_editor_absoluteY="603dp" />
+
+            <EditText
+                android:id="@+id/rem_subj_field"
+                android:layout_width="387dp"
+                android:layout_height="44dp"
+                android:layout_weight="1"
+                android:ems="10"
+                android:hint="SubjectName"
+                android:inputType="text"
+                tools:layout_editor_absoluteX="12dp"
+                tools:layout_editor_absoluteY="629dp" />
+
+            <Button
+                android:id="@+id/rem_subj_confirm"
+                android:layout_width="92dp"
+                android:layout_height="35dp"
+                android:layout_weight="1"
+                android:text="@string/ok"
+                android:textSize="12sp"
+                tools:layout_editor_absoluteX="159dp"
+                tools:layout_editor_absoluteY="675dp" />
+        </LinearLayout>
+    </ScrollView>
 
 </android.support.constraint.ConstraintLayout>
