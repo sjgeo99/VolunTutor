@@ -115,19 +115,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/student_or_tutor_dir">
 
-        <Button
-            android:id="@+id/student_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="A student" />
+        <RadioGroup
+            android:id="@+id/student_or_tutor"
+            android:layout_width="193dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
 
-        <Button
-            android:id="@+id/tutor_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="A tutor" />
+            <RadioButton
+                android:id="@+id/student_option"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="A student" />
+
+            <RadioButton
+                android:id="@+id/tutor_option"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="A tutor" />
+        </RadioGroup>
+
     </LinearLayout>
 
     <TextView
@@ -145,56 +153,80 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
 
-    <EditText
-        android:id="@+id/enter_session_day"
+    <Spinner
+        android:id="@+id/spinnerDay"
         android:layout_width="392dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginEnd="10dp"
-        android:layout_marginRight="10dp"
-        android:ems="10"
-        android:hint="Enter day of the week"
-        android:inputType="textPersonName"
+        android:layout_height="35dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/session_label" />
 
     <LinearLayout
-        android:id="@+id/linearLayout3"
+        android:id="@+id/linearLayout"
         android:layout_width="392dp"
         android:layout_height="47dp"
+        android:gravity="center"
         android:orientation="horizontal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.473"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerDay">
+
+        <TextView
+            android:id="@+id/startTImeLabel"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center|left"
+            android:text="Start time:" />
+
+        <Spinner
+            android:id="@+id/spinnerSH"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <Spinner
+            android:id="@+id/spinnerSM"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="392dp"
+        android:layout_height="51dp"
+        android:layout_marginBottom="3dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/subjects_label"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/enter_session_day">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
-        <EditText
-            android:id="@+id/enter_session_start"
-            android:layout_width="181dp"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:hint="@string/Start_time_hint"
-            android:inputType="textPersonName"
-            tools:layout_editor_absoluteX="26dp"
-            tools:layout_editor_absoluteY="519dp" />
+        <TextView
+            android:id="@+id/end_time_descr"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center|left"
+            android:text="End time:" />
 
-        <EditText
-            android:id="@+id/enter_session_end"
-            android:layout_width="190dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginEnd="211dp"
-            android:layout_marginRight="211dp"
-            android:ems="10"
-            android:hint="@string/End_time_hint2"
-            android:inputType="textPersonName"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/enter_session_day" />
+        <Spinner
+            android:id="@+id/spinnerEH"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
+
+        <Spinner
+            android:id="@+id/spinnerEM"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1" />
 
     </LinearLayout>
 
@@ -202,20 +234,21 @@
         android:id="@+id/subjects_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:text="@string/Subjects_descr"
         app:layout_constraintBottom_toTopOf="@+id/enter_subjects"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.59"
+        app:layout_constraintHorizontal_bias="0.454"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout3" />
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout2" />
 
     <EditText
         android:id="@+id/enter_subjects"
         android:layout_width="392dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="1dp"
         android:ems="10"
         android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/make_user_obj"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -225,12 +258,11 @@
         android:id="@+id/make_user_obj"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="92dp"
-        android:layout_marginBottom="132dp"
+        android:layout_marginBottom="96dp"
         android:text="OK"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/enter_subjects" />
 
