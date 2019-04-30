@@ -22,6 +22,12 @@ public class Student {
         psessions = new ArrayList<Sessions>();
         usessions = new ArrayList<Sessions>();
     }
+    public Student() {
+        name = "";
+        school = "";
+        psessions = new ArrayList<Sessions>();
+        usessions = new ArrayList<Sessions>();
+    }
 
     //Methods
 
@@ -97,4 +103,10 @@ public class Student {
      * @param school String name of the school
      */
     public void setSchool(String school) {this.school = school;}
+    public void setPsessions(ArrayList<Sessions> psessions) {this.psessions = psessions;}
+    public void setUsessions(ArrayList<Sessions> usessions) {this.usessions = usessions;}
+    @Override
+    public String toString() {
+        return name + " from " + school;
+    }
 }

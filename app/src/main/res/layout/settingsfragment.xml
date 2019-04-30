@@ -207,68 +207,10 @@
                 tools:layout_editor_absoluteY="398dp" />
 
             <Spinner
-                android:id="@+id/spinnerDOWR"
+                android:id="@+id/spinnerRemove"
                 android:layout_width="392dp"
                 android:layout_height="30dp"
                 android:layout_weight="1" />
-
-            <LinearLayout
-                android:id="@+id/linearLayout4"
-                android:layout_width="392dp"
-                android:layout_height="38dp"
-                android:layout_weight="1"
-                android:orientation="horizontal"
-                tools:layout_editor_absoluteX="10dp"
-                tools:layout_editor_absoluteY="299dp">
-
-                <TextView
-                    android:id="@+id/startDescription"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center|left"
-                    android:text="Start time:" />
-
-                <Spinner
-                    android:id="@+id/spinnerSHRem"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-
-                <Spinner
-                    android:id="@+id/spinnerSMRem"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="392dp"
-                android:layout_height="38dp"
-                android:layout_weight="1"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/end_description"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center|left"
-                    android:text="End time:" />
-
-                <Spinner
-                    android:id="@+id/spinnerEHRem"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-
-                <Spinner
-                    android:id="@+id/spinnerEMRem"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1" />
-            </LinearLayout>
 
             <Button
                 android:id="@+id/remove_slot_confirm"

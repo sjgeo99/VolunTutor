@@ -145,5 +145,6 @@
     <string name="updateMyHours">Update</string>
     <string name="Student_hours_error">Oops! You don\'t have access to this page since you\'re a student.</string>
     <string name="browse">Browse to find your new tutor here!</string>
+    <string name="Slot_descr">Please add in one day of the week and time you are available</string>
     <string name="button">Button</string>
 </resources>

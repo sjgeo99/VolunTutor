@@ -52,9 +52,9 @@ public class HoursFragment extends Fragment {
                         for(DataSnapshot ds: dataSnapshot.getChildren()) {
                             Sessions s = ds.getValue(Sessions.class);
                             count += s.getLength();
-                            TextView t = view.findViewById(R.id.showHours);
-                            t.setText(count);
                         }
+                        TextView t = view.findViewById(R.id.showHours);
+                        t.setText(count);
                     }
 
                     @Override
