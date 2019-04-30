@@ -4,9 +4,13 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.voluntutor.mRecycler.MyAdapter;
 
 /**
  * This class provides the tools accessed by the Home Page fragment
@@ -14,6 +18,10 @@ import android.view.ViewGroup;
  * commands recieved from the bottom navigation bar
  */
 public class HomeFragment extends Fragment {
+
+    String[] sessions = {"May 3","May 3","May 3","May 3","May 3","May 3","May 3"};
+
+
 
     /**
      * Instantiates the UI view of a particular fragment
@@ -27,7 +35,15 @@ public class HomeFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.homefragment, container, false);
+
+        View rootView = inflater.inflate(R.layout.homefragment,container,false);
+
+        RecyclerView rv = rootView.findViewById(R.id.homeRV);
+        rv.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+        MyAdapter adapter = new MyAdapter(this.getActivity(),sessions);
+        rv.setAdapter(adapter);
+
+        return rootView;
     }
 
 }
