@@ -11,7 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.voluntutor.mRecycler.MyAdapter;
+import com.example.voluntutor.mRecycler.MyTutorAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -28,8 +28,8 @@ import java.util.ArrayList;
  */
 public class SearchFragment extends Fragment {
 
-    public ArrayList<String> tutors = new ArrayList<String>();
-    public MyAdapter searchAdapter;
+    public ArrayList<Tutor> tutors = new ArrayList<Tutor>();
+    public MyTutorAdapter searchAdapter;
     /**
      * Instantiates the UI view of a particular fragment
      *
@@ -46,7 +46,7 @@ public class SearchFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.searchfragment, container, false);
         RecyclerView recyclerView = rootView.findViewById(R.id.searchRV);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        searchAdapter = new MyAdapter(this.getActivity(), tutors);
+        searchAdapter = new MyTutorAdapter(this.getActivity(), tutors);
         recyclerView.setAdapter(searchAdapter);
 
         FirebaseDatabase fb2 = FirebaseDatabase.getInstance();
@@ -57,8 +57,8 @@ public class SearchFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
                     for (DataSnapshot snap : dataSnapshot.getChildren()) {
-                        String subjtest = snap.getValue(Tutor.class).toString();
-                        searchAdapter.add(subjtest);
+                        Tutor t = snap.getValue(Tutor.class);
+                        searchAdapter.add(t);
                     }
                     searchAdapter.notifyDataSetChanged();
             }
