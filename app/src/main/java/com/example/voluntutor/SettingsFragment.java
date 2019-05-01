@@ -1,4 +1,6 @@
 package com.example.voluntutor;
+import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -27,7 +29,10 @@ public class SettingsFragment extends Fragment {
     public String DOWA;
     public TimeSlot toRemove = new TimeSlot();
     public ArrayList<TimeSlot> ts = new ArrayList<TimeSlot>();
+    public ArrayList<String> subjects = new ArrayList<String>();
     public ArrayAdapter<TimeSlot> ada;
+    public ArrayAdapter<String> rSubs;
+    public String removeSubj;
 
     //initializes the Settings Fragment
     @Nullable
@@ -36,7 +41,10 @@ public class SettingsFragment extends Fragment {
         final View view = inflater.inflate(R.layout.settingsfragment, container, false);
         ada = new ArrayAdapter<TimeSlot>(this.getContext(),
                 android.R.layout.simple_spinner_dropdown_item, ts);
+        rSubs = new ArrayAdapter<String>(this.getContext(),
+                android.R.layout.simple_spinner_dropdown_item, subjects);
         makeSpinners(view);
+        setHints(view);
 
         Button buttonName = (Button) view.findViewById(R.id.name_change_student_confirm);
         buttonName.setOnClickListener(new View.OnClickListener() {
@@ -109,9 +117,7 @@ public class SettingsFragment extends Fragment {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for(DataSnapshot ds: dataSnapshot.getChildren()) {
                             String subj = ds.getValue(String.class);
-                            EditText et = (EditText) view.findViewById(R.id.rem_subj_field);
-                            String toRemove = et.getText().toString();
-                            if(subj.equals(toRemove)) ds.getRef().removeValue();
+                            if(subj.equals(removeSubj)) ds.getRef().removeValue();
                         }
                     }
 
@@ -158,6 +164,39 @@ public class SettingsFragment extends Fragment {
     }
 
     private void makeSpinners(View v) {
+        Spinner spinnerRSubs = (Spinner) v.findViewById(R.id.spinnerRemS);
+        rSubs.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerRSubs.setAdapter(rSubs);
+
+        spinnerRSubs.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                removeSubj = (String) parent.getItemAtPosition(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        FirebaseDatabase fb = FirebaseDatabase.getInstance();
+        DatabaseReference ref = fb.getReference("/tutors");
+        DatabaseReference mySubs = ref.child(MakeUserFragment.getID()).getRef().child("subjects");
+        mySubs.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot ds: dataSnapshot.getChildren()) {
+                    rSubs.add(ds.getValue(String.class));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         Spinner spinnerRemove = (Spinner) v.findViewById(R.id.spinnerRemove);
         ada.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerRemove.setAdapter(ada);
@@ -173,8 +212,6 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        FirebaseDatabase fb = FirebaseDatabase.getInstance();
-        DatabaseReference ref = fb.getReference("/tutors");
         DatabaseReference mySlots = ref.child(MakeUserFragment.getID()).getRef().child("timeSlots");
         mySlots.addValueEventListener(new ValueEventListener() {
             @Override
@@ -276,5 +313,17 @@ public class SettingsFragment extends Fragment {
 
             }
         });
+    }
+
+    private void setHints(View v) {
+        final EditText changeName = (EditText) v.findViewById(R.id.change_name_student_field);
+        final EditText changeSchool = (EditText) v.findViewById(R.id.change_school_student_field);
+
+        SharedPreferences sharedPref = getActivity().getSharedPreferences(getString(R.string.shared_pref_name), 0);
+        String nameHint = sharedPref.getString(getString(R.string.name), "");
+        String schoolHint = sharedPref.getString(getString(R.string.school), "");
+
+        changeName.setHint("Current name: " + nameHint);
+        changeSchool.setHint("Current school: " + schoolHint);
     }
 }

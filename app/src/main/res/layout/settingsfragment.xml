@@ -270,16 +270,11 @@
                 tools:layout_editor_absoluteX="12dp"
                 tools:layout_editor_absoluteY="603dp" />
 
-            <EditText
-                android:id="@+id/rem_subj_field"
-                android:layout_width="387dp"
-                android:layout_height="44dp"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="SubjectName"
-                android:inputType="text"
-                tools:layout_editor_absoluteX="12dp"
-                tools:layout_editor_absoluteY="629dp" />
+            <Spinner
+                android:id="@+id/spinnerRemS"
+                android:layout_width="392dp"
+                android:layout_height="40dp"
+                android:layout_weight="1" />
 
             <Button
                 android:id="@+id/rem_subj_confirm"

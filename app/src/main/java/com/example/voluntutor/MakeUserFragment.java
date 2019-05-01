@@ -107,6 +107,11 @@ public class MakeUserFragment extends Fragment {
                     int endHr = values[2];
                     int endMin = values[3];
 
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putString(getString(R.string.name), name);
+                    editor.putString(getString(R.string.school), school);
+                    editor.commit();
+
                     String subjects = txtSubjects.getText().toString();
 
                     TimeSlot ts = new TimeSlot(dayOfWeek, startHr, startMin, endHr, endMin);
@@ -135,6 +140,11 @@ public class MakeUserFragment extends Fragment {
                     EditText txtSchool = (EditText) view.findViewById(R.id.enter_school);
                     String name = txtName.getText().toString();
                     String school = txtSchool.getText().toString();
+
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putString(getString(R.string.name), name);
+                    editor.putString(getString(R.string.school), school);
+                    editor.commit();
 
                     Student s = new Student(name, school);
 
