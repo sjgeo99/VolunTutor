@@ -8,24 +8,25 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.voluntutor.R;
+import com.example.voluntutor.TimeSlot;
 import com.example.voluntutor.Tutor;
 
 import java.util.ArrayList;
 
-public class MyAdapter extends RecyclerView.Adapter<myHolder> {
+public class MyTutorAdapter extends RecyclerView.Adapter<myHolder> {
 
     Context c;
-    ArrayList<String> sessions;
+    ArrayList<Tutor> tutors;
 
-    public MyAdapter(Context c, ArrayList<String> sessions)
+    public MyTutorAdapter(Context c, ArrayList<Tutor> tutors)
     {
         this.c = c;
-        this.sessions =sessions;
+        this.tutors =tutors;
     }
-    public MyAdapter(Context c)
+    public MyTutorAdapter(Context c)
     {
         this.c = c;
-        sessions = new ArrayList<String>();
+        tutors = new ArrayList<Tutor>();
     }
 
 
@@ -40,21 +41,21 @@ public class MyAdapter extends RecyclerView.Adapter<myHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull myHolder holder, int position) {
-        holder.nametxt.setText(sessions.get(position));
+        holder.nametxt.setText(tutors.get(position).toString());
 
     }
 
     @Override
     public int getItemCount() {
-        return sessions.size();
+        return tutors.size();
     }
 
-    public void add(String s) {
-        sessions.add(s);
+    public void add(Tutor s) {
+        tutors.add(s);
         notifyDataSetChanged();
     }
     public void clear() {
-        sessions = new ArrayList<String>();
+        tutors = new ArrayList<Tutor>();
         notifyDataSetChanged();
     }
 }
