@@ -9,15 +9,22 @@ import android.view.ViewGroup;
 
 import com.example.voluntutor.R;
 
+import java.util.ArrayList;
+
 public class MyAdapter extends RecyclerView.Adapter<myHolder> {
 
     Context c;
-    String[] sessions;
+    ArrayList<String> sessions;
 
-    public MyAdapter(Context c, String[] sessions)
+    public MyAdapter(Context c, ArrayList<String> sessions)
     {
         this.c = c;
         this.sessions =sessions;
+    }
+    public MyAdapter(Context c)
+    {
+        this.c = c;
+        sessions = new ArrayList<String>();
     }
 
 
@@ -32,12 +39,17 @@ public class MyAdapter extends RecyclerView.Adapter<myHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull myHolder holder, int position) {
-        holder.nametxt.setText(sessions[position]);
+        holder.nametxt.setText(sessions.get(position));
 
     }
 
     @Override
     public int getItemCount() {
-        return sessions.length;
+        return sessions.size();
+    }
+
+    public void add(String s) {
+        sessions.add(s);
+        notifyDataSetChanged();
     }
 }

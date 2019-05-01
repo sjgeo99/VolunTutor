@@ -36,6 +36,9 @@ public class MainActivity extends AppCompatActivity {
         return false;
     }
 
+    //SETTINGS BUTTON
+    private Button button;
+
     /**
      * This method sets the content views, opens the settings button, sets the content views
      * @param savedInstanceState
@@ -65,6 +68,14 @@ public class MainActivity extends AppCompatActivity {
         editor.putString(getString(R.string.path), MakeUserFragment.getID());
         editor.putBoolean(getString(R.string.inFireBase), MakeUserFragment.getID() != null);
         editor.commit();
+    }
+    /**
+     * This method opens the settings preference screen
+     */
+    public void openSettings ()
+    {
+        Intent intent = new Intent(this, SettingsPreference.class);
+        startActivity(intent);
     }
 
 
@@ -105,6 +116,19 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 }
             };
+
+    /**
+     * This creates a new instance of the preference fragment class for the settings preference fragment
+     */
+    public static class PreferFragment extends PreferenceFragment
+    {
+        public void onCreate (Bundle savedInstanceState)
+        {
+            super.onCreate(savedInstanceState);
+            addPreferencesFromResource(R.xml.settingspreference);
+        }
+
+    }
 
 
 }

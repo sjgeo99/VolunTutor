@@ -1,9 +1,11 @@
 package com.example.voluntutor;
-
+import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,18 +21,30 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class SettingsFragment extends Fragment {
     public int[] addVals = new int[4];
-    public int[] remVals = new int[4];
-    public String DOWA, DOWR;
+    public String DOWA;
+    public TimeSlot toRemove = new TimeSlot();
+    public ArrayList<TimeSlot> ts = new ArrayList<TimeSlot>();
+    public ArrayList<String> subjects = new ArrayList<String>();
+    public ArrayAdapter<TimeSlot> ada;
+    public ArrayAdapter<String> rSubs;
+    public String removeSubj;
+
     //initializes the Settings Fragment
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable final Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.settingsfragment, container, false);
-
-        makeAddSpinners(view);
-        makeRemSpinners(view);
+        ada = new ArrayAdapter<TimeSlot>(this.getContext(),
+                android.R.layout.simple_spinner_dropdown_item, ts);
+        rSubs = new ArrayAdapter<String>(this.getContext(),
+                android.R.layout.simple_spinner_dropdown_item, subjects);
+        makeSpinners(view);
+        setHints(view);
 
         Button buttonName = (Button) view.findViewById(R.id.name_change_student_confirm);
         buttonName.setOnClickListener(new View.OnClickListener() {
@@ -103,9 +117,7 @@ public class SettingsFragment extends Fragment {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for(DataSnapshot ds: dataSnapshot.getChildren()) {
                             String subj = ds.getValue(String.class);
-                            EditText et = (EditText) view.findViewById(R.id.rem_subj_field);
-                            String toRemove = et.getText().toString();
-                            if(subj.equals(toRemove)) ds.getRef().removeValue();
+                            if(subj.equals(removeSubj)) ds.getRef().removeValue();
                         }
                     }
 
@@ -121,20 +133,20 @@ public class SettingsFragment extends Fragment {
         buttonRemSlot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("timeslots", Arrays.toString(ts.toArray()));
+                Log.d("to remove", toRemove.toString());
+                Spinner s = (Spinner) view.findViewById(R.id.spinnerRemove);
+
                 FirebaseDatabase fb = FirebaseDatabase.getInstance();
                 DatabaseReference ref = fb.getReference("/tutors");
                 DatabaseReference mySlots = ref.child(MakeUserFragment.getID()).getRef().child("timeSlots");
-
-                final TimeSlot ts = new TimeSlot(DOWR, remVals[0], remVals[1],
-                        remVals[2], remVals[3]);
-
                 mySlots.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for(DataSnapshot ds: dataSnapshot.getChildren()) {
                             TimeSlot check = ds.getValue(TimeSlot.class);
 
-                            if(check.equals(ts)) {
+                            if(check.equals(toRemove)) {
                                 ds.getRef().removeValue();
                             }
                         }
@@ -151,7 +163,71 @@ public class SettingsFragment extends Fragment {
         return view;
     }
 
-    private void makeAddSpinners(View v) {
+    private void makeSpinners(View v) {
+        Spinner spinnerRSubs = (Spinner) v.findViewById(R.id.spinnerRemS);
+        rSubs.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerRSubs.setAdapter(rSubs);
+
+        spinnerRSubs.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                removeSubj = (String) parent.getItemAtPosition(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        FirebaseDatabase fb = FirebaseDatabase.getInstance();
+        DatabaseReference ref = fb.getReference("/tutors");
+        DatabaseReference mySubs = ref.child(MakeUserFragment.getID()).getRef().child("subjects");
+        mySubs.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot ds: dataSnapshot.getChildren()) {
+                    rSubs.add(ds.getValue(String.class));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        Spinner spinnerRemove = (Spinner) v.findViewById(R.id.spinnerRemove);
+        ada.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerRemove.setAdapter(ada);
+
+        spinnerRemove.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                toRemove = (TimeSlot) parent.getItemAtPosition(position);
+            }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        DatabaseReference mySlots = ref.child(MakeUserFragment.getID()).getRef().child("timeSlots");
+        mySlots.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                ada.clear();
+                for(DataSnapshot ds : dataSnapshot.getChildren()) {
+                    ada.add(ds.getValue(TimeSlot.class));
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         Spinner spinnerDOWA = (Spinner) v.findViewById(R.id.spinnerDOWA);
         ArrayAdapter<CharSequence> adapt = ArrayAdapter.createFromResource(getContext(),
                 R.array.days, android.R.layout.simple_spinner_item);
@@ -239,91 +315,15 @@ public class SettingsFragment extends Fragment {
         });
     }
 
-    public void makeRemSpinners(View v) {
-        Spinner spinnerDOWR = (Spinner) v.findViewById(R.id.spinnerDOWR);
-        ArrayAdapter<CharSequence> ada = ArrayAdapter.createFromResource(getContext(),
-                R.array.days, android.R.layout.simple_spinner_item);
-        ada.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerDOWR.setAdapter(ada);
+    private void setHints(View v) {
+        final EditText changeName = (EditText) v.findViewById(R.id.change_name_student_field);
+        final EditText changeSchool = (EditText) v.findViewById(R.id.change_school_student_field);
 
-        spinnerDOWR.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                String s = (String) parent.getItemAtPosition(position);
-                DOWR = s;
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+        SharedPreferences sharedPref = getActivity().getSharedPreferences(getString(R.string.shared_pref_name), 0);
+        String nameHint = sharedPref.getString(getString(R.string.name), "");
+        String schoolHint = sharedPref.getString(getString(R.string.school), "");
 
-            }
-        });
-
-        Spinner spinnerSHRem = (Spinner) v.findViewById(R.id.spinnerSHRem);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
-                R.array.hours, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerSHRem.setAdapter(adapter);
-
-        spinnerSHRem.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                remVals[0] = position;
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-        Spinner spinnerSMRem = (Spinner) v.findViewById(R.id.spinnerSMRem);
-        ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(getContext(),
-                R.array.minutes, android.R.layout.simple_spinner_item);
-        adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerSMRem.setAdapter(adapter2);
-
-        spinnerSMRem.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                remVals[1] = position;
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-        Spinner spinnerEHRem = (Spinner) v.findViewById(R.id.spinnerEHRem);
-        ArrayAdapter<CharSequence> adapter3 = ArrayAdapter.createFromResource(getContext(),
-                R.array.hours, android.R.layout.simple_spinner_item);
-        adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerEHRem.setAdapter(adapter3);
-
-        spinnerEHRem.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                remVals[2] = position;
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
-
-        Spinner spinnerEMRem = (Spinner) v.findViewById(R.id.spinnerEMRem);
-        ArrayAdapter<CharSequence> adapter4 = ArrayAdapter.createFromResource(getContext(),
-                R.array.minutes, android.R.layout.simple_spinner_item);
-        adapter4.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinnerEMRem.setAdapter(adapter4);
-
-        spinnerEMRem.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                remVals[3] = position;
-            }
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
-
-            }
-        });
+        changeName.setHint("Current name: " + nameHint);
+        changeSchool.setHint("Current school: " + schoolHint);
     }
 }

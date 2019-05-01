@@ -1,5 +1,6 @@
 package com.example.voluntutor;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -34,6 +35,8 @@ public class SettingsFragmentStudent extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.settingsfragmentstudent, container, false);
 
+        setHints(view);
+
         Button buttonName = (Button) view.findViewById(R.id.name_change_student_confirm);
         buttonName.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,5 +68,17 @@ public class SettingsFragmentStudent extends Fragment {
         });
 
         return view;
+    }
+
+    private void setHints(View v) {
+        final EditText changeName = (EditText) v.findViewById(R.id.change_name_student_field);
+        final EditText changeSchool = (EditText) v.findViewById(R.id.change_school_student_field);
+
+        SharedPreferences sharedPref = getActivity().getSharedPreferences(getString(R.string.shared_pref_name), 0);
+        String nameHint = sharedPref.getString(getString(R.string.name), "");
+        String schoolHint = sharedPref.getString(getString(R.string.school), "");
+
+        changeName.setHint("Current name: " + nameHint);
+        changeSchool.setHint("Current school: " + schoolHint);
     }
 }
