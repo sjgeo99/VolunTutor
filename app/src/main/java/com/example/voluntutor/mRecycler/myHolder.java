@@ -13,7 +13,7 @@ public class myHolder extends RecyclerView.ViewHolder{
     public myHolder(View itemView)
     {
         super(itemView);
-        nametxt = (TextView) itemView.findViewById(R.id.nameTxt);
+        nametxt = itemView.findViewById(R.id.nameTxt);
     }
 
 }

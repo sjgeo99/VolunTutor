@@ -26,7 +26,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/browse"
+            android:id="@+id/searchRV"
             android:layout_width="match_parent"
             android:layout_height="663dp"
             android:layout_marginStart="16dp"
