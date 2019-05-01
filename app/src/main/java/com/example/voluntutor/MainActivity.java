@@ -27,7 +27,7 @@ import java.util.List;
  * This class allows for the UI to run in compliance with the individual fragments and the bottom navigation bar
  */
 public class MainActivity extends AppCompatActivity {
-        private List<Tutor> tutorList;
+
     /**
      * This method allows the GUI to load individual fragments and switch between views
      * @param fragment desired fragment

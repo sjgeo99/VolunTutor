@@ -44,24 +44,23 @@ public class SearchFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.searchfragment, container, false);
-        RecyclerView recyclerView = rootView.findViewById(R.id.browse);
+        RecyclerView recyclerView = rootView.findViewById(R.id.searchRV);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         searchAdapter = new MyAdapter(this.getActivity(), tutors);
         recyclerView.setAdapter(searchAdapter);
 
-        FirebaseDatabase fb = FirebaseDatabase.getInstance();
-        Query query = FirebaseDatabase.getInstance().getReference("/tutors")
-                .orderByChild("subjects").equalTo("math");
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
+        FirebaseDatabase fb2 = FirebaseDatabase.getInstance();
+        DatabaseReference dr2 = fb2.getReference("tutors");
+        Query query = dr2.orderByChild("subjects").equalTo("math");
+        query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()) {
-                    // dataSnapshot is the "issue" node with all children with id 0
+
                     for (DataSnapshot snap : dataSnapshot.getChildren()) {
                         String subjtest = snap.getValue(Tutor.class).toString();
                         searchAdapter.add(subjtest);
                     }
-                }
+                    searchAdapter.notifyDataSetChanged();
             }
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
