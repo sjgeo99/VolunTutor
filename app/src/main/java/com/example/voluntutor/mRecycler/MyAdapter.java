@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.voluntutor.R;
+import com.example.voluntutor.Tutor;
 
 import java.util.ArrayList;
 
@@ -50,6 +51,10 @@ public class MyAdapter extends RecyclerView.Adapter<myHolder> {
 
     public void add(String s) {
         sessions.add(s);
+        notifyDataSetChanged();
+    }
+    public void clear() {
+        sessions = new ArrayList<String>();
         notifyDataSetChanged();
     }
 }

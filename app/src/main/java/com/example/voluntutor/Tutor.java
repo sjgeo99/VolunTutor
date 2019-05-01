@@ -95,7 +95,7 @@ public class Tutor {
     public ArrayList<Sessions> getPsessions() {
         return psessions;
     }
-
+    public void setPsessions(ArrayList<Sessions> psessions) { this.psessions = psessions; }
     /**
      * Checks through the upcoming sessions to see if they have already passed. If they have
      * the session is moved to pending
@@ -124,7 +124,7 @@ public class Tutor {
                 vsessions.add(s);
                 i--;
             }
-            else if(psessions.get(i).isHappened() != true) {
+            else if(psessions.get(i).getHappened() != true) {
                 psessions.remove(i);
             }
         }
@@ -138,6 +138,10 @@ public class Tutor {
         return usessions;
     }
 
+    public void setUsessions(ArrayList<Sessions> usessions) {
+        this.usessions = usessions;
+    }
+
     /**
      * Gets the sessions that are already verified
      * @return the sessions that are verified in an arraylist
@@ -145,6 +149,11 @@ public class Tutor {
     public ArrayList<Sessions> getVsessions() {
         return vsessions;
     }
+
+    public void setVsessions(ArrayList<Sessions> vsessions) {
+        this.vsessions = vsessions;
+    }
+
     /**
      * Adds a session to upcoming sessions
      * @param s the session
@@ -163,6 +172,11 @@ public class Tutor {
     public ArrayList<TimeSlot> getTimeSlots() {
         return timeSlots;
     }
+
+    public void setTimeSlots(ArrayList<TimeSlot> timeSlots) {
+        this.timeSlots = timeSlots;
+    }
+
     /**
      * Adds a time slot during which the tutor is available
      */
@@ -175,6 +189,9 @@ public class Tutor {
      */
     public ArrayList<String> getSubjects() {
         return subjects;
+    }
+    public void setSubjects(ArrayList<String> subjects) {
+        this.subjects = subjects;
     }
 
     /**

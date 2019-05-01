@@ -15,12 +15,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -80,14 +82,32 @@ public class SettingsFragment extends Fragment {
         buttonAddS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 FirebaseDatabase fb = FirebaseDatabase.getInstance();
                 DatabaseReference ref = fb.getReference("tutors");
-                DatabaseReference nameRef = ref.child(MakeUserFragment.getID()).getRef().child("subjects").getRef();
+                final DatabaseReference nameRef = ref.child(MakeUserFragment.getID()).getRef();
+                final EditText et = (EditText) view.findViewById(R.id.add_subj_field);
 
-                EditText et = (EditText) view.findViewById(R.id.add_subj_field);
-                String newSub = et.getText().toString();
+                nameRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for(DataSnapshot ds: dataSnapshot.getChildren()) {
+                            if(ds.getKey().equals("subjects")) {
+                                ArrayList<String> s = (ArrayList<String>) ds.getValue();
+                                String added = et.getText().toString();
+                                s.add(added);
+                                ds.getRef().setValue(s);
+                                break;
+                            }
+                        }
+                    }
 
-                nameRef.push().setValue(newSub);
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
             }
         });
 
@@ -97,10 +117,31 @@ public class SettingsFragment extends Fragment {
             public void onClick(View v) {
                 FirebaseDatabase fb = FirebaseDatabase.getInstance();
                 DatabaseReference ref = fb.getReference("tutors");
-                DatabaseReference nameRef = ref.child(MakeUserFragment.getID()).getRef().child("timeSlots").getRef();
+                DatabaseReference nameRef = ref.child(MakeUserFragment.getID()).getRef();
 
-                nameRef.push().setValue(new TimeSlot(DOWA, addVals[0], addVals[1], addVals[2],
-                        addVals[3]));
+                TimeSlot toAdd = new TimeSlot(DOWA, addVals[0], addVals[1], addVals[2],
+                        addVals[3]);
+
+                nameRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for(DataSnapshot ds: dataSnapshot.getChildren()) {
+                            if(ds.getKey().equals("timeSlots")) {
+                                ArrayList<TimeSlot> s = (ArrayList<TimeSlot>) ds.getValue();
+                                TimeSlot toAdd = new TimeSlot(DOWA, addVals[0], addVals[1], addVals[2],
+                                        addVals[3]);
+                                s.add(toAdd);
+                                ds.getRef().setValue(s);
+                                break;
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
             }
         });
 

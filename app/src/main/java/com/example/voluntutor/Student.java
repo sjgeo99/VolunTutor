@@ -87,7 +87,7 @@ public class Student {
             if (psessions.get(i).getVerified()) {
                 psessions.remove(i);
                 i--;
-            } else if (psessions.get(i).isHappened() != true) {
+            } else if (psessions.get(i).getHappened() != true) {
                 psessions.remove(i);
             }
         }

@@ -20,6 +20,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 
 /**
  * This class provides the tools accessed by the Home Page fragment
@@ -52,13 +53,15 @@ public class HomeFragment extends Fragment {
         rv.setAdapter(adapter);
 
         FirebaseDatabase fb = FirebaseDatabase.getInstance();
-        DatabaseReference dr = fb.getReference("/students");
+        DatabaseReference dr = fb.getReference("/tutors");
         dr.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                adapter.clear();
                 for(DataSnapshot ds: dataSnapshot.getChildren()) {
-                    String student = ds.getValue(Student.class).toString();
-                    adapter.add(student);
+                    Tutor t = ds.getValue(Tutor.class);
+                    Log.d("tutor", t.getName());
+                    adapter.add(t.toString());
                 }
             }
 
