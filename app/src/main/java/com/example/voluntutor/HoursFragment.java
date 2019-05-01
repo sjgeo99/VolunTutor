@@ -38,7 +38,7 @@ public class HoursFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.hoursfragment, container, false);
 
-        Button buttonName = (Button) view.findViewById(R.id.update_hours);
+        Button buttonName = view.findViewById(R.id.update_hours);
         buttonName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

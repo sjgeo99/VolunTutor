@@ -9,15 +9,25 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.List;
 
 /**
  * This class allows for the UI to run in compliance with the individual fragments and the bottom navigation bar
  */
 public class MainActivity extends AppCompatActivity {
-
+        private List<Tutor> tutorList;
     /**
      * This method allows the GUI to load individual fragments and switch between views
      * @param fragment desired fragment
@@ -58,6 +68,8 @@ public class MainActivity extends AppCompatActivity {
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
+
+
 
     }
     @Override
@@ -126,9 +138,15 @@ public class MainActivity extends AppCompatActivity {
         {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.settingspreference);
+
         }
 
+
     }
+
+
+
+
 
 
 }

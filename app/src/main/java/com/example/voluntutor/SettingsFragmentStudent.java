@@ -37,7 +37,7 @@ public class SettingsFragmentStudent extends Fragment {
 
         setHints(view);
 
-        Button buttonName = (Button) view.findViewById(R.id.name_change_student_confirm);
+        Button buttonName = view.findViewById(R.id.name_change_student_confirm);
         buttonName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -45,14 +45,14 @@ public class SettingsFragmentStudent extends Fragment {
                 DatabaseReference ref = fb.getReference("students");
                 DatabaseReference nameRef = ref.child(MakeUserFragment.getID()).getRef().child("name").getRef();
 
-                EditText et = (EditText) view.findViewById(R.id.change_name_student_field);
+                EditText et = view.findViewById(R.id.change_name_student_field);
                 String newName = et.getText().toString();
 
                 nameRef.setValue(newName);
             }
         });
 
-        Button buttonSchool = (Button) view.findViewById(R.id.school_change_student_confirm);
+        Button buttonSchool = view.findViewById(R.id.school_change_student_confirm);
         buttonSchool.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -60,7 +60,7 @@ public class SettingsFragmentStudent extends Fragment {
                 DatabaseReference ref = fb.getReference("students");
                 DatabaseReference nameRef = ref.child(MakeUserFragment.getID()).getRef().child("school").getRef();
 
-                EditText et = (EditText) view.findViewById(R.id.change_school_student_field);
+                EditText et = view.findViewById(R.id.change_school_student_field);
                 String newSchool = et.getText().toString();
 
                 nameRef.setValue(newSchool);
@@ -71,8 +71,8 @@ public class SettingsFragmentStudent extends Fragment {
     }
 
     private void setHints(View v) {
-        final EditText changeName = (EditText) v.findViewById(R.id.change_name_student_field);
-        final EditText changeSchool = (EditText) v.findViewById(R.id.change_school_student_field);
+        final EditText changeName = v.findViewById(R.id.change_name_student_field);
+        final EditText changeSchool = v.findViewById(R.id.change_school_student_field);
 
         SharedPreferences sharedPref = getActivity().getSharedPreferences(getString(R.string.shared_pref_name), 0);
         String nameHint = sharedPref.getString(getString(R.string.name), "");

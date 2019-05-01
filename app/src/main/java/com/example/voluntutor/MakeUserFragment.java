@@ -17,6 +17,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 
 
 public class MakeUserFragment extends Fragment {
@@ -59,7 +60,7 @@ public class MakeUserFragment extends Fragment {
         v7.setVisibility(View.GONE);
 
         //check student or tutor is checked
-        RadioGroup radioGroup = (RadioGroup) view.findViewById(R.id.student_or_tutor);
+        RadioGroup radioGroup = view.findViewById(R.id.student_or_tutor);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -86,7 +87,7 @@ public class MakeUserFragment extends Fragment {
         });
 
         //deal with making tutor or student object
-        Button button = (Button) view.findViewById(R.id.make_user_obj);
+        Button button = view.findViewById(R.id.make_user_obj);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v)
@@ -96,9 +97,9 @@ public class MakeUserFragment extends Fragment {
                 boolean isTutor = sharedPref.getBoolean(getString(R.string.isTutor), false);
                 if(isTutor) {
 
-                    EditText txtName = (EditText) view.findViewById(R.id.enter_name);
-                    EditText txtSchool = (EditText) view.findViewById(R.id.enter_school);
-                    EditText txtSubjects = (EditText) view.findViewById(R.id.enter_subjects);
+                    EditText txtName = view.findViewById(R.id.enter_name);
+                    EditText txtSchool = view.findViewById(R.id.enter_school);
+                    EditText txtSubjects = view.findViewById(R.id.enter_subjects);
 
                     String name = txtName.getText().toString();
                     String school = txtSchool.getText().toString();
@@ -136,8 +137,8 @@ public class MakeUserFragment extends Fragment {
                 }
                 else {
 
-                    EditText txtName = (EditText) view.findViewById(R.id.enter_name);
-                    EditText txtSchool = (EditText) view.findViewById(R.id.enter_school);
+                    EditText txtName = view.findViewById(R.id.enter_name);
+                    EditText txtSchool = view.findViewById(R.id.enter_school);
                     String name = txtName.getText().toString();
                     String school = txtSchool.getText().toString();
 
@@ -163,7 +164,7 @@ public class MakeUserFragment extends Fragment {
     }
 
     private void makeSpinner(View v) {
-        Spinner spinnerD = (Spinner) v.findViewById(R.id.spinnerDay);
+        Spinner spinnerD = v.findViewById(R.id.spinnerDay);
         ArrayAdapter<CharSequence> adapt = ArrayAdapter.createFromResource(this.getContext(),
                 R.array.days, android.R.layout.simple_spinner_item);
         adapt.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -181,7 +182,7 @@ public class MakeUserFragment extends Fragment {
             }
         });
 
-        Spinner spinnerSH = (Spinner) v.findViewById(R.id.spinnerSH);
+        Spinner spinnerSH = v.findViewById(R.id.spinnerSH);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this.getContext(),
                 R.array.hours, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -198,7 +199,7 @@ public class MakeUserFragment extends Fragment {
             }
         });
 
-        Spinner spinnerSM = (Spinner) v.findViewById(R.id.spinnerSM);
+        Spinner spinnerSM = v.findViewById(R.id.spinnerSM);
         ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(this.getContext(),
                 R.array.minutes, android.R.layout.simple_spinner_item);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -215,7 +216,7 @@ public class MakeUserFragment extends Fragment {
             }
         });
 
-        Spinner spinnerEH = (Spinner) v.findViewById(R.id.spinnerEH);
+        Spinner spinnerEH = v.findViewById(R.id.spinnerEH);
         ArrayAdapter<CharSequence> adapter3 = ArrayAdapter.createFromResource(this.getContext(),
                 R.array.hours, android.R.layout.simple_spinner_item);
         adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -232,7 +233,7 @@ public class MakeUserFragment extends Fragment {
             }
         });
 
-        Spinner spinnerEM = (Spinner) v.findViewById(R.id.spinnerEM);
+        Spinner spinnerEM = v.findViewById(R.id.spinnerEM);
         ArrayAdapter<CharSequence> adapter4 = ArrayAdapter.createFromResource(this.getContext(),
                 R.array.minutes, android.R.layout.simple_spinner_item);
         adapter4.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

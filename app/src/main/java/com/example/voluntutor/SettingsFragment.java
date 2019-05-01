@@ -46,7 +46,7 @@ public class SettingsFragment extends Fragment {
         makeSpinners(view);
         setHints(view);
 
-        Button buttonName = (Button) view.findViewById(R.id.name_change_student_confirm);
+        Button buttonName = view.findViewById(R.id.name_change_student_confirm);
         buttonName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,14 +54,14 @@ public class SettingsFragment extends Fragment {
                 DatabaseReference ref = fb.getReference("tutors");
                 DatabaseReference nameRef = ref.child(MakeUserFragment.getID()).getRef().child("name").getRef();
 
-                EditText et = (EditText) view.findViewById(R.id.change_name_student_field);
+                EditText et = view.findViewById(R.id.change_name_student_field);
                 String newName = et.getText().toString();
 
                 nameRef.setValue(newName);
             }
         });
 
-        Button buttonSchool = (Button) view.findViewById(R.id.school_change_student_confirm);
+        Button buttonSchool = view.findViewById(R.id.school_change_student_confirm);
         buttonSchool.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,14 +69,14 @@ public class SettingsFragment extends Fragment {
                 DatabaseReference ref = fb.getReference("tutors");
                 DatabaseReference nameRef = ref.child(MakeUserFragment.getID()).getRef().child("school").getRef();
 
-                EditText et = (EditText) view.findViewById(R.id.change_school_student_field);
+                EditText et = view.findViewById(R.id.change_school_student_field);
                 String newSchool = et.getText().toString();
 
                 nameRef.setValue(newSchool);
             }
         });
 
-        Button buttonAddS = (Button) view.findViewById(R.id.add_subj_confirm);
+        Button buttonAddS = view.findViewById(R.id.add_subj_confirm);
         buttonAddS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -84,14 +84,14 @@ public class SettingsFragment extends Fragment {
                 DatabaseReference ref = fb.getReference("tutors");
                 DatabaseReference nameRef = ref.child(MakeUserFragment.getID()).getRef().child("subjects").getRef();
 
-                EditText et = (EditText) view.findViewById(R.id.add_subj_field);
+                EditText et = view.findViewById(R.id.add_subj_field);
                 String newSub = et.getText().toString();
 
                 nameRef.push().setValue(newSub);
             }
         });
 
-        Button buttonAddTS = (Button) view.findViewById(R.id.add_slot_confirm);
+        Button buttonAddTS = view.findViewById(R.id.add_slot_confirm);
         buttonAddTS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -104,7 +104,7 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        Button buttonRemSubj = (Button) view.findViewById(R.id.rem_subj_confirm);
+        Button buttonRemSubj = view.findViewById(R.id.rem_subj_confirm);
         buttonRemSubj.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -129,13 +129,13 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        Button buttonRemSlot = (Button) view.findViewById(R.id.remove_slot_confirm);
+        Button buttonRemSlot = view.findViewById(R.id.remove_slot_confirm);
         buttonRemSlot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d("timeslots", Arrays.toString(ts.toArray()));
                 Log.d("to remove", toRemove.toString());
-                Spinner s = (Spinner) view.findViewById(R.id.spinnerRemove);
+                Spinner s = view.findViewById(R.id.spinnerRemove);
 
                 FirebaseDatabase fb = FirebaseDatabase.getInstance();
                 DatabaseReference ref = fb.getReference("/tutors");
@@ -164,7 +164,7 @@ public class SettingsFragment extends Fragment {
     }
 
     private void makeSpinners(View v) {
-        Spinner spinnerRSubs = (Spinner) v.findViewById(R.id.spinnerRemS);
+        Spinner spinnerRSubs = v.findViewById(R.id.spinnerRemS);
         rSubs.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerRSubs.setAdapter(rSubs);
 
@@ -197,7 +197,7 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        Spinner spinnerRemove = (Spinner) v.findViewById(R.id.spinnerRemove);
+        Spinner spinnerRemove = v.findViewById(R.id.spinnerRemove);
         ada.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerRemove.setAdapter(ada);
 
@@ -228,7 +228,7 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        Spinner spinnerDOWA = (Spinner) v.findViewById(R.id.spinnerDOWA);
+        Spinner spinnerDOWA = v.findViewById(R.id.spinnerDOWA);
         ArrayAdapter<CharSequence> adapt = ArrayAdapter.createFromResource(getContext(),
                 R.array.days, android.R.layout.simple_spinner_item);
         adapt.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -246,7 +246,7 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        Spinner spinnerSHAdd = (Spinner) v.findViewById(R.id.spinnerSHAdd);
+        Spinner spinnerSHAdd = v.findViewById(R.id.spinnerSHAdd);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(getContext(),
                 R.array.hours, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -263,7 +263,7 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        Spinner spinnerSMAdd = (Spinner) v.findViewById(R.id.spinnerSMAdd);
+        Spinner spinnerSMAdd = v.findViewById(R.id.spinnerSMAdd);
         ArrayAdapter<CharSequence> adapter2 = ArrayAdapter.createFromResource(getContext(),
                 R.array.minutes, android.R.layout.simple_spinner_item);
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -280,7 +280,7 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        Spinner spinnerEHAdd = (Spinner) v.findViewById(R.id.spinnerEHAdd);
+        Spinner spinnerEHAdd = v.findViewById(R.id.spinnerEHAdd);
         ArrayAdapter<CharSequence> adapter3 = ArrayAdapter.createFromResource(getContext(),
                 R.array.hours, android.R.layout.simple_spinner_item);
         adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -297,7 +297,7 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        Spinner spinnerEMAdd = (Spinner) v.findViewById(R.id.spinnerEMAdd);
+        Spinner spinnerEMAdd = v.findViewById(R.id.spinnerEMAdd);
         ArrayAdapter<CharSequence> adapter4 = ArrayAdapter.createFromResource(getContext(),
                 R.array.minutes, android.R.layout.simple_spinner_item);
         adapter4.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -316,8 +316,8 @@ public class SettingsFragment extends Fragment {
     }
 
     private void setHints(View v) {
-        final EditText changeName = (EditText) v.findViewById(R.id.change_name_student_field);
-        final EditText changeSchool = (EditText) v.findViewById(R.id.change_school_student_field);
+        final EditText changeName = v.findViewById(R.id.change_name_student_field);
+        final EditText changeSchool = v.findViewById(R.id.change_school_student_field);
 
         SharedPreferences sharedPref = getActivity().getSharedPreferences(getString(R.string.shared_pref_name), 0);
         String nameHint = sharedPref.getString(getString(R.string.name), "");
