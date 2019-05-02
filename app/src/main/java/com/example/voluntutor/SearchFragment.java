@@ -6,19 +6,17 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
+import android.widget.EditText;
+import android.widget.ImageButton;
 import com.example.voluntutor.mRecycler.MyTutorAdapter;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
 
 /**
@@ -30,6 +28,7 @@ public class SearchFragment extends Fragment {
 
     public ArrayList<Tutor> tutors = new ArrayList<Tutor>();
     public MyTutorAdapter searchAdapter;
+    public String searched_for;
     /**
      * Instantiates the UI view of a particular fragment
      *
@@ -43,28 +42,36 @@ public class SearchFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.searchfragment, container, false);
+        final View rootView = inflater.inflate(R.layout.searchfragment, container, false);
         RecyclerView recyclerView = rootView.findViewById(R.id.searchRV);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         searchAdapter = new MyTutorAdapter(this.getActivity(), tutors);
         recyclerView.setAdapter(searchAdapter);
 
-        FirebaseDatabase fb2 = FirebaseDatabase.getInstance();
-        DatabaseReference dr2 = fb2.getReference("tutors");
-        dr2.addValueEventListener(new ValueEventListener() {
+        ImageButton go = (ImageButton) rootView.findViewById(R.id.go);
+        go.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot ds: dataSnapshot.getChildren()) {
-                    Tutor t = ds.getValue(Tutor.class);
-                    if(t.containsSub("math")) {
-                        searchAdapter.add(t);
+            public void onClick(View v) {
+                EditText et = rootView.findViewById(R.id.subject_search);
+                searched_for = et.getText().toString();
+                FirebaseDatabase fb2 = FirebaseDatabase.getInstance();
+                DatabaseReference dr2 = fb2.getReference("tutors");
+                dr2.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for(DataSnapshot ds: dataSnapshot.getChildren()) {
+                            Tutor t = ds.getValue(Tutor.class);
+                            if(t.containsSub(searched_for)) {
+                                searchAdapter.add(t);
+                            }
+                        }
                     }
-                }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
+                    }
+                });
             }
         });
 

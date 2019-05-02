@@ -32,10 +32,10 @@ public class Sessions implements Comparable<Sessions> {
      */
     public Sessions() {
         date = new Date();
-        location = "";
+        location = "here";
         length = 0;
-        tutor = "";
-        tutee = "";
+        tutor = "me";
+        tutee = "you";
     }
     //methods
     /**

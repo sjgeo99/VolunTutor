@@ -6,14 +6,14 @@ import android.widget.TextView;
 
 import com.example.voluntutor.R;
 
-public class myHolder extends RecyclerView.ViewHolder{
+public class MySessionsHolder extends RecyclerView.ViewHolder{
 
     TextView nametxt;
 
-    public myHolder(View itemView)
+    public MySessionsHolder(View itemView)
     {
         super(itemView);
-        nametxt = itemView.findViewById(R.id.nameTxt);
+        nametxt = itemView.findViewById(R.id.sessions_name_txt);
     }
 
 }

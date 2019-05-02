@@ -167,11 +167,11 @@ public class Tutor {
      * @param s the session
      */
     public void addSession(Sessions s) {
-        Calendar cal = Calendar.getInstance();
-        if(s.getDate().after(cal.getTime())) {
+        /*Calendar cal = Calendar.getInstance();
+        if(s.getDate().after(cal.getTime())) {*/
             usessions.add(s);
             Collections.sort(usessions);
-        }
+        /*}*/
     }
     /**
      * Gets the Time Slots of the tutor.
