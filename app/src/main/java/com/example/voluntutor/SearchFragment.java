@@ -51,17 +51,17 @@ public class SearchFragment extends Fragment {
 
         FirebaseDatabase fb2 = FirebaseDatabase.getInstance();
         DatabaseReference dr2 = fb2.getReference("tutors");
-        Query query = dr2.orderByChild("subjects").equalTo("math");
-        query.addValueEventListener(new ValueEventListener() {
+        dr2.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                    for (DataSnapshot snap : dataSnapshot.getChildren()) {
-                        Tutor t = snap.getValue(Tutor.class);
+                for(DataSnapshot ds: dataSnapshot.getChildren()) {
+                    Tutor t = ds.getValue(Tutor.class);
+                    if(t.containsSub("math")) {
                         searchAdapter.add(t);
                     }
-                    searchAdapter.notifyDataSetChanged();
+                }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 

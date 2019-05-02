@@ -43,6 +43,14 @@ public class Tutor {
     //methods
 
     /**
+     * Says if a specific string is among the tutor's subjects
+     * @param s the string being tested
+     * @return if the string is, true, if not false
+     */
+    public boolean containsSub(String s) {
+        return subjects.contains(s);
+    }
+    /**
      * removes a specific time slot from the tutor's time slot
      * @param s the time slot
      */
