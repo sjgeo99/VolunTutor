@@ -3,13 +3,16 @@ package com.example.voluntutor;
 /**
  * This class models time slots that the tutor chooses to say they are available during.
  */
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
 
-public class TimeSlot implements Comparable<TimeSlot>{
+public class TimeSlot implements Comparable<TimeSlot>, Parcelable {
     private String dayOfWeek;
     /**
      * On a 24-hour system
@@ -172,4 +175,26 @@ public class TimeSlot implements Comparable<TimeSlot>{
         return dayOfWeek.equals(ts.getDayOfWeek()) && sHour == ts.getsHour() && sMinute == ts.getsMinute() && eHour == ts.geteHour()
                 && eMinute == ts.geteMinute();
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeStringArray(new String[] {dayOfWeek, Integer.toString(sHour), Integer.toString(sMinute),
+        Integer.toString(eHour), Integer.toString(eMinute)});
+    }
+
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        public TimeSlot createFromParcel(Parcel in) {
+            String[] s = in.createStringArray();
+            return new TimeSlot(s[0], Integer.parseInt(s[1]), Integer.parseInt(s[2]), Integer.parseInt(s[3]), Integer.parseInt(s[4]));
+        }
+
+        public Student[] newArray(int size) {
+            return new Student[size];
+        }
+    };
 }

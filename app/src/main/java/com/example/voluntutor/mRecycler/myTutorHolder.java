@@ -1,7 +1,10 @@
 package com.example.voluntutor.mRecycler;
 
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -12,7 +15,7 @@ public class myTutorHolder extends RecyclerView.ViewHolder{
     TextView nametxt;
     TextView schooltxt;
     TextView subjectstxt;
-    RelativeLayout rl;
+    ConstraintLayout rl;
 
     public myTutorHolder(View itemView)
     {
@@ -23,5 +26,4 @@ public class myTutorHolder extends RecyclerView.ViewHolder{
         rl = itemView.findViewById(R.id.relativeLayout);
 
     }
-
 }

@@ -83,6 +83,7 @@ public class Sessions implements Comparable<Sessions> {
      * @return whether the session is verified
      */
     public boolean getVerified() {return sverified && tverified;}
+    public void setVerified(Boolean b) { sverified = true; tverified = true; }
     public boolean getSVerified() { return sverified; }
     public boolean getTVerified() { return tverified; }
 

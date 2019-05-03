@@ -11,13 +11,16 @@
     <android.support.constraint.ConstraintLayout
         android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:clickable="true">
+        android:layout_height="wrap_content">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:id="@+id/layout"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_weight="1"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
 
             <TextView
                 android:id="@+id/tutor_name_txt"
@@ -36,6 +39,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="TextView" />
+
+            <TextView
+                android:id="@+id/instruct"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Click to see more"
+                android:textColor="#696969"
+                android:textStyle="italic" />
+
         </LinearLayout>
 
     </android.support.constraint.ConstraintLayout>
