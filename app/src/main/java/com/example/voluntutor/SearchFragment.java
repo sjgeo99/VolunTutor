@@ -58,7 +58,7 @@ public class SearchFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 EditText et = rootView.findViewById(R.id.subject_search);
-                searched_for = et.getText().toString().toLowerCase();
+                searched_for = et.getText().toString();
                 FirebaseDatabase fb2 = FirebaseDatabase.getInstance();
                 DatabaseReference dr2 = fb2.getReference("tutors");
                 dr2.addValueEventListener(new ValueEventListener() {

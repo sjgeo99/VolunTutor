@@ -72,7 +72,7 @@ public class HoursFragment extends Fragment {
             }
         });
 
-        RecyclerView recyclerView = view.findViewById(R.id.searchRV);
+        RecyclerView recyclerView = view.findViewById(R.id.verified_sessions);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         hoursAdapter = new MySessionsAdapter(this.getActivity(), verified);
         recyclerView.setAdapter(hoursAdapter);

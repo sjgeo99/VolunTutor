@@ -18,11 +18,14 @@ import android.widget.TextView;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Date;
+
 
 public class MakeUserFragment extends Fragment {
     public static String id;
     public int[] values = new int[4];
     public String dayOfWeek;
+    public String subject;
     /**
      * returns the path to the tutor object of the person
      * @return the path
@@ -45,7 +48,7 @@ public class MakeUserFragment extends Fragment {
         final View v2 = view.findViewById(R.id.linearLayout);
         final View v3 = view.findViewById(R.id.linearLayout2);
         final View v4 = view.findViewById(R.id.subjects_label);
-        final View v5 = view.findViewById(R.id.enter_subjects);
+        final View v5 = view.findViewById(R.id.chooseSubs);
         final View v6 = view.findViewById(R.id.proceed);
         final View v7 = view.findViewById(R.id.spinnerDay);
 
@@ -98,7 +101,6 @@ public class MakeUserFragment extends Fragment {
 
                     EditText txtName = (EditText) view.findViewById(R.id.enter_name);
                     EditText txtSchool = (EditText) view.findViewById(R.id.enter_school);
-                    EditText txtSubjects = (EditText) view.findViewById(R.id.enter_subjects);
 
                     String name = txtName.getText().toString();
                     String school = txtSchool.getText().toString();
@@ -112,19 +114,11 @@ public class MakeUserFragment extends Fragment {
                     editor.putString(getString(R.string.school), school);
                     editor.commit();
 
-                    String subjects = txtSubjects.getText().toString();
-
                     TimeSlot ts = new TimeSlot(dayOfWeek, startHr, startMin, endHr, endMin);
                     Tutor t = new Tutor(name, school);
                     t.addTimeSlots(ts);
 
-                    if(subjects.contains(", ")) {
-                        String[] split = subjects.split(", ");
-                        for(String s: split) {
-                            t.addSubject(s);
-                        }
-                    }
-                    else t.addSubject(subjects);
+                    t.addSubject(subject);
 
                     FirebaseDatabase fb = FirebaseDatabase.getInstance();
                     DatabaseReference ref = fb.getReference("/tutors");
@@ -243,6 +237,24 @@ public class MakeUserFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 values[3] = position;
             }
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        Spinner subs = (Spinner) v.findViewById(R.id.chooseSubs);
+        ArrayAdapter<CharSequence> adapter5 = ArrayAdapter.createFromResource(this.getContext(),
+                R.array.subjects, android.R.layout.simple_spinner_item);
+        adapter5.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        subs.setAdapter(adapter5);
+        subs.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String s = (String) parent.getItemAtPosition(position);
+                subject = s;
+            }
+
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 

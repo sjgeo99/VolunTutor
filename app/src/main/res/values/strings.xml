@@ -14,6 +14,11 @@
     <string name="isTutor">isTutor</string>
     <string name="name">Name</string>
     <string name="school">School</string>
+    <string-array name="subjects">
+        <item>"Art"</item><item>Biology</item><item>"Chemistry"</item><item>"Computer Science"</item>
+        <item>"Earth Science"</item><item>"English"</item> <item>"French"</item><item>"History"</item>
+        <item>"Math"</item><item>"Music"</item><item>"Physics"</item><item>"Spanish"</item>
+    </string-array>
 
     <string-array name="hours">
         <item>"0"</item><item>"1"</item><item>"2"</item><item>"3"</item><item>"4"</item>

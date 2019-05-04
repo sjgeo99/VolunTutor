@@ -81,14 +81,6 @@ public class MainActivity extends AppCompatActivity {
         editor.putBoolean(getString(R.string.inFireBase), MakeUserFragment.getID() != null);
         editor.commit();
     }
-    /**
-     * This method opens the settings preference screen
-     */
-    public void openSettings ()
-    {
-        Intent intent = new Intent(this, SettingsPreference.class);
-        startActivity(intent);
-    }
 
 
     /**
@@ -128,21 +120,6 @@ public class MainActivity extends AppCompatActivity {
                     return true;
                 }
             };
-
-    /**
-     * This creates a new instance of the preference fragment class for the settings preference fragment
-     */
-    public static class PreferFragment extends PreferenceFragment
-    {
-        public void onCreate (Bundle savedInstanceState)
-        {
-            super.onCreate(savedInstanceState);
-            addPreferencesFromResource(R.xml.settingspreference);
-
-        }
-
-
-    }
 
 
 

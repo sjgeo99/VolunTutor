@@ -46,12 +46,17 @@ public class Tutor {
     //methods
 
     /**
-     * Says if a specific string is among the tutor's subjects
+     * Says if a specific string is among the tutor's subjects (case insensitive)
      * @param s the string being tested
      * @return if the string is, true, if not false
      */
     public boolean containsSub(String s) {
-        return subjects.contains(s);
+        for(int i = 0; i < subjects.size(); i++) {
+            if(subjects.get(i).toLowerCase().equals(s.toLowerCase())) {
+                return true;
+            }
+        }
+        return false;
     }
     /**
      * removes a specific time slot from the tutor's time slot
@@ -63,7 +68,7 @@ public class Tutor {
      * @param s the subject to be added
      */
     public void addSubject(String s) {
-        subjects.add(s.toLowerCase());
+        subjects.add(s);
     }
     /**
      * Takes a subject out of the list of subjects

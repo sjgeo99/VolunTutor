@@ -12,7 +12,11 @@ import com.example.voluntutor.R;
 import com.example.voluntutor.Sessions;
 import com.example.voluntutor.Tutor;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
 public class MySessionsAdapter extends RecyclerView.Adapter<MySessionsHolder> {
 
@@ -42,9 +46,32 @@ public class MySessionsAdapter extends RecyclerView.Adapter<MySessionsHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull MySessionsHolder holder, int position) {
-        String name = "";
-        holder.nametxt.setText(sessions.get(position).toString());
+        Sessions s = sessions.get(position);
+        SharedPreferences sharedPref = c.getSharedPreferences("Startup info", 0);
+        boolean b = sharedPref.getBoolean("isTutor", true);
+        if(b) {
+            String tutee = "Tutoring " + s.getTutee();
+            holder.nametxt.setText(tutee);
+        }
+        else {
+            String tutor = "Tutored by " + s.getTutor();
+            holder.nametxt.setText(tutor);
+        }
 
+        Date d = s.getDate();
+        SimpleDateFormat sdf = new SimpleDateFormat("EEEE, MMMM dd, yyyy");
+        String date = sdf.format(d);
+        holder.date.setText(date);
+
+        SimpleDateFormat sdf2 = new SimpleDateFormat("h:mm a");
+        String time = sdf2.format(d);
+        time = time + " - ";
+        Calendar c = Calendar.getInstance();
+        c.setTime(d);
+        c.add(Calendar.MINUTE, s.getLength());
+        Date later = c.getTime();
+        time = time + sdf2.format(later);
+        holder.time.setText(time);
     }
 
     @Override
