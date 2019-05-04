@@ -15,12 +15,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.RadioButton;
+
 import com.example.voluntutor.mRecycler.MyTutorAdapter;
 import com.example.voluntutor.mRecycler.myTutorHolder;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
@@ -34,6 +37,7 @@ public class SearchFragment extends Fragment {
     public ArrayList<Tutor> tutors = new ArrayList<Tutor>();
     public MyTutorAdapter searchAdapter;
     public String searched_for;
+
     /**
      * Instantiates the UI view of a particular fragment
      *
@@ -53,6 +57,7 @@ public class SearchFragment extends Fragment {
         searchAdapter = new MyTutorAdapter(this.getActivity(), tutors);
         recyclerView.setAdapter(searchAdapter);
 
+
         ImageButton go = (ImageButton) rootView.findViewById(R.id.go);
         go.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,9 +70,9 @@ public class SearchFragment extends Fragment {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         searchAdapter.clear();
-                        for(DataSnapshot ds: dataSnapshot.getChildren()) {
+                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
                             Tutor t = ds.getValue(Tutor.class);
-                            if(t.containsSub(searched_for)) {
+                            if (t.containsSub(searched_for)) {
                                 searchAdapter.add(t);
                             }
                         }
@@ -79,10 +84,44 @@ public class SearchFragment extends Fragment {
                     }
                 });
             }
+
+
         });
 
 
         return rootView;
     }
-}
+
+    public void onRadioButtonClicked(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+        FirebaseDatabase fb2 = FirebaseDatabase.getInstance();
+        DatabaseReference dr2 = fb2.getReference("tutors");
+        // Check which radio button was clicked
+        switch (view.getId()) {
+            case R.id.Art:
+                if (checked)
+                    dr2.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            searchAdapter.clear();
+                            for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                                Tutor t = ds.getValue(Tutor.class);
+                                if (t.containsSub("Art")) {
+                                    searchAdapter.add(t);
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+                    break;
+
+                }
+        }
+    }
+
 
