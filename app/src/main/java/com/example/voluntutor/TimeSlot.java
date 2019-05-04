@@ -5,6 +5,7 @@ package com.example.voluntutor;
  */
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -190,7 +191,8 @@ public class TimeSlot implements Comparable<TimeSlot>, Parcelable {
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
         public TimeSlot createFromParcel(Parcel in) {
             String[] s = in.createStringArray();
-            return new TimeSlot(s[0], Integer.parseInt(s[1]), Integer.parseInt(s[2]), Integer.parseInt(s[3]), Integer.parseInt(s[4]));
+            TimeSlot toReturn = new TimeSlot(s[0], Integer.parseInt(s[1]), Integer.parseInt(s[2]), Integer.parseInt(s[3]), Integer.parseInt(s[4]));
+            return toReturn;
         }
 
         public Student[] newArray(int size) {

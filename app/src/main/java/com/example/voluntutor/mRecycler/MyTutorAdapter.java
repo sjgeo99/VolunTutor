@@ -20,28 +20,22 @@ import com.example.voluntutor.Tutor;
 import com.example.voluntutor.TutorPopup;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class MyTutorAdapter extends RecyclerView.Adapter<myTutorHolder> {
 
-    Context c;
-    ArrayList<Tutor> tutors;
+    private Context c;
+    private ArrayList<Tutor> tutors;
 
     public MyTutorAdapter(Context c, ArrayList<Tutor> tutors)
     {
         this.c = c;
-        this.tutors =tutors;
+        this.tutors = tutors;
     }
-    public MyTutorAdapter(Context c)
-    {
-        this.c = c;
-        tutors = new ArrayList<Tutor>();
-    }
-
 
     @NonNull
     @Override
     public myTutorHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        Log.d("in oncreate", "here we are");
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.rv_model,parent,false);
         return new myTutorHolder(v);
     }
@@ -70,13 +64,12 @@ public class MyTutorAdapter extends RecyclerView.Adapter<myTutorHolder> {
         holder.rl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("tutor position", position + "");
-                Log.d("selected tutor", tutors.get(position).toString());
                 Tutor t = tutors.get(position);
                 Intent intent = new Intent(c, TutorPopup.class);
                 intent.putExtra("Name", t.getName());
                 intent.putExtra("School", t.getSchool());
                 intent.putExtra("Subjects", t.getSubjects());
+                Log.d("timeSlots put", Arrays.toString(t.getTimeSlots().toArray()));
                 intent.putExtra("TimeSlots", t.getTimeSlots());
                 c.startActivity(intent);
             }

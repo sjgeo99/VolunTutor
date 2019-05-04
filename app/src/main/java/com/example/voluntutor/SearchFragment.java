@@ -34,7 +34,6 @@ public class SearchFragment extends Fragment {
     public ArrayList<Tutor> tutors = new ArrayList<Tutor>();
     public MyTutorAdapter searchAdapter;
     public String searched_for;
-    public Tutor selectedTutor;
     /**
      * Instantiates the UI view of a particular fragment
      *
@@ -59,12 +58,13 @@ public class SearchFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 EditText et = rootView.findViewById(R.id.subject_search);
-                searched_for = et.getText().toString();
+                searched_for = et.getText().toString().toLowerCase();
                 FirebaseDatabase fb2 = FirebaseDatabase.getInstance();
                 DatabaseReference dr2 = fb2.getReference("tutors");
                 dr2.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        searchAdapter.clear();
                         for(DataSnapshot ds: dataSnapshot.getChildren()) {
                             Tutor t = ds.getValue(Tutor.class);
                             if(t.containsSub(searched_for)) {

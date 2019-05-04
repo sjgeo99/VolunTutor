@@ -30,7 +30,7 @@
         app:layout_constraintTop_toBottomOf="@+id/setName" />
 
     <TextView
-        android:id="@+id/subs"
+        android:id="@+id/setSubs"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="1dp"
@@ -41,11 +41,12 @@
         app:layout_constraintTop_toBottomOf="@+id/setSchool" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/setSubjects"
+        android:id="@+id/slots_rv"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.473"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/subs" />
+        app:layout_constraintTop_toBottomOf="@+id/setSubs" />
+
 </android.support.constraint.ConstraintLayout>
