@@ -42,69 +42,85 @@
         </LinearLayout>
 
         <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
-            android:layout_width="match_parent"
+            android:id="@+id/radioSubs"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <RadioButton android:id="@+id/Art"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <RadioButton
+                android:id="@+id/Art"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Art"
-                android:onClick="onRadioButtonClicked"/>
-            <RadioButton android:id="@+id/radio_Biology"
+                android:text="Art" />
+
+            <RadioButton
+                android:id="@+id/radio_Biology"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Biology"
-                android:onClick="onRadioButtonClicked"/>
-            <RadioButton android:id="@+id/radio_Chemistry"
+                android:text="Biology" />
+
+            <RadioButton
+                android:id="@+id/radio_Chemistry"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Chemistry"
-                android:onClick="onRadioButtonClicked"/>
-            <RadioButton android:id="@+id/radio_CS"
+                android:text="Chemistry" />
+
+            <RadioButton
+                android:id="@+id/radio_CS"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="CS"
-                android:onClick="onRadioButtonClicked"/>
-            <RadioButton android:id="@+id/radio_EarthScience"
+                android:text="CS" />
+
+            <RadioButton
+                android:id="@+id/radio_EarthScience"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Earth Science"
-                android:onClick="onRadioButtonClicked"/>
-            <RadioButton android:id="@+id/radio_English"
+                android:text="Earth Science" />
+
+            <RadioButton
+                android:id="@+id/radio_English"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="English"
-                android:onClick="onRadioButtonClicked"/>
-            <RadioButton android:id="@+id/radio_French"
+                android:text="English" />
+
+            <RadioButton
+                android:id="@+id/radio_French"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="French"
-                android:onClick="onRadioButtonClicked"/>
-            <RadioButton android:id="@+id/radio_History"
+                android:text="French" />
+
+            <RadioButton
+                android:id="@+id/radio_History"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="History"
-                android:onClick="onRadioButtonClicked"/>
-            <RadioButton android:id="@+id/radio_Physics"
+                android:text="History" />
+
+            <RadioButton
+                android:id="@+id/radio_Physics"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Physics"
-                android:onClick="onRadioButtonClicked"/>
-            <RadioButton android:id="@+id/radio_Math"
+                android:text="Physics" />
+
+            <RadioButton
+                android:id="@+id/radio_Math"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Math"
-                android:onClick="onRadioButtonClicked"/>
-            <RadioButton android:id="@+id/radio_Music"
+                android:text="Math" />
+
+            <RadioButton
+                android:id="@+id/radio_Music"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Music"
-                android:onClick="onRadioButtonClicked"/>
-            <RadioButton android:id="@+id/radio_Spanish"
+                android:text="Music" />
+
+            <RadioButton
+                android:id="@+id/radio_Spanish"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Spanish"
-                android:onClick="onRadioButtonClicked"/>
+                android:text="Spanish" />
         </RadioGroup>
 
         <android.support.v7.widget.RecyclerView

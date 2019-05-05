@@ -25,6 +25,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class SettingsFragment extends Fragment {
+    //TODO: get the add subjects to use a spinner, and to not include the subjects that the tutor already has
+
     public int[] addVals = new int[4];
     public String DOWA;
     public TimeSlot toRemove = new TimeSlot();

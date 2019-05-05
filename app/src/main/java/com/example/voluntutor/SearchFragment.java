@@ -9,6 +9,7 @@ import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -16,6 +17,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 
 import com.example.voluntutor.mRecycler.MyTutorAdapter;
 import com.example.voluntutor.mRecycler.myTutorHolder;
@@ -37,6 +39,7 @@ public class SearchFragment extends Fragment {
     public ArrayList<Tutor> tutors = new ArrayList<Tutor>();
     public MyTutorAdapter searchAdapter;
     public String searched_for;
+    public String checked = "";
 
     /**
      * Instantiates the UI view of a particular fragment
@@ -57,6 +60,7 @@ public class SearchFragment extends Fragment {
         searchAdapter = new MyTutorAdapter(this.getActivity(), tutors);
         recyclerView.setAdapter(searchAdapter);
 
+        onRadioButtonClicked(rootView);
 
         ImageButton go = (ImageButton) rootView.findViewById(R.id.go);
         go.setOnClickListener(new View.OnClickListener() {
@@ -94,34 +98,33 @@ public class SearchFragment extends Fragment {
 
     public void onRadioButtonClicked(View view) {
         // Is the button now checked?
-        boolean checked = ((RadioButton) view).isChecked();
-        FirebaseDatabase fb2 = FirebaseDatabase.getInstance();
-        DatabaseReference dr2 = fb2.getReference("tutors");
-        // Check which radio button was clicked
-        switch (view.getId()) {
-            case R.id.Art:
-                if (checked)
-                    dr2.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            searchAdapter.clear();
-                            for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                                Tutor t = ds.getValue(Tutor.class);
-                                if (t.containsSub("Art")) {
-                                    searchAdapter.add(t);
-                                }
-                            }
+        final View v = view;
+        RadioGroup r = (RadioGroup) view.findViewById(R.id.radioSubs);
+        r.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                checked = ((RadioButton) v.findViewById(checkedId)).getText().toString();
+
+                FirebaseDatabase fb2 = FirebaseDatabase.getInstance();
+                DatabaseReference dr2 = fb2.getReference("tutors");
+                dr2.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        searchAdapter.clear();
+                        for(DataSnapshot ds: dataSnapshot.getChildren()) {
+                            Tutor t = ds.getValue(Tutor.class);
+                            if(t.containsSub(checked)) searchAdapter.add(t);
                         }
+                    }
 
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                        }
-                    });
-                    break;
-
-                }
-        }
+                    }
+                });
+            }
+        });
     }
+}
 
 

@@ -72,6 +72,13 @@ public class MySessionsAdapter extends RecyclerView.Adapter<MySessionsHolder> {
         Date later = c.getTime();
         time = time + sdf2.format(later);
         holder.time.setText(time);
+
+        holder.l.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO: add bundle code to transfer sessions data
+            }
+        });
     }
 
     @Override

@@ -17,6 +17,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".TutorPopup" />
+        <activity android:name=".SessionsPopup" />
     </application>
 
 </manifest>
