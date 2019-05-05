@@ -120,6 +120,15 @@ public class MakeUserFragment extends Fragment {
 
                     t.addSubject(subject);
 
+                    Sessions s = new Sessions();
+                    s.setDate(new Date());
+                    s.setTutor("me");
+                    s.setTutee("you");
+                    s.setLocation("MAMS");
+                    s.setLength(40);
+
+                    t.addSession(s);
+
                     FirebaseDatabase fb = FirebaseDatabase.getInstance();
                     DatabaseReference ref = fb.getReference("/tutors");
                     DatabaseReference nRef = ref.push();

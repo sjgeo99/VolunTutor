@@ -13,7 +13,7 @@ public class MySessionsHolder extends RecyclerView.ViewHolder{
     TextView nametxt;
     TextView date;
     TextView time;
-    LinearLayout l;
+    ConstraintLayout c;
 
     public MySessionsHolder(View itemView)
     {
@@ -21,7 +21,7 @@ public class MySessionsHolder extends RecyclerView.ViewHolder{
         nametxt = itemView.findViewById(R.id.sessions_name_txt);
         date = itemView.findViewById(R.id.sessions_date_txt);
         time = itemView.findViewById(R.id.sessions_time_txt);
-        l = itemView.findViewById(R.id.sessions_layout);
+        c = itemView.findViewById(R.id.click_me);
     }
 
 }

@@ -9,6 +9,7 @@
     >
 
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/click_me"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="true">

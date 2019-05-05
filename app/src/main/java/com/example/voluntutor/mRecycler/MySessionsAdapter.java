@@ -1,15 +1,19 @@
 package com.example.voluntutor.mRecycler;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.voluntutor.R;
 import com.example.voluntutor.Sessions;
+import com.example.voluntutor.SessionsPopup;
 import com.example.voluntutor.Tutor;
 
 import java.text.SimpleDateFormat;
@@ -20,8 +24,11 @@ import java.util.Date;
 
 public class MySessionsAdapter extends RecyclerView.Adapter<MySessionsHolder> {
 
-    Context c;
-    ArrayList<Sessions> sessions;
+    private final Context c;
+    private ArrayList<Sessions> sessions;
+    private String name = "";
+    private String date = "";
+    private String time = "";
 
     public MySessionsAdapter(Context c, ArrayList<Sessions> sessions)
     {
@@ -45,38 +52,44 @@ public class MySessionsAdapter extends RecyclerView.Adapter<MySessionsHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MySessionsHolder holder, int position) {
+    public void onBindViewHolder(@NonNull final MySessionsHolder holder, int position) {
         Sessions s = sessions.get(position);
         SharedPreferences sharedPref = c.getSharedPreferences("Startup info", 0);
         boolean b = sharedPref.getBoolean("isTutor", true);
         if(b) {
-            String tutee = "Tutoring " + s.getTutee();
-            holder.nametxt.setText(tutee);
+            name = "Tutoring " + s.getTutee();
+            holder.nametxt.setText(name);
         }
         else {
-            String tutor = "Tutored by " + s.getTutor();
-            holder.nametxt.setText(tutor);
+            name = "Tutored by " + s.getTutor();
+            holder.nametxt.setText(name);
         }
 
         Date d = s.getDate();
         SimpleDateFormat sdf = new SimpleDateFormat("EEEE, MMMM dd, yyyy");
-        String date = sdf.format(d);
+        date = sdf.format(d);
         holder.date.setText(date);
 
         SimpleDateFormat sdf2 = new SimpleDateFormat("h:mm a");
-        String time = sdf2.format(d);
+        time = sdf2.format(d);
         time = time + " - ";
-        Calendar c = Calendar.getInstance();
-        c.setTime(d);
-        c.add(Calendar.MINUTE, s.getLength());
-        Date later = c.getTime();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(d);
+        cal.add(Calendar.MINUTE, s.getLength());
+        Date later = cal.getTime();
         time = time + sdf2.format(later);
         holder.time.setText(time);
 
-        holder.l.setOnClickListener(new View.OnClickListener() {
+        holder.c.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: add bundle code to transfer sessions data
+                Intent intent = new Intent(c, SessionsPopup.class);
+                intent.putExtra("Name", name);
+                Log.d("date?", date);
+                intent.putExtra("Date", date);
+                intent.putExtra("Time", time);
+                intent.putExtra("Location", sessions.get(holder.getAdapterPosition()).getLocation());
+                c.startActivity(intent);
             }
         });
     }
@@ -93,5 +106,8 @@ public class MySessionsAdapter extends RecyclerView.Adapter<MySessionsHolder> {
     public void clear() {
         sessions = new ArrayList<Sessions>();
         notifyDataSetChanged();
+    }
+    public ArrayList<Sessions> getSessions() {
+        return sessions;
     }
 }

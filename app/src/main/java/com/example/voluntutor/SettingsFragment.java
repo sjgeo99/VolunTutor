@@ -1,6 +1,7 @@
 package com.example.voluntutor;
 import android.app.Activity;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -35,6 +36,8 @@ public class SettingsFragment extends Fragment {
     public ArrayAdapter<TimeSlot> ada;
     public ArrayAdapter<String> rSubs;
     public String removeSubj;
+    public ArrayAdapter<String> aSubs;
+    public String addSubject;
 
     //initializes the Settings Fragment
     @Nullable
@@ -45,6 +48,13 @@ public class SettingsFragment extends Fragment {
                 android.R.layout.simple_spinner_dropdown_item, ts);
         rSubs = new ArrayAdapter<String>(this.getContext(),
                 android.R.layout.simple_spinner_dropdown_item, subjects);
+
+        Resources res = getResources();
+        String[] subs = res.getStringArray(R.array.subjects);
+        ArrayList<String> alSubs = new ArrayList<String>(Arrays.asList(subs));
+
+        aSubs = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_spinner_dropdown_item, alSubs);
+
         makeSpinners(view);
         setHints(view);
 
@@ -85,7 +95,6 @@ public class SettingsFragment extends Fragment {
                 FirebaseDatabase fb = FirebaseDatabase.getInstance();
                 DatabaseReference ref = fb.getReference("tutors");
                 final DatabaseReference nameRef = ref.child(MakeUserFragment.getID()).getRef();
-                final EditText et = (EditText) view.findViewById(R.id.add_subj_field);
 
                 nameRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -93,8 +102,7 @@ public class SettingsFragment extends Fragment {
                         for(DataSnapshot ds: dataSnapshot.getChildren()) {
                             if(ds.getKey().equals("subjects")) {
                                 ArrayList<String> s = (ArrayList<String>) ds.getValue();
-                                String added = et.getText().toString();
-                                s.add(added);
+                                s.add(addSubject);
                                 ds.getRef().setValue(s);
                                 break;
                             }
@@ -204,6 +212,40 @@ public class SettingsFragment extends Fragment {
     }
 
     private void makeSpinners(View v) {
+        FirebaseDatabase fb = FirebaseDatabase.getInstance();
+        DatabaseReference ref = fb.getReference("/tutors");
+        DatabaseReference mySubs = ref.child(MakeUserFragment.getID()).getRef().child("subjects");
+
+        Spinner addSub = (Spinner) v.findViewById(R.id.addSubSpin);
+        aSubs.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        addSub.setAdapter(aSubs);
+        mySubs.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot ds: dataSnapshot.getChildren()) {
+                    String s = ds.getValue(String.class);
+                    aSubs.remove(s);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        addSub.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                addSubject = (String) parent.getItemAtPosition(position);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
         Spinner spinnerRSubs = (Spinner) v.findViewById(R.id.spinnerRemS);
         rSubs.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerRSubs.setAdapter(rSubs);
@@ -220,9 +262,6 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        FirebaseDatabase fb = FirebaseDatabase.getInstance();
-        DatabaseReference ref = fb.getReference("/tutors");
-        DatabaseReference mySubs = ref.child(MakeUserFragment.getID()).getRef().child("subjects");
         mySubs.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

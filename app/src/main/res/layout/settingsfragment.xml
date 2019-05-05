@@ -234,19 +234,11 @@
                 tools:layout_editor_absoluteX="16dp"
                 tools:layout_editor_absoluteY="504dp" />
 
-            <EditText
-                android:id="@+id/add_subj_field"
-                android:layout_width="387dp"
+            <Spinner
+                android:id="@+id/addSubSpin"
+                android:layout_width="392dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="SubjectName"
-                android:inputType="text"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/add_subj_label"
-                app:layout_constraintVertical_bias="0.0" />
+                android:layout_weight="1" />
 
             <Button
                 android:id="@+id/add_subj_confirm"

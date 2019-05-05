@@ -153,7 +153,7 @@ public class Tutor {
     public ArrayList<Sessions> getUsessions() {
         return usessions;
     }
-
+    public void removeUsession(Sessions s) { usessions.remove(s); }
     public void setUsessions(ArrayList<Sessions> usessions) {
         this.usessions = usessions;
     }
