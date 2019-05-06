@@ -154,4 +154,13 @@
     <string name="browse">Browse to find your new tutor here!</string>
     <string name="Slot_descr">Please add in one day of the week and time you are available</string>
     <string name="button">Button</string>
+    <string name="homefragment_title">Sessions</string>
+    <string name="sample_hours">00</string>
+    <string name="sample_date">Monday, May 4</string>
+    <string name="sample_time">12:00-2:00</string>
+    <string name="sample_highschool">_____ High School</string>
+    <string name="tutor_name">TextView</string>
+    <string name="instruct_text">Click to see more</string>
+    <string name="TextView">TextView</string>
+    <string name="welcome_text">Welcome to VolunTutor!</string>
 </resources>

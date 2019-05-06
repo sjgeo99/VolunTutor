@@ -3,7 +3,6 @@ package com.example.voluntutor.mRecycler;
 import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.voluntutor.R;

@@ -26,25 +26,25 @@
                 android:id="@+id/tutor_name_txt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:text="@string/tutor_name" />
 
             <TextView
                 android:id="@+id/tutor_school_txt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:text="@string/tutor_name" />
 
             <TextView
                 android:id="@+id/tutor_subjects_txt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:text="@string/tutor_name" />
 
             <TextView
                 android:id="@+id/instruct"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Click to see more"
+                android:text="@string/instruct_text"
                 android:textColor="#696969"
                 android:textStyle="italic" />
 

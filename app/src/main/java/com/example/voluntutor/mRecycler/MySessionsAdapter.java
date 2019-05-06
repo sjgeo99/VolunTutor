@@ -3,7 +3,6 @@ package com.example.voluntutor.mRecycler;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,10 +13,8 @@ import android.view.ViewGroup;
 import com.example.voluntutor.R;
 import com.example.voluntutor.Sessions;
 import com.example.voluntutor.SessionsPopup;
-import com.example.voluntutor.Tutor;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;

@@ -5,7 +5,6 @@ package com.example.voluntutor;
  */
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;

@@ -125,7 +125,7 @@
                 android:layout_weight="1" />
 
             <LinearLayout
-                android:id="@+id/linearLayout3"
+                android:id="@+id/startTimeLayout"
                 android:layout_width="392dp"
                 android:layout_height="38dp"
                 android:layout_weight="1"
