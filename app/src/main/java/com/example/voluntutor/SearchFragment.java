@@ -1,5 +1,6 @@
 package com.example.voluntutor;
 
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,10 +10,13 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 
 import com.example.voluntutor.mRecycler.MyTutorAdapter;
 import com.google.firebase.database.DataSnapshot;
@@ -21,6 +25,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * This class provides the tools accessed by the Search Page fragment
@@ -31,9 +36,7 @@ public class SearchFragment extends Fragment {
 
     public ArrayList<Tutor> tutors = new ArrayList<Tutor>();
     public MyTutorAdapter searchAdapter;
-    public String searched_for;
-    public String checked = "";
-
+    public boolean firstTime = true;
     /**
      * Instantiates the UI view of a particular fragment
      *
@@ -53,70 +56,49 @@ public class SearchFragment extends Fragment {
         searchAdapter = new MyTutorAdapter(this.getActivity(), tutors);
         recyclerView.setAdapter(searchAdapter);
 
-        onRadioButtonClicked(rootView);
+        Spinner s = rootView.findViewById(R.id.subj_search);
+        Resources res = getResources();
+        String[] subs = res.getStringArray(R.array.subjects);
+        ArrayList<String> alSubs = new ArrayList<String>(Arrays.asList(subs));
+        ArrayAdapter<String> a = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_dropdown_item, alSubs);
+        a.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        s.setAdapter(a);
 
-        ImageButton go = (ImageButton) rootView.findViewById(R.id.go);
-        go.setOnClickListener(new View.OnClickListener() {
+        s.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onClick(View v) {
-                EditText et = rootView.findViewById(R.id.subject_search);
-                searched_for = et.getText().toString();
-                FirebaseDatabase fb2 = FirebaseDatabase.getInstance();
-                DatabaseReference dr2 = fb2.getReference("tutors");
-                dr2.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        searchAdapter.clear();
-                        for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                            Tutor t = ds.getValue(Tutor.class);
-                            if (t.containsSub(searched_for)) {
-                                searchAdapter.add(t);
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                if(!firstTime) {
+                    final String selected = (String) parent.getItemAtPosition(position);
+                    FirebaseDatabase fb2 = FirebaseDatabase.getInstance();
+                    DatabaseReference dr2 = fb2.getReference("tutors");
+                    dr2.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            searchAdapter.clear();
+                            for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                                Tutor t = ds.getValue(Tutor.class);
+                                if (t.containsSub(selected)) {
+                                    searchAdapter.add(t);
+                                }
                             }
                         }
-                    }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
 
-                    }
-                });
+                        }
+                    });
+                }
+                else { firstTime = false; }
             }
 
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
 
+            }
         });
-
 
         return rootView;
-    }
-
-    public void onRadioButtonClicked(View view) {
-        // Is the button now checked?
-        final View v = view;
-        RadioGroup r = (RadioGroup) view.findViewById(R.id.radioSubs);
-        r.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                checked = ((RadioButton) v.findViewById(checkedId)).getText().toString();
-
-                FirebaseDatabase fb2 = FirebaseDatabase.getInstance();
-                DatabaseReference dr2 = fb2.getReference("tutors");
-                dr2.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        searchAdapter.clear();
-                        for(DataSnapshot ds: dataSnapshot.getChildren()) {
-                            Tutor t = ds.getValue(Tutor.class);
-                            if(t.containsSub(checked)) searchAdapter.add(t);
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                    }
-                });
-            }
-        });
     }
 }
 

@@ -12,123 +12,26 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <LinearLayout
-            android:id="@+id/enter_subject"
-            android:layout_width="392dp"
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
-            android:orientation="horizontal"
+            android:text="Enter the subject you are looking for a tutor in"
+            app:layout_constraintBottom_toTopOf="@+id/subj_search"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Spinner
+            android:id="@+id/subj_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp"
+            android:layout_weight="1"
             app:layout_constraintBottom_toTopOf="@+id/searchRV"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-
-            <ImageButton
-                android:id="@+id/go"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_search_black_24dp" />
-
-            <EditText
-                android:id="@+id/subject_search"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="Enter a subject to search for: "
-                android:inputType="text" />
-        </LinearLayout>
-
-        <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/radioSubs"
-            android:layout_width="116dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginTop="224dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginRight="16dp"
-            android:orientation="vertical"
-            app:layout_constraintBottom_toTopOf="@+id/searchRV"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.05">
-
-            <RadioButton
-                android:id="@+id/Art"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Art" />
-
-            <RadioButton
-                android:id="@+id/radio_Biology"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Biology" />
-
-            <RadioButton
-                android:id="@+id/radio_Chemistry"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Chemistry" />
-
-            <RadioButton
-                android:id="@+id/radio_CS"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="CS" />
-
-            <RadioButton
-                android:id="@+id/radio_EarthScience"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Earth Science" />
-
-            <RadioButton
-                android:id="@+id/radio_English"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="English" />
-
-            <RadioButton
-                android:id="@+id/radio_French"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="French" />
-
-            <RadioButton
-                android:id="@+id/radio_History"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="History" />
-
-            <RadioButton
-                android:id="@+id/radio_Physics"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Physics" />
-
-            <RadioButton
-                android:id="@+id/radio_Math"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Math" />
-
-            <RadioButton
-                android:id="@+id/radio_Music"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Music" />
-
-            <RadioButton
-                android:id="@+id/radio_Spanish"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Spanish" />
-        </RadioGroup>
+            app:layout_constraintStart_toStartOf="parent" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/searchRV"
@@ -142,7 +45,6 @@
             android:scrollbars="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/enter_subject" />
+            app:layout_constraintStart_toStartOf="parent" />
     </android.support.constraint.ConstraintLayout>
 </RelativeLayout>
