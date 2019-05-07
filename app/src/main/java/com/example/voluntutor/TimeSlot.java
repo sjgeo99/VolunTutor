@@ -46,7 +46,7 @@ public class TimeSlot implements Comparable<TimeSlot>, Parcelable {
      * @return whether the session is in the time slot
      */
     public boolean isValid(Sessions s) {
-        Date d = s.getDate();
+        Date d = new Date(s.getDate());
 
         SimpleDateFormat df = new SimpleDateFormat("EEEE"); // the day of the week spelled out completely
         String dow = df.format(d);

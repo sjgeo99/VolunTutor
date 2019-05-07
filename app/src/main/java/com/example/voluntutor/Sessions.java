@@ -8,7 +8,7 @@ import java.util.Date;
  */
 public class Sessions implements Comparable<Sessions> {
     //data
-    private Date date;
+    private String date;
     private String location;
     // length of session in minutes
     private int length;
@@ -19,7 +19,7 @@ public class Sessions implements Comparable<Sessions> {
     private String tutee;
     private boolean imTutor;
     //constructor(s)
-    public Sessions(Date d, String l, int len, String tutor, String tutee, boolean b) {
+    public Sessions(String d, String l, int len, String tutor, String tutee, boolean b) {
         date = d;
         location = l;
         length = len;
@@ -34,7 +34,7 @@ public class Sessions implements Comparable<Sessions> {
      * Empty constructor
      */
     public Sessions() {
-        date = new Date();
+        date = Long.toString(new Date().getTime());
         location = "here";
         length = 0;
         tutor = "me";
@@ -73,7 +73,7 @@ public class Sessions implements Comparable<Sessions> {
      * Gets the date of the session
      * @return the date of the session
      */
-    public Date getDate() {return date;}
+    public String getDate() {return date;}
 
     /**
      * Gets the location of the session
@@ -123,7 +123,7 @@ public class Sessions implements Comparable<Sessions> {
      * Sets the date of the session
      * @param d the date of the session
      */
-    public void setDate(Date d) {date = d;}
+    public void setDate(String d) {date = d;}
 
     /**
      * Sets the location of the session
@@ -155,7 +155,7 @@ public class Sessions implements Comparable<Sessions> {
      * @return if the 2 objects are the same
      */
     public boolean equals(Sessions s) {
-        return date.equals(s.date) && location.equals(s.getLocation()) && length == s.getLength() && (sverified && tverified) == s.getVerified()
+        return date == (s.getDate()) && location.equals(s.getLocation()) && length == s.getLength() && (sverified && tverified) == s.getVerified()
                 && happened == s.getHappened() && tutor.equals(s.getTutor()) && tutee.equals(s.getTutee());
     }
 }

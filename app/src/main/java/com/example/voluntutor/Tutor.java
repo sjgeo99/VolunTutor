@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 
 //This class represents a tutor in the VolunTutor Application
 
@@ -81,6 +82,10 @@ public class Tutor {
     public String getName() {
         return name;
     }
+
+    public boolean hasSession(Sessions s) {
+        return usessions.contains(s);
+    }
     /**
      * Sets the name of the tutor.
      */
@@ -115,7 +120,8 @@ public class Tutor {
     public void checkUpcoming() {
         Calendar cal = Calendar.getInstance();
         for(int i = 0; i < usessions.size(); i++) {
-            if(usessions.get(i).getDate().before(cal.getTime())) {
+            Date d = new Date(usessions.get(i).getDate());
+            if(d.before(cal.getTime())) {
                 Sessions s = usessions.get(i);
                 psessions.add(s);
                 usessions.remove(i);

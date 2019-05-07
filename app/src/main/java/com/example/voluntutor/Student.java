@@ -3,6 +3,7 @@ package com.example.voluntutor;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 
 /**
  * This class stores information about a student from the VolunTutor application
@@ -70,7 +71,8 @@ public class Student {
     public void checkUpcoming() {
         Calendar cal = Calendar.getInstance();
         for(int i = 0; i < usessions.size(); i++) {
-            if(usessions.get(i).getDate().before(cal.getTime())) {
+            Date d = new Date(usessions.get(i).getDate());
+            if(d.before(cal.getTime())) {
                 Sessions s = usessions.get(i);
                 psessions.add(s);
                 usessions.remove(i);

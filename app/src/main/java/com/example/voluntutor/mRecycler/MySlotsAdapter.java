@@ -10,10 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.TextView;
 import android.widget.Toast;
-
-
 import com.example.voluntutor.MakeUserFragment;
 import com.example.voluntutor.R;
 import com.example.voluntutor.Sessions;
@@ -36,11 +33,11 @@ public class MySlotsAdapter extends RecyclerView.Adapter<MySlotsHolder> {
     private ArrayList<TimeSlot> slots;
     private ArrayList<String> datesList = new ArrayList<String>();
     private ArrayList<String> timesList = new ArrayList<String>();
-    private boolean daySelect = false;
-    private boolean timeSelect = false;
     private String selectedDay;
     private String selectedTime;
     private String tutorName;
+    private boolean firstStu = true;
+    private boolean firstTut = true;
 
     public MySlotsAdapter(Context c, ArrayList<TimeSlot> slots1, String name)
     {
@@ -131,10 +128,7 @@ public class MySlotsAdapter extends RecyclerView.Adapter<MySlotsHolder> {
         mySlotsHolder.getDay().setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(daySelect) {
                     selectedDay = (String) parent.getItemAtPosition(position);
-                }
-                else daySelect = true;
             }
 
             @Override
@@ -156,10 +150,7 @@ public class MySlotsAdapter extends RecyclerView.Adapter<MySlotsHolder> {
         mySlotsHolder.getTime().setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if(timeSelect) {
-                    selectedTime = (String) parent.getItemAtPosition(position);
-                }
-                else timeSelect = true;
+                selectedTime = (String) parent.getItemAtPosition(position);
             }
 
             @Override
@@ -228,18 +219,22 @@ public class MySlotsAdapter extends RecyclerView.Adapter<MySlotsHolder> {
                     else { setTime.set(Calendar.HOUR_OF_DAY, Integer.parseInt(time[0])); }
                     setTime.set(Calendar.MINUTE, Integer.parseInt(time[1]));
 
-                    final Sessions s = new Sessions(setTime.getTime(), location, length, tutorName, tutee, false);
+                    final Sessions s = new Sessions(Long.toString(setTime.getTime().getTime()), location, length, tutorName, tutee, false);
                     Log.d("session", s.toString());
                     FirebaseDatabase fb = FirebaseDatabase.getInstance();
+                    Log.d("is tutor?", sharedPref.getBoolean("isTutor", false) + "");
+                    Log.d("key", MakeUserFragment.getID());
                     if(sharedPref.getBoolean("isTutor", false)) {
                         DatabaseReference dr = fb.getReference("tutors");
                         dr.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 for(DataSnapshot ds: dataSnapshot.getChildren()) {
-                                    if(ds.getKey().equals(MakeUserFragment.getID())) {
+                                    if(ds.getKey().equals(MakeUserFragment.getID()) && firstStu) {
                                         Tutor t = ds.getValue(Tutor.class);
                                         t.addSession(s);
+                                        ds.getRef().setValue(t);
+                                        firstStu = false;
                                     }
                                 }
                             }
@@ -256,9 +251,11 @@ public class MySlotsAdapter extends RecyclerView.Adapter<MySlotsHolder> {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 for(DataSnapshot ds: dataSnapshot.getChildren()) {
-                                    if(ds.getKey().equals(MakeUserFragment.getID())) {
+                                    if(ds.getKey().equals(MakeUserFragment.getID()) && firstStu) {
                                         Student stu = ds.getValue(Student.class);
                                         stu.addSession(s);
+                                        ds.getRef().setValue(stu);
+                                        firstStu = false;
                                     }
                                 }
                             }
@@ -269,6 +266,7 @@ public class MySlotsAdapter extends RecyclerView.Adapter<MySlotsHolder> {
                             }
                         });
                     }
+
                     //find tutor
                     DatabaseReference tutors = fb.getReference("tutors");
                     tutors.addValueEventListener(new ValueEventListener() {
@@ -276,9 +274,16 @@ public class MySlotsAdapter extends RecyclerView.Adapter<MySlotsHolder> {
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             for(DataSnapshot ds: dataSnapshot.getChildren()) {
                                 Tutor t = ds.getValue(Tutor.class);
-                                if(t.getName().equals(tutorName)) {
+                                Log.d("tutor name", t.getName());
+                                Log.d("target name", tutorName);
+                                Log.d("boolean", t.getName().equals(tutorName) + "");
+                                Log.d("first time", firstTut + "");
+                                if(t.getName().equals(tutorName) && firstTut) {
                                     s.setImTutor(true);
                                     t.addSession(s);
+                                    ds.getRef().setValue(t);
+                                    Log.d("session", s.toString());
+                                    firstTut = false;
                                 }
                             }
                         }

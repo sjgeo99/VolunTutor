@@ -51,18 +51,17 @@ public class MySessionsAdapter extends RecyclerView.Adapter<MySessionsHolder> {
     @Override
     public void onBindViewHolder(@NonNull final MySessionsHolder holder, int position) {
         Sessions s = sessions.get(position);
-        SharedPreferences sharedPref = c.getSharedPreferences("Startup info", 0);
-        boolean b = sharedPref.getBoolean("isTutor", true);
-        if(b) {
-            name = "Tutoring " + s.getTutee();
-            holder.nametxt.setText(name);
+
+        if(s.getImTutor()) {
+            String str = "Tutoring: " + s.getTutee();
+            holder.nametxt.setText(str);
         }
         else {
-            name = "Tutored by " + s.getTutor();
-            holder.nametxt.setText(name);
+            String str = "Tutored by: " + s.getTutor();
+            holder.nametxt.setText(str);
         }
 
-        Date d = s.getDate();
+        Date d = new Date(Long.parseLong(s.getDate()));
         SimpleDateFormat sdf = new SimpleDateFormat("EEEE, MMMM dd, yyyy");
         date = sdf.format(d);
         holder.date.setText(date);
