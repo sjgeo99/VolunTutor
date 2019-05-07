@@ -55,6 +55,7 @@ public class MySlotsAdapter extends RecyclerView.Adapter<MySlotsHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull final MySlotsHolder mySlotsHolder, int i) {
+        final int position = i;
         mySlotsHolder.getDaytxt().setText(slots.get(i).getDayOfWeek());
         int sHour = slots.get(i).getsHour();
         int sMin = slots.get(i).getsMinute();
@@ -224,17 +225,64 @@ public class MySlotsAdapter extends RecyclerView.Adapter<MySlotsHolder> {
                     FirebaseDatabase fb = FirebaseDatabase.getInstance();
                     Log.d("is tutor?", sharedPref.getBoolean("isTutor", false) + "");
                     Log.d("key", MakeUserFragment.getID());
-                    if(sharedPref.getBoolean("isTutor", false)) {
-                        DatabaseReference dr = fb.getReference("tutors");
-                        dr.addValueEventListener(new ValueEventListener() {
+
+                    TimeSlot t = slots.get(position);
+                    if(t.isValid(s)) {
+
+                        if (sharedPref.getBoolean("isTutor", false)) {
+                            DatabaseReference dr = fb.getReference("tutors");
+                            dr.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                                        if (ds.getKey().equals(MakeUserFragment.getID()) && firstStu) {
+                                            Tutor t = ds.getValue(Tutor.class);
+                                            t.addSession(s);
+                                            ds.getRef().setValue(t);
+                                            firstStu = false;
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+                        } else {
+                            DatabaseReference dr = fb.getReference("students");
+                            dr.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                    for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                                        if (ds.getKey().equals(MakeUserFragment.getID()) && firstStu) {
+                                            Student stu = ds.getValue(Student.class);
+                                            stu.addSession(s);
+                                            ds.getRef().setValue(stu);
+                                            firstStu = false;
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                }
+                            });
+                        }
+
+                        //find tutor
+                        DatabaseReference tutors = fb.getReference("tutors");
+                        tutors.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                for(DataSnapshot ds: dataSnapshot.getChildren()) {
-                                    if(ds.getKey().equals(MakeUserFragment.getID()) && firstStu) {
-                                        Tutor t = ds.getValue(Tutor.class);
+                                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                                    Tutor t = ds.getValue(Tutor.class);
+                                    if (t.getName().equals(tutorName) && firstTut) {
+                                        s.setImTutor(true);
                                         t.addSession(s);
                                         ds.getRef().setValue(t);
-                                        firstStu = false;
+                                        firstTut = false;
                                     }
                                 }
                             }
@@ -246,53 +294,12 @@ public class MySlotsAdapter extends RecyclerView.Adapter<MySlotsHolder> {
                         });
                     }
                     else {
-                        DatabaseReference dr = fb.getReference("students");
-                        dr.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                for(DataSnapshot ds: dataSnapshot.getChildren()) {
-                                    if(ds.getKey().equals(MakeUserFragment.getID()) && firstStu) {
-                                        Student stu = ds.getValue(Student.class);
-                                        stu.addSession(s);
-                                        ds.getRef().setValue(stu);
-                                        firstStu = false;
-                                    }
-                                }
-                            }
+                        CharSequence text = "This session does not fit within the given time slot";
+                        int duration = Toast.LENGTH_SHORT;
 
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                            }
-                        });
+                        Toast toast = Toast.makeText(c, text, duration);
+                        toast.show();
                     }
-
-                    //find tutor
-                    DatabaseReference tutors = fb.getReference("tutors");
-                    tutors.addValueEventListener(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            for(DataSnapshot ds: dataSnapshot.getChildren()) {
-                                Tutor t = ds.getValue(Tutor.class);
-                                Log.d("tutor name", t.getName());
-                                Log.d("target name", tutorName);
-                                Log.d("boolean", t.getName().equals(tutorName) + "");
-                                Log.d("first time", firstTut + "");
-                                if(t.getName().equals(tutorName) && firstTut) {
-                                    s.setImTutor(true);
-                                    t.addSession(s);
-                                    ds.getRef().setValue(t);
-                                    Log.d("session", s.toString());
-                                    firstTut = false;
-                                }
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                        }
-                    });
                 }
                 else {
                     CharSequence text = "Please fill out all the fields to make a session";
