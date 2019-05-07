@@ -1,5 +1,6 @@
 package com.example.voluntutor;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -16,8 +17,9 @@ public class Sessions implements Comparable<Sessions> {
     private boolean happened;
     private String tutor;
     private String tutee;
+    private boolean imTutor;
     //constructor(s)
-    public Sessions(Date d, String l, int len, String tutor, String tutee) {
+    public Sessions(Date d, String l, int len, String tutor, String tutee, boolean b) {
         date = d;
         location = l;
         length = len;
@@ -26,6 +28,7 @@ public class Sessions implements Comparable<Sessions> {
         happened = false;
         this.tutor = tutor;
         this.tutee = tutee;
+        imTutor = b;
     }
     /**
      * Empty constructor
@@ -38,6 +41,12 @@ public class Sessions implements Comparable<Sessions> {
         tutee = "you";
     }
     //methods
+    public boolean getImTutor() {
+        return imTutor;
+    }
+    public void setImTutor(boolean b) {
+        imTutor = b;
+    }
     /**
      * Adds a comparator method for sorting lists
      */

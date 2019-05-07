@@ -5,13 +5,9 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.widget.TextView;
-
 import com.example.voluntutor.mRecycler.MySlotsAdapter;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class TutorPopup extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -42,9 +38,8 @@ public class TutorPopup extends AppCompatActivity {
         }
         else if(subjects.size() == 1) subs = subs.concat(subjects.get(0));
         setSubs.setText(subs);
-        Log.d("Time Slot list", Arrays.toString(timeSlots.toArray()));
-        rv.setLayoutManager(new LinearLayoutManager(this.getBaseContext()));
-        MySlotsAdapter adapter = new MySlotsAdapter(this.getBaseContext(), timeSlots);
+            rv.setLayoutManager(new LinearLayoutManager(this.getBaseContext()));
+        MySlotsAdapter adapter = new MySlotsAdapter(this.getBaseContext(), timeSlots, name);
         rv.setAdapter(adapter);
     }
 
