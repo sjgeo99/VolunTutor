@@ -1,10 +1,14 @@
 package com.example.voluntutor;
 
+import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +19,8 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -92,63 +98,76 @@ public class MakeUserFragment extends Fragment {
         Button button = (Button) view.findViewById(R.id.make_user_obj);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 SharedPreferences sharedPref = getActivity().getSharedPreferences(getString(R.string.shared_pref_name), 0);
-
                 boolean isTutor = sharedPref.getBoolean(getString(R.string.isTutor), false);
-                if(isTutor) {
+                if (isTutor) {
 
                     EditText txtName = (EditText) view.findViewById(R.id.enter_name);
                     EditText txtSchool = (EditText) view.findViewById(R.id.enter_school);
+                    String stxtName = txtName.getText().toString();
+                    String stxtSchool = txtSchool.getText().toString();
 
-                    String name = txtName.getText().toString();
-                    String school = txtSchool.getText().toString();
-                    int startHr = values[0];
-                    int startMin = values[1];
-                    int endHr = values[2];
-                    int endMin = values[3];
+                    if (TextUtils.isEmpty(stxtSchool) || TextUtils.isEmpty(stxtName)) {
+                        Toast.makeText(getContext(), "You did not enter a username and/or password. Please fill out both.", Toast.LENGTH_LONG).show();
+                    }
+                    else {
+                        String name = txtName.getText().toString();
+                        String school = txtSchool.getText().toString();
+                        int startHr = values[0];
+                        int startMin = values[1];
+                        int endHr = values[2];
+                        int endMin = values[3];
 
-                    SharedPreferences.Editor editor = sharedPref.edit();
-                    editor.putString(getString(R.string.name), name);
-                    editor.putString(getString(R.string.school), school);
-                    editor.commit();
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putString(getString(R.string.name), name);
+                        editor.putString(getString(R.string.school), school);
+                        editor.commit();
 
-                    TimeSlot ts = new TimeSlot(dayOfWeek, startHr, startMin, endHr, endMin);
-                    Tutor t = new Tutor(name, school);
-                    t.addTimeSlots(ts);
+                        TimeSlot ts = new TimeSlot(dayOfWeek, startHr, startMin, endHr, endMin);
+                        Tutor t = new Tutor(name, school);
+                        t.addTimeSlots(ts);
 
-                    t.addSubject(subject);
+                        t.addSubject(subject);
 
-                    FirebaseDatabase fb = FirebaseDatabase.getInstance();
-                    DatabaseReference ref = fb.getReference("/tutors");
-                    DatabaseReference nRef = ref.push();
-                    nRef.setValue(t);
-                    id = nRef.getKey();
+                        FirebaseDatabase fb = FirebaseDatabase.getInstance();
+                        DatabaseReference ref = fb.getReference("/tutors");
+                        DatabaseReference nRef = ref.push();
+                        nRef.setValue(t);
+                        id = nRef.getKey();
 
-                    v6.setVisibility(View.VISIBLE);
+                        v6.setVisibility(View.VISIBLE);
+                    }
                 }
                 else {
 
                     EditText txtName = (EditText) view.findViewById(R.id.enter_name);
                     EditText txtSchool = (EditText) view.findViewById(R.id.enter_school);
-                    String name = txtName.getText().toString();
-                    String school = txtSchool.getText().toString();
+                    String stxtName = txtName.getText().toString();
+                    String stxtSchool = txtSchool.getText().toString();
+                    if (TextUtils.isEmpty(stxtSchool) || TextUtils.isEmpty(stxtName)) {
+                        Toast.makeText(getContext(), "You did not enter a username and/or password. Please fill out both.", Toast.LENGTH_LONG).show();
+                    }
+                    else {
+                        String name = txtName.getText().toString();
+                        String school = txtSchool.getText().toString();
 
-                    SharedPreferences.Editor editor = sharedPref.edit();
-                    editor.putString(getString(R.string.name), name);
-                    editor.putString(getString(R.string.school), school);
-                    editor.commit();
 
-                    Student s = new Student(name, school);
+                        SharedPreferences.Editor editor = sharedPref.edit();
+                        editor.putString(getString(R.string.name), name);
+                        editor.putString(getString(R.string.school), school);
+                        editor.commit();
 
-                    FirebaseDatabase fb = FirebaseDatabase.getInstance();
-                    DatabaseReference ref = fb.getReference("/students");
-                    DatabaseReference nRef = ref.push();
-                    nRef.setValue(s);
-                    id = nRef.getKey();
+                        Student s = new Student(name, school);
 
-                    v6.setVisibility(View.VISIBLE);
+                        FirebaseDatabase fb = FirebaseDatabase.getInstance();
+                        DatabaseReference ref = fb.getReference("/students");
+                        DatabaseReference nRef = ref.push();
+                        nRef.setValue(s);
+                        id = nRef.getKey();
+
+                        v6.setVisibility(View.VISIBLE);
+                    }
                 }
             }
         });
