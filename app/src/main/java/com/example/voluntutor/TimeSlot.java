@@ -46,7 +46,7 @@ public class TimeSlot implements Comparable<TimeSlot>, Parcelable {
      * @return whether the session is in the time slot
      */
     public boolean isValid(Sessions s) {
-        Date d = new Date(s.getDate());
+        Date d = new Date(Long.parseLong(s.getDate()));
 
         SimpleDateFormat df = new SimpleDateFormat("EEEE"); // the day of the week spelled out completely
         String dow = df.format(d);
@@ -54,10 +54,10 @@ public class TimeSlot implements Comparable<TimeSlot>, Parcelable {
 
         Calendar c = Calendar.getInstance();
         c.setTime(d);
-        c.set(Calendar.HOUR, sHour);
+        c.set(Calendar.HOUR_OF_DAY, sHour);
         c.set(Calendar.MINUTE, sMinute);
         Date startSlot = c.getTime();
-        c.set(Calendar.HOUR, eHour);
+        c.set(Calendar.HOUR_OF_DAY, eHour);
         c.set(Calendar.MINUTE, eMinute);
         Date endSlot = c.getTime();
 
@@ -65,8 +65,8 @@ public class TimeSlot implements Comparable<TimeSlot>, Parcelable {
         c.add(Calendar.MINUTE, s.getLength());
         Date endSession = c.getTime();
 
-        boolean startWithin = (d.after(startSlot));
-        boolean endWithin = (endSession.before(endSlot));
+        boolean startWithin = (d.after(startSlot) || d.equals(startSlot));
+        boolean endWithin = (endSession.before(endSlot) || endSession.equals(endSlot));
 
         return onDay && startWithin && endWithin;
     }

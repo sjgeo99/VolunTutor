@@ -1,4 +1,74 @@
 package com.example.voluntutor.mRecycler;
 
-public class PendingSessionsHolder {
+import android.support.constraint.ConstraintLayout;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+
+import com.example.voluntutor.R;
+
+public class PendingSessionsHolder extends RecyclerView.ViewHolder {
+
+    private TextView name;
+    private TextView day;
+    private TextView time;
+    private Button yes;
+    private Button no;
+    private ConstraintLayout c;
+
+    public PendingSessionsHolder(View view) {
+        super(view);
+        name = view.findViewById(R.id.psessions_name);
+        day = view.findViewById(R.id.psessions_date);
+        time = view.findViewById(R.id.psessions_time);
+        yes = view.findViewById(R.id.verify_button);
+        no = view.findViewById(R.id.no_verify_button);
+        c = view.findViewById(R.id.psessions_constraint);
+    }
+    public ConstraintLayout getC() {
+        return c;
+    }
+    public void setC(ConstraintLayout c) {
+        this.c = c;
+    }
+    public TextView getName() {
+        return name;
+    }
+
+    public TextView getDay() {
+        return day;
+    }
+
+    public TextView getTime() {
+        return time;
+    }
+
+    public Button getYes() {
+        return yes;
+    }
+
+    public Button getNo() {
+        return no;
+    }
+
+    public void setName(TextView name) {
+        this.name = name;
+    }
+
+    public void setDay(TextView day) {
+        this.day = day;
+    }
+
+    public void setTime(TextView time) {
+        this.time = time;
+    }
+
+    public void setYes(Button yes) {
+        this.yes = yes;
+    }
+
+    public void setNo(Button no) {
+        this.no = no;
+    }
 }

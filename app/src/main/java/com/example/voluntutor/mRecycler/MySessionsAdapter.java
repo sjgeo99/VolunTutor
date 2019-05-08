@@ -17,6 +17,7 @@ import com.example.voluntutor.SessionsPopup;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 
 public class MySessionsAdapter extends RecyclerView.Adapter<MySessionsHolder> {
@@ -53,16 +54,16 @@ public class MySessionsAdapter extends RecyclerView.Adapter<MySessionsHolder> {
         Sessions s = sessions.get(position);
 
         if(s.getImTutor()) {
-            String str = "Tutoring: " + s.getTutee();
-            holder.nametxt.setText(str);
+            name = "Tutoring: " + s.getTutee();
+            holder.nametxt.setText(name);
         }
         else {
-            String str = "Tutored by: " + s.getTutor();
-            holder.nametxt.setText(str);
+            name = "Tutored by: " + s.getTutor();
+            holder.nametxt.setText(name);
         }
 
         Date d = new Date(Long.parseLong(s.getDate()));
-        SimpleDateFormat sdf = new SimpleDateFormat("EEEE, MMMM dd, yyyy");
+        SimpleDateFormat sdf = new SimpleDateFormat("MMMM dd");
         date = sdf.format(d);
         holder.date.setText(date);
 
@@ -81,7 +82,6 @@ public class MySessionsAdapter extends RecyclerView.Adapter<MySessionsHolder> {
             public void onClick(View v) {
                 Intent intent = new Intent(c, SessionsPopup.class);
                 intent.putExtra("Name", name);
-                Log.d("date?", date);
                 intent.putExtra("Date", date);
                 intent.putExtra("Time", time);
                 intent.putExtra("Location", sessions.get(holder.getAdapterPosition()).getLocation());
@@ -97,6 +97,7 @@ public class MySessionsAdapter extends RecyclerView.Adapter<MySessionsHolder> {
 
     public void add(Sessions s) {
         sessions.add(s);
+        Collections.sort(sessions);
         notifyDataSetChanged();
     }
     public void clear() {

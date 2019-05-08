@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,23 +44,55 @@ public class HoursFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.hoursfragment, container, false);
 
-        Button buttonName = view.findViewById(R.id.update_hours);
-        buttonName.setOnClickListener(new View.OnClickListener() {
+        RecyclerView rv = view.findViewById(R.id.verified_sessions);
+        rv.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        hoursAdapter = new MySessionsAdapter(this.getContext(), verified);
+        rv.setAdapter(hoursAdapter);
+        Log.d("Making adapter", "yes");
+
+        FirebaseDatabase fb = FirebaseDatabase.getInstance();
+        DatabaseReference dr = fb.getReference("tutors");
+        dr.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                hoursAdapter.clear();
+                for(DataSnapshot ds: dataSnapshot.getChildren()) {
+                    if(ds.getKey().equals(MakeUserFragment.getID())) {
+                        Tutor t = ds.getValue(Tutor.class);
+                        ArrayList<Sessions> s = t.getVsessions();
+                        for(Sessions sess: s) {
+                            hoursAdapter.add(sess);
+                        }
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        Button button = (Button) view.findViewById(R.id.update_hours);
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Log.d("button clicked", "yes");
                 FirebaseDatabase fb = FirebaseDatabase.getInstance();
                 DatabaseReference ref = fb.getReference("tutors");
                 DatabaseReference nameRef = ref.child(MakeUserFragment.getID()).getRef().child("vsessions").getRef();
                 nameRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        Log.d("in ondatachange", "yes");
                         int count = 0;
                         for(DataSnapshot ds: dataSnapshot.getChildren()) {
                             Sessions s = ds.getValue(Sessions.class);
                             count += s.getLength();
                         }
                         TextView t = view.findViewById(R.id.showHours);
-                        t.setText(count);
+                        String set = ((double) count / 60) + "";
+                        t.setText(set);
                     }
 
                     @Override
@@ -70,30 +103,7 @@ public class HoursFragment extends Fragment {
             }
         });
 
-        RecyclerView recyclerView = view.findViewById(R.id.verified_sessions);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        hoursAdapter = new MySessionsAdapter(this.getActivity(), verified);
-        recyclerView.setAdapter(hoursAdapter);
-
-        FirebaseDatabase fb = FirebaseDatabase.getInstance();
-        DatabaseReference dr = fb.getReference("tutors");
-        DatabaseReference mySessions = dr.child(MakeUserFragment.getID()).getRef().child("vsessions").getRef();
-        mySessions.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                for(DataSnapshot ds: dataSnapshot.getChildren()) {
-                    Sessions s = ds.getValue(Sessions.class);
-                    hoursAdapter.add(s);
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
-
-        return inflater.inflate(R.layout.hoursfragment, container, false);
+        return view;
 
     }
 }

@@ -292,6 +292,12 @@ public class MySlotsAdapter extends RecyclerView.Adapter<MySlotsHolder> {
 
                             }
                         });
+
+                        CharSequence text = "Session successful!";
+                        int duration = Toast.LENGTH_SHORT;
+
+                        Toast toast = Toast.makeText(c, text, duration);
+                        toast.show();
                     }
                     else {
                         CharSequence text = "This session does not fit within the given time slot";

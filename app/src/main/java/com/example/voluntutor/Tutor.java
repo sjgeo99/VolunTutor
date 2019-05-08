@@ -75,6 +75,19 @@ public class Tutor {
         subjects.remove(s.toLowerCase());
     }
 
+    public void addPsession(Sessions s) { psessions.add(s); }
+
+    public void addVsession(Sessions s) { vsessions.add(s); }
+
+    public void removePsession(Sessions s) {
+        for(int i = 0; i < psessions.size(); i++) {
+            if(psessions.get(i).equals(s)) {
+                psessions.remove(i);
+                break;
+            }
+        }
+    }
+
     /**
      * Gets the name of the tutor.
      * @return String representation of the tutor's name
@@ -130,24 +143,7 @@ public class Tutor {
         }
         Collections.sort(psessions);
     }
-    /**
-     * If any of the pending sessions have been fully verified, this method will move them to
-     * the vsessions arraylist. If one of the pending sessions has not occurred, it get deleted.
-     */
-    public void checkPending() {
-        for(int i = 0; i < psessions.size(); i++) {
-            if(psessions.get(i).getVerified()) {
-                Sessions s = psessions.get(i);
-                psessions.remove(i);
-                vsessions.add(s);
-                i--;
-            }
-            else if(psessions.get(i).getHappened() != true) {
-                psessions.remove(i);
-            }
-        }
-        Collections.sort(vsessions);
-    }
+
     /**
      * Gets the sessions that are upcoming
      * @return the sessions in an arraylist

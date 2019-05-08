@@ -50,6 +50,10 @@ public class Student {
      */
     public ArrayList getPSessions() {return psessions;}
 
+    public void removePsession(Sessions s) { psessions.remove(s); }
+    public void removeUsession(Sessions s) { usessions.remove(s); }
+    public void addPsession(Sessions s) { psessions.add(s); }
+
     /**
      * Gets and returns the upcoming sessions
      * @return the sessions (ArrayList<Session>)the student has not yet attended
@@ -80,20 +84,6 @@ public class Student {
             }
         }
         Collections.sort(psessions);
-    }
-    /**
-     * If any of the pending sessions have been fully verified, this method will delete them. If it
-     * has not happened, it is also deleted.
-     */
-    public void checkPending() {
-        for(int i = 0; i < psessions.size(); i++) {
-            if (psessions.get(i).getVerified()) {
-                psessions.remove(i);
-                i--;
-            } else if (psessions.get(i).getHappened() != true) {
-                psessions.remove(i);
-            }
-        }
     }
     /**
      * Sets the name of the student to the inputted parameter (String)

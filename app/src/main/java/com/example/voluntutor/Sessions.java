@@ -1,6 +1,5 @@
 package com.example.voluntutor;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -14,7 +13,6 @@ public class Sessions implements Comparable<Sessions> {
     private int length;
     private boolean sverified;
     private boolean tverified;
-    private boolean happened;
     private String tutor;
     private String tutee;
     private boolean imTutor;
@@ -25,7 +23,6 @@ public class Sessions implements Comparable<Sessions> {
         length = len;
         sverified = false;
         tverified = false;
-        happened = false;
         this.tutor = tutor;
         this.tutee = tutee;
         imTutor = b;
@@ -62,13 +59,6 @@ public class Sessions implements Comparable<Sessions> {
         return "Session is at " + location + ", begins at " + date + ", lasts " + length +
                 " minutes, and takes place between " + tutor + " and " + tutee;
     }
-    /**
-     * Gets whether the session happened (note: by default, the happened boolean is false). It only
-     * becomes true if one of the participants (tutor or student) changes it.
-     * @return whether the session happened or not (as a boolean)
-     */
-    public boolean getHappened() { return happened; }
-    public void setHappened(boolean b) { happened = b; }
     /**
      * Gets the date of the session
      * @return the date of the session
@@ -155,7 +145,7 @@ public class Sessions implements Comparable<Sessions> {
      * @return if the 2 objects are the same
      */
     public boolean equals(Sessions s) {
-        return date == (s.getDate()) && location.equals(s.getLocation()) && length == s.getLength() && (sverified && tverified) == s.getVerified()
-                && happened == s.getHappened() && tutor.equals(s.getTutor()) && tutee.equals(s.getTutee());
+        return date.equals(s.getDate()) && location.equals(s.getLocation()) && length == s.getLength() && sverified == s.getSVerified()
+                && tverified == s.getTVerified() && tutor.equals(s.getTutor()) && tutee.equals(s.getTutee());
     }
 }

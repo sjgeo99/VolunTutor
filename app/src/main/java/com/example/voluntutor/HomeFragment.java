@@ -12,12 +12,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import com.example.voluntutor.mRecycler.MySessionsAdapter;
+import com.example.voluntutor.mRecycler.PendingSessionsAdapter;
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 /**
  * This class provides the tools accessed by the Home Page fragment
@@ -29,7 +32,7 @@ public class HomeFragment extends Fragment {
     public ArrayList<Sessions> psession = new ArrayList<Sessions>();
     public ArrayList<Sessions> usession = new ArrayList<Sessions>();
     public MySessionsAdapter uadapter;
-    public MySessionsAdapter padapter;
+    public PendingSessionsAdapter padapter;
     public DatabaseReference dr;
 
     /**
@@ -54,24 +57,61 @@ public class HomeFragment extends Fragment {
 
         RecyclerView rv2 = rootView.findViewById(R.id.homeRV2);
         rv2.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-        padapter = new MySessionsAdapter(this.getContext(), usession);
+        padapter = new PendingSessionsAdapter(this.getContext(), usession);
         rv2.setAdapter(padapter);
 
         FirebaseDatabase fb = FirebaseDatabase.getInstance();
         SharedPreferences sharedPref = getActivity().getSharedPreferences(getString(R.string.shared_pref_name), 0);
-        if(sharedPref.getBoolean(getString(R.string.isTutor), false)) { dr = fb.getReference("/tutors"); }
+        final boolean isTutor = sharedPref.getBoolean(getString(R.string.isTutor), false);
+        if(isTutor) { dr = fb.getReference("/tutors"); }
         else { dr = fb.getReference("/student"); }
 
         DatabaseReference myUsessions = dr.child(MakeUserFragment.getID()).getRef().child("usessions").getRef();
         DatabaseReference myPsessions = dr.child(MakeUserFragment.getID()).getRef().child("psessions").getRef();
+        //checks if upcoming sessions are in the past and moves them to psessions
+        dr.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot ds: dataSnapshot.getChildren()) {
+                    if(ds.getKey().equals(MakeUserFragment.getID())) {
+                        if(isTutor) {
+                            Tutor t = ds.getValue(Tutor.class);
+                            ArrayList<Sessions> usessionsT = t.getUsessions();
+                            for(Sessions sess: usessionsT) {
+                                if(Long.parseLong(sess.getDate()) < Calendar.getInstance().getTime().getTime()) {
+                                    t.removeUsession(sess);
+                                    t.addPsession(sess);
+                                }
+                            }
+                            ds.getRef().setValue(t);
+                        }
+                        else {
+                            Student s = ds.getValue(Student.class);
+                            ArrayList<Sessions> usessionsS = s.getUSessions();
+                            for(Sessions sess: usessionsS) {
+                                if(Long.parseLong(sess.getDate()) < Calendar.getInstance().getTime().getTime()) {
+                                    s.removeUsession(sess);
+                                    s.addPsession(sess);
+                                }
+                            }
+                            ds.getRef().setValue(s);
+                        }
+                    }
+                }
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        //populates upcoming sessions
         myUsessions.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 uadapter.clear();
                 for(DataSnapshot ds: dataSnapshot.getChildren()) {
                     Sessions t = ds.getValue(Sessions.class);
-                    Log.d("usessions", t.toString());
                     uadapter.add(t);
                 }
             }
@@ -82,15 +122,34 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        myPsessions.addValueEventListener(new ValueEventListener() {
+        myPsessions.addChildEventListener(new ChildEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                padapter.clear();
-                for(DataSnapshot ds: dataSnapshot.getChildren()) {
-                    Sessions t = ds.getValue(Sessions.class);
-                    Log.d("psessions", t.toString());
-                    uadapter.add(t);
-                }
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                Sessions sess = dataSnapshot.getValue(Sessions.class);
+                padapter.add(sess);
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                    int key = 0;
+                    if(s != null) {
+                        int prevKey = Integer.parseInt(s);
+                        key = prevKey + 1;
+                    }
+                    padapter.remove(key);
+                    Sessions newSess = dataSnapshot.getValue(Sessions.class);
+                    padapter.add(newSess);
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                Sessions sess = dataSnapshot.getValue(Sessions.class);
+                padapter.remove(sess);
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
             }
 
             @Override
