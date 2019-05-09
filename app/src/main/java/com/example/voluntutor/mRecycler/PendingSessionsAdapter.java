@@ -158,50 +158,6 @@ public class PendingSessionsAdapter extends RecyclerView.Adapter<PendingSessions
                         }
                     });
                     //delete from the tutee's sessions list
-                    //TODO: it infinitely creates and deletes psessions for some reason
-                    //THIS ONE DOESN'T WORKKK
-                    SharedPreferences sharedPref = c.getSharedPreferences("Startup info", 0);
-                    if(sharedPref.getBoolean("isTutor", false)) {
-                        dr.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                for(DataSnapshot ds: dataSnapshot.getChildren()) {
-                                    Tutor t = ds.getValue(Tutor.class);
-                                    Sessions s = selected;
-                                    s.setSverified(false);
-                                    s.setImTutor(false);
-                                    if(t.hasPsession(s)) {
-                                        t.removePsession(s);
-                                        ds.getRef().setValue(t);
-                                    }
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                            }
-                        });
-                    }
-                    else {
-                        DatabaseReference listReference = fb.getReference("students").child(MakeUserFragment.getID());
-                        listReference.addValueEventListener(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    if(tuteeDelete2) {
-                                        Student s = dataSnapshot.getValue(Student.class);
-                                        s.removePsession(selected);
-                                        dataSnapshot.getRef().setValue(s);
-                                        tuteeDelete2 = false;
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                            }
-                        });
-                    }
 
                 }
             }
@@ -243,20 +199,19 @@ public class PendingSessionsAdapter extends RecyclerView.Adapter<PendingSessions
 
                     }
                 });
-                //search through list of students as well (just search imTutor = false)
-                //this doesn't seem to work
-                DatabaseReference dr2 = fb.getReference("students");
-                dr2.addListenerForSingleValueEvent(new ValueEventListener() {
+
+                DatabaseReference studentRef = fb.getReference("students");
+                studentRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for(DataSnapshot ds: dataSnapshot.getChildren()) {
-                            Student student = ds.getValue(Student.class);
-                            Sessions sessions = selected;
-                            sessions.setSverified(false);
-                            sessions.setImTutor(false);
-                            if(student.hasPsession(sessions)) {
-                                student.removePsession(sessions);
-                                ds.getRef().setValue(student);
+                            Sessions s = selected;
+                            s.setSverified(false);
+                            s.setImTutor(false);
+                            Student t = ds.getValue(Student.class);
+                            if(t.hasPsession(s)) {
+                                t.removePsession(s);
+                                ds.getRef().setValue(t);
                             }
                         }
                     }
@@ -266,7 +221,6 @@ public class PendingSessionsAdapter extends RecyclerView.Adapter<PendingSessions
 
                     }
                 });
-
             }
         });
 

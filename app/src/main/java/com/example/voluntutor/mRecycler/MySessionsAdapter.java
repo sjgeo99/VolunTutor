@@ -107,4 +107,7 @@ public class MySessionsAdapter extends RecyclerView.Adapter<MySessionsHolder> {
     public ArrayList<Sessions> getSessions() {
         return sessions;
     }
+
+    public void remove(int i) { sessions.remove(i); }
+    public void remove(Sessions s) { sessions.remove(s); }
 }

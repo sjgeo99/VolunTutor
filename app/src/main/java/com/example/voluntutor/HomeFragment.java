@@ -52,12 +52,12 @@ public class HomeFragment extends Fragment {
 
         RecyclerView rv = rootView.findViewById(R.id.homeRV);
         rv.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-        uadapter = new MySessionsAdapter(this.getContext(), psession);
+        uadapter = new MySessionsAdapter(this.getContext(), usession);
         rv.setAdapter(uadapter);
 
         RecyclerView rv2 = rootView.findViewById(R.id.homeRV2);
         rv2.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-        padapter = new PendingSessionsAdapter(this.getContext(), usession);
+        padapter = new PendingSessionsAdapter(this.getContext(), psession);
         rv2.setAdapter(padapter);
 
         FirebaseDatabase fb = FirebaseDatabase.getInstance();

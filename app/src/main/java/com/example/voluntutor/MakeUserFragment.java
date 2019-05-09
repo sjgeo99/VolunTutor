@@ -77,6 +77,12 @@ public class MakeUserFragment extends Fragment {
                     SharedPreferences.Editor editor = sharedPref.edit();
                     editor.putBoolean(getString(R.string.isTutor), false);
                     editor.commit();
+                    tv1.setVisibility(View.GONE);
+                    v1.setVisibility(View.GONE);
+                    v2.setVisibility(View.GONE);
+                    v3.setVisibility(View.GONE);
+                    v4.setVisibility(View.GONE);
+                    v5.setVisibility(View.GONE);
                 }
                 else if(checkedId == R.id.tutor_option) {
                     SharedPreferences sharedPref = getActivity().getSharedPreferences(getString(R.string.shared_pref_name), 0);
@@ -133,7 +139,7 @@ public class MakeUserFragment extends Fragment {
                         calendar.set(Calendar.DAY_OF_MONTH, 6);
                         Sessions s = new Sessions(Long.toString(calendar.getTime().getTime()), "MAMS",
                                 45, "Alan", name, false);
-                        t.addPsession(s);
+                        t.addSession(s);
 
                         Log.d("tutor", t.toString());
 
@@ -145,7 +151,11 @@ public class MakeUserFragment extends Fragment {
 
                         Log.d("tutor key", id);
 
-                        v6.setVisibility(View.VISIBLE);
+                        HomeFragment nextFrag= new HomeFragment();
+                        getActivity().getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.fragment_container, nextFrag)
+                                .addToBackStack(null)
+                                .commit();
                     }
                     else {
                         Log.d("is tutor", "no");
@@ -163,7 +173,7 @@ public class MakeUserFragment extends Fragment {
                         Calendar calendar = Calendar.getInstance();
                         Sessions sess = new Sessions(Long.toString(calendar.getTime().getTime()), "MAMS",
                                 45, "Alan", name, false);
-                        s.addPsession(sess);
+                        s.addSession(sess);
 
                         Log.d("student", s.toString());
 
@@ -175,7 +185,11 @@ public class MakeUserFragment extends Fragment {
 
                         Log.d("student key", id);
 
-                        v6.setVisibility(View.VISIBLE);
+                        HomeFragment nextFrag= new HomeFragment();
+                        getActivity().getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.fragment_container, nextFrag)
+                                .addToBackStack(null)
+                                .commit();
                     }
                 }
             }
