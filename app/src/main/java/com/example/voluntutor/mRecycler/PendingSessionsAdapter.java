@@ -22,6 +22,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -96,8 +97,9 @@ public class PendingSessionsAdapter extends RecyclerView.Adapter<PendingSessions
                 final Sessions selected = sessions.get(pos);
                 Log.d("session tverified", selected.getTVerified() + "");
                 if(selected.getImTutor()) {
-                    Log.d("in wrong loop", "oops");
+                    Log.d("in right loop", "oops");
                     //set tverified true in the tutor's session
+                    //this one works
                     FirebaseDatabase fb = FirebaseDatabase.getInstance();
                     DatabaseReference dr = fb.getReference("tutors");
                     dr.addValueEventListener(new ValueEventListener() {
@@ -106,7 +108,7 @@ public class PendingSessionsAdapter extends RecyclerView.Adapter<PendingSessions
                             for(DataSnapshot ds: dataSnapshot.getChildren()) {
                                 if(ds.getKey().equals(MakeUserFragment.getID()) && yes) {
                                     Tutor tutor1 = ds.getValue(Tutor.class);
-                                    tutor1.getPsessions().remove(selected);
+                                    tutor1.removePsession(selected);
                                     Sessions s = selected;
                                     s.setTverified(true);
                                     if (s.getSVerified()) {
@@ -128,25 +130,23 @@ public class PendingSessionsAdapter extends RecyclerView.Adapter<PendingSessions
                     });
                 }
                 else {
-                    Log.d("in correct loop", "yes");
                     //set sverified true in the tutor's session
+                    //this one seems to work
                     FirebaseDatabase fb = FirebaseDatabase.getInstance();
                     DatabaseReference dr = fb.getReference("tutors");
-                    dr.addValueEventListener(new ValueEventListener() {
+                    dr.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             for(DataSnapshot ds: dataSnapshot.getChildren()) {
                                 Tutor tutor1 = ds.getValue(Tutor.class);
                                 if(tutor1.getName().equals(selected.getTutor()) && yess) {
+                                    yess = false;
                                     Sessions s = selected;
                                     s.setImTutor(true);
                                     tutor1.getPsessions().remove(s);
                                     s.setSverified(true);
-                                    if(s.getTVerified()) {
-                                        tutor1.addVsession(s);
-                                    }
+                                    if(s.getTVerified()) { tutor1.addVsession(s); }
                                     else { tutor1.addPsession(s); }
-                                    yess = false;
                                     ds.getRef().setValue(tutor1);
                                 }
                             }
@@ -158,27 +158,26 @@ public class PendingSessionsAdapter extends RecyclerView.Adapter<PendingSessions
                         }
                     });
                     //delete from the tutee's sessions list
-                    //TODO: its broken lmao
+                    //TODO: it infinitely creates and deletes psessions for some reason
+                    //THIS ONE DOESN'T WORKKK
                     SharedPreferences sharedPref = c.getSharedPreferences("Startup info", 0);
-                    Log.d("is tutor", sharedPref.getBoolean("isTutor", false) + "");
                     if(sharedPref.getBoolean("isTutor", false)) {
-                        DatabaseReference listReference = fb.getReference("tutors").child(MakeUserFragment.getID());
-                        listReference.addValueEventListener(new ValueEventListener() {
+                        DatabaseReference meRef = dr.child(MakeUserFragment.getID()).getRef();
+                        meRef.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                if(tuteeDelete) {
-                                    Log.d("tutee delete", tuteeDelete + "");
-                                    Tutor t = dataSnapshot.getValue(Tutor.class);
-                                    Sessions s = selected;
-                                    s.setSverified(false);
-                                    s.setImTutor(false);
-                                    Log.d("s", s.getTVerified() + " " + s.getSVerified() + s.getImTutor());
-                                    Log.d("selected", t.getPsessions().get(0).getTVerified() + " " +
-                                            t.getPsessions().get(0).getSVerified() + t.getPsessions().get(0).getImTutor());
-                                    Log.d("same", s.equals(t.getPsessions().get(0)) + "");
-                                    t.removePsession(s);
-                                    tuteeDelete = false;
-                                    dataSnapshot.getRef().setValue(t);
+                                for(DataSnapshot ds: dataSnapshot.getChildren()) {
+                                    if (tuteeDelete && ds.getKey().equals("psessions")) {
+                                        tuteeDelete = false;
+                                        ArrayList<Sessions> sessions1 = (ArrayList<Sessions>) ds.getValue();
+                                        Log.d("sessions1", sessions1.get(0).toString());
+                                        Sessions s = selected;
+                                        s.setSverified(false);
+                                        s.setImTutor(false);
+                                        Log.d("same", "" + sessions1.contains(s));
+                                        sessions1.remove(s);
+                                        ds.getRef().setValue(sessions1);
+                                    }
                                 }
                             }
 
@@ -215,7 +214,9 @@ public class PendingSessionsAdapter extends RecyclerView.Adapter<PendingSessions
         holder.getNo().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //remove from tutor's list
 
+                //remove from tutee's list
             }
         });
 

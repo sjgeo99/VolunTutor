@@ -9,6 +9,7 @@ import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,7 +58,6 @@ public class MakeUserFragment extends Fragment {
         final View v4 = view.findViewById(R.id.subjects_label);
         final View v5 = view.findViewById(R.id.chooseSubs);
         final View v6 = view.findViewById(R.id.proceed);
-        final View v7 = view.findViewById(R.id.spinnerDay);
 
         tv1.setVisibility(View.GONE);
         v1.setVisibility(View.GONE);
@@ -66,7 +66,6 @@ public class MakeUserFragment extends Fragment {
         v4.setVisibility(View.GONE);
         v5.setVisibility(View.GONE);
         v6.setVisibility(View.GONE);
-        v7.setVisibility(View.GONE);
 
         //check student or tutor is checked
         RadioGroup radioGroup = (RadioGroup) view.findViewById(R.id.student_or_tutor);
@@ -90,7 +89,6 @@ public class MakeUserFragment extends Fragment {
                     v3.setVisibility(View.VISIBLE);
                     v4.setVisibility(View.VISIBLE);
                     v5.setVisibility(View.VISIBLE);
-                    v7.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -100,19 +98,19 @@ public class MakeUserFragment extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SharedPreferences sharedPref = getActivity().getSharedPreferences(getString(R.string.shared_pref_name), 0);
-                boolean isTutor = sharedPref.getBoolean(getString(R.string.isTutor), false);
-                if (isTutor) {
+                Log.d("click", "click");
+                EditText txtName = (EditText) view.findViewById(R.id.enter_name);
+                EditText txtSchool = (EditText) view.findViewById(R.id.enter_school);
 
-                    EditText txtName = (EditText) view.findViewById(R.id.enter_name);
-                    EditText txtSchool = (EditText) view.findViewById(R.id.enter_school);
-                    String stxtName = txtName.getText().toString();
-                    String stxtSchool = txtSchool.getText().toString();
-
-                    if (TextUtils.isEmpty(stxtSchool) || TextUtils.isEmpty(stxtName)) {
-                        Toast.makeText(getContext(), "You did not enter a username and/or password. Please fill out both.", Toast.LENGTH_LONG).show();
-                    }
-                    else {
+                if (txtName.getText().toString().equals("") || txtSchool.getText().toString().equals("")) {
+                    Log.d("null", "Null");
+                    Toast.makeText(getContext(), "You did not enter a name and school. Please fill out both.", Toast.LENGTH_LONG).show();
+                }
+                else {
+                    SharedPreferences sharedPref = getActivity().getSharedPreferences(getString(R.string.shared_pref_name), 0);
+                    boolean isTutor = sharedPref.getBoolean(getString(R.string.isTutor), false);
+                    if (isTutor) {
+                        Log.d("is tutor", "yes");
                         String name = txtName.getText().toString();
                         String school = txtSchool.getText().toString();
                         int startHr = values[0];
@@ -131,25 +129,26 @@ public class MakeUserFragment extends Fragment {
 
                         t.addSubject(subject);
 
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.set(Calendar.DAY_OF_MONTH, 6);
+                        Sessions s = new Sessions(Long.toString(calendar.getTime().getTime()), "MAMS",
+                                45, name, "Alan", true);
+                        t.addPsession(s);
+
+                        Log.d("tutor", t.toString());
+
                         FirebaseDatabase fb = FirebaseDatabase.getInstance();
-                        DatabaseReference ref = fb.getReference("/tutors");
+                        DatabaseReference ref = fb.getReference("tutors");
                         DatabaseReference nRef = ref.push();
                         nRef.setValue(t);
                         id = nRef.getKey();
 
+                        Log.d("tutor key", id);
+
                         v6.setVisibility(View.VISIBLE);
                     }
-                }
-                else {
-
-                    EditText txtName = (EditText) view.findViewById(R.id.enter_name);
-                    EditText txtSchool = (EditText) view.findViewById(R.id.enter_school);
-                    String stxtName = txtName.getText().toString();
-                    String stxtSchool = txtSchool.getText().toString();
-                    if (TextUtils.isEmpty(stxtSchool) || TextUtils.isEmpty(stxtName)) {
-                        Toast.makeText(getContext(), "You did not enter a username and/or password. Please fill out both.", Toast.LENGTH_LONG).show();
-                    }
                     else {
+                        Log.d("is tutor", "no");
                         String name = txtName.getText().toString();
                         String school = txtSchool.getText().toString();
 
@@ -161,11 +160,15 @@ public class MakeUserFragment extends Fragment {
 
                         Student s = new Student(name, school);
 
+                        Log.d("student", s.toString());
+
                         FirebaseDatabase fb = FirebaseDatabase.getInstance();
                         DatabaseReference ref = fb.getReference("/students");
                         DatabaseReference nRef = ref.push();
                         nRef.setValue(s);
                         id = nRef.getKey();
+
+                        Log.d("student key", id);
 
                         v6.setVisibility(View.VISIBLE);
                     }

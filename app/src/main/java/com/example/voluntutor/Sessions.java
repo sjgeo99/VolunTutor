@@ -81,8 +81,6 @@ public class Sessions implements Comparable<Sessions> {
      * Gets whether the session is verified
      * @return whether the session is verified
      */
-    public boolean getVerified() {return sverified && tverified;}
-    public void setVerified(Boolean b) { sverified = true; tverified = true; }
     public boolean getSVerified() { return sverified; }
     public boolean getTVerified() { return tverified; }
 
@@ -138,7 +136,6 @@ public class Sessions implements Comparable<Sessions> {
      * @param s the name of the tutee
      */
     public void setTutee(String s) {tutee = s;}
-
     /**
      * equals method for sessions
      * @param s the other session to compare to
