@@ -212,11 +212,63 @@ public class PendingSessionsAdapter extends RecyclerView.Adapter<PendingSessions
         });
 
         holder.getNo().setOnClickListener(new View.OnClickListener() {
+            final Sessions selected = sessions.get(pos);
             @Override
             public void onClick(View v) {
-                //remove from tutor's list
+                //check through tutor list and delete any occurrences of the selected session
+                //delete whether the imTutor boolean is true or false (because we also want to
+                //delete the tutee's session)
+                FirebaseDatabase fb = FirebaseDatabase.getInstance();
+                DatabaseReference dr = fb.getReference("tutors");
+                dr.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for(DataSnapshot ds: dataSnapshot.getChildren()) {
+                            Sessions s = selected;
+                            s.setSverified(false);
+                            s.setImTutor(false);
+                            Sessions s2 = s;
+                            s.setImTutor(true);
+                            Tutor t = ds.getValue(Tutor.class);
+                            if(t.hasPsession(s)) {
+                                t.removePsession(s);
+                                ds.getRef().setValue(t);
+                            }
+                            else if(t.hasPsession(s2)) {
+                                t.removePsession(s2);
+                                ds.getRef().setValue(t);
+                            }
+                        }
+                    }
 
-                //remove from tutee's list
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+                //search through list of students as well (just search imTutor = false)
+                DatabaseReference dr2 = fb.getReference("students");
+                dr2.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        for(DataSnapshot ds: dataSnapshot.getChildren()) {
+                            Student student = ds.getValue(Student.class);
+                            Sessions sessions = selected;
+                            sessions.setSverified(false);
+                            sessions.setImTutor(false);
+                            if(student.hasPsession(sessions)) {
+                                student.removePsession(sessions);
+                                ds.getRef().setValue(student);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
             }
         });
 

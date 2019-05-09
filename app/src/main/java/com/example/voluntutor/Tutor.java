@@ -55,6 +55,12 @@ public class Tutor {
         }
         return false;
     }
+    public boolean hasPsession(Sessions s) {
+        for(int i = 0; i < psessions.size(); i++) {
+            if(psessions.get(i).equals(s)) return true;
+        }
+        return false;
+    }
     /**
      * removes a specific time slot from the tutor's time slot
      * @param s the time slot
@@ -97,7 +103,7 @@ public class Tutor {
     }
 
     public boolean hasSession(Sessions s) {
-        return usessions.contains(s);
+        return usessions.contains(s) || psessions.contains(s) || vsessions.contains(s);
     }
     /**
      * Sets the name of the tutor.

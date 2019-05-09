@@ -136,6 +136,18 @@ public class Sessions implements Comparable<Sessions> {
      * @param s the name of the tutee
      */
     public void setTutee(String s) {tutee = s;}
+    public boolean getVerified() {
+        if(tverified && sverified) {
+            return true;
+        }
+        else { return false; }
+    }
+    public void setVerified(boolean b) {
+        if(b) {
+            sverified = true;
+            tverified = true;
+        }
+    }
     /**
      * equals method for sessions
      * @param s the other session to compare to

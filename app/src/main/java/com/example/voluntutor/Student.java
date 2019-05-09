@@ -90,7 +90,12 @@ public class Student {
      * @param name String name of the student
      */
     public void setName(String name) {this.name = name;}
-
+    public boolean hasPsession(Sessions s) {
+        for(int i = 0; i < psessions.size(); i++) {
+            if(psessions.get(i).equals(s)) return true;
+        }
+        return false;
+    }
     /**
      * Sets the school of the student to the inputted parameter (String
      * @param school String name of the school
