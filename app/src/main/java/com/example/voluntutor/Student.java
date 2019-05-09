@@ -48,7 +48,7 @@ public class Student {
      * Gets and returns the pending sessions
      * @return the sessions (ArrayList<Session>)the student has yet to verify
      */
-    public ArrayList getPSessions() {return psessions;}
+    public ArrayList<Sessions> getPSessions() {return psessions;}
 
     public void removePsession(Sessions s) { psessions.remove(s); }
     public void removeUsession(Sessions s) { usessions.remove(s); }
@@ -58,7 +58,7 @@ public class Student {
      * Gets and returns the upcoming sessions
      * @return the sessions (ArrayList<Session>)the student has not yet attended
      */
-    public ArrayList getUSessions() {return usessions;}
+    public ArrayList<Sessions> getUSessions() {return usessions;}
 
     /**
      * Adds a session to upcoming sessions

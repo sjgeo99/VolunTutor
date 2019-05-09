@@ -64,7 +64,7 @@ public class HomeFragment extends Fragment {
         SharedPreferences sharedPref = getActivity().getSharedPreferences(getString(R.string.shared_pref_name), 0);
         final boolean isTutor = sharedPref.getBoolean(getString(R.string.isTutor), false);
         if(isTutor) { dr = fb.getReference("/tutors"); }
-        else { dr = fb.getReference("/student"); }
+        else { dr = fb.getReference("/students"); }
 
         DatabaseReference myUsessions = dr.child(MakeUserFragment.getID()).getRef().child("usessions").getRef();
         DatabaseReference myPsessions = dr.child(MakeUserFragment.getID()).getRef().child("psessions").getRef();

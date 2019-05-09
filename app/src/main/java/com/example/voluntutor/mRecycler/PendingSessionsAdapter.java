@@ -162,21 +162,17 @@ public class PendingSessionsAdapter extends RecyclerView.Adapter<PendingSessions
                     //THIS ONE DOESN'T WORKKK
                     SharedPreferences sharedPref = c.getSharedPreferences("Startup info", 0);
                     if(sharedPref.getBoolean("isTutor", false)) {
-                        DatabaseReference meRef = dr.child(MakeUserFragment.getID()).getRef();
-                        meRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        dr.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 for(DataSnapshot ds: dataSnapshot.getChildren()) {
-                                    if (tuteeDelete && ds.getKey().equals("psessions")) {
-                                        tuteeDelete = false;
-                                        ArrayList<Sessions> sessions1 = (ArrayList<Sessions>) ds.getValue();
-                                        Log.d("sessions1", sessions1.get(0).toString());
-                                        Sessions s = selected;
-                                        s.setSverified(false);
-                                        s.setImTutor(false);
-                                        Log.d("same", "" + sessions1.contains(s));
-                                        sessions1.remove(s);
-                                        ds.getRef().setValue(sessions1);
+                                    Tutor t = ds.getValue(Tutor.class);
+                                    Sessions s = selected;
+                                    s.setSverified(false);
+                                    s.setImTutor(false);
+                                    if(t.hasPsession(s)) {
+                                        t.removePsession(s);
+                                        ds.getRef().setValue(t);
                                     }
                                 }
                             }
@@ -218,6 +214,7 @@ public class PendingSessionsAdapter extends RecyclerView.Adapter<PendingSessions
                 //check through tutor list and delete any occurrences of the selected session
                 //delete whether the imTutor boolean is true or false (because we also want to
                 //delete the tutee's session)
+                //this seems to work
                 FirebaseDatabase fb = FirebaseDatabase.getInstance();
                 DatabaseReference dr = fb.getReference("tutors");
                 dr.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -247,6 +244,7 @@ public class PendingSessionsAdapter extends RecyclerView.Adapter<PendingSessions
                     }
                 });
                 //search through list of students as well (just search imTutor = false)
+                //this doesn't seem to work
                 DatabaseReference dr2 = fb.getReference("students");
                 dr2.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override

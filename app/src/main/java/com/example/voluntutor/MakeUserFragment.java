@@ -132,7 +132,7 @@ public class MakeUserFragment extends Fragment {
                         Calendar calendar = Calendar.getInstance();
                         calendar.set(Calendar.DAY_OF_MONTH, 6);
                         Sessions s = new Sessions(Long.toString(calendar.getTime().getTime()), "MAMS",
-                                45, name, "Alan", true);
+                                45, "Alan", name, false);
                         t.addPsession(s);
 
                         Log.d("tutor", t.toString());
@@ -159,6 +159,11 @@ public class MakeUserFragment extends Fragment {
                         editor.commit();
 
                         Student s = new Student(name, school);
+
+                        Calendar calendar = Calendar.getInstance();
+                        Sessions sess = new Sessions(Long.toString(calendar.getTime().getTime()), "MAMS",
+                                45, "Alan", name, false);
+                        s.addPsession(sess);
 
                         Log.d("student", s.toString());
 
