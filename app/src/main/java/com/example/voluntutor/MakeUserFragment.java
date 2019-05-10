@@ -140,6 +140,7 @@ public class MakeUserFragment extends Fragment {
                         FirebaseDatabase fb = FirebaseDatabase.getInstance();
                         DatabaseReference ref = fb.getReference("tutors");
                         DatabaseReference nRef = ref.push();
+                        Toast.makeText(getContext(), "You are a tutor!", Toast.LENGTH_LONG).show();
                         nRef.setValue(t);
                         id = nRef.getKey();
 
@@ -169,6 +170,7 @@ public class MakeUserFragment extends Fragment {
                         FirebaseDatabase fb = FirebaseDatabase.getInstance();
                         DatabaseReference ref = fb.getReference("/students");
                         DatabaseReference nRef = ref.push();
+                        Toast.makeText(getContext(), "You are a student!", Toast.LENGTH_LONG).show();
                         nRef.setValue(s);
                         id = nRef.getKey();
 
