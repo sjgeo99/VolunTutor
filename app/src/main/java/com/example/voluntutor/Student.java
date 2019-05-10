@@ -44,13 +44,29 @@ public class Student {
      */
     public String getSchool() {return school;}
 
+    public void psessionSverify(Sessions s) {
+        for(int i = 0; i < psessions.size(); i++) {
+            if(psessions.get(i).equals(s)) {
+                s.setSverified(true);
+                psessions.set(i, s);
+            }
+        }
+    }
+
     /**
      * Gets and returns the pending sessions
      * @return the sessions (ArrayList<Session>)the student has yet to verify
      */
     public ArrayList<Sessions> getPSessions() {return psessions;}
 
-    public void removePsession(Sessions s) { psessions.remove(s); }
+    public void removePsession(Sessions s) {
+        for(int i = 0; i < psessions.size(); i++) {
+            if(psessions.get(i).equals(s)) {
+                psessions.remove(i);
+                break;
+            }
+        }
+    }
     public void removeUsession(Sessions s) { usessions.remove(s); }
     public void addPsession(Sessions s) { psessions.add(s); }
 
@@ -90,6 +106,7 @@ public class Student {
      * @param name String name of the student
      */
     public void setName(String name) {this.name = name;}
+
     public boolean hasPsession(Sessions s) {
         for(int i = 0; i < psessions.size(); i++) {
             if(psessions.get(i).equals(s)) return true;

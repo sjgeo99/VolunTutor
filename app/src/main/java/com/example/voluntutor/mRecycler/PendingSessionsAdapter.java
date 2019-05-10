@@ -93,32 +93,25 @@ public class PendingSessionsAdapter extends RecyclerView.Adapter<PendingSessions
         holder.getYes().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 final Sessions selected = sessions.get(pos);
-                Log.d("session tverified", selected.getTVerified() + "");
+                Log.d("selected", selected.getSVerified() + " " + selected.getImTutor() +
+                        " " + selected.getTVerified());
+                //this works
                 if(selected.getImTutor()) {
-                    Log.d("in right loop", "oops");
-                    //set tverified true in the tutor's session
-                    //this one works
                     FirebaseDatabase fb = FirebaseDatabase.getInstance();
                     DatabaseReference dr = fb.getReference("tutors");
-                    dr.addValueEventListener(new ValueEventListener() {
+                    dr.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             for(DataSnapshot ds: dataSnapshot.getChildren()) {
-                                if(ds.getKey().equals(MakeUserFragment.getID()) && yes) {
-                                    Tutor tutor1 = ds.getValue(Tutor.class);
-                                    tutor1.removePsession(selected);
-                                    Sessions s = selected;
-                                    s.setTverified(true);
-                                    if (s.getSVerified()) {
-                                        tutor1.addVsession(s);
-                                    }
-                                    else {
-                                        tutor1.addPsession(s);
-                                    }
-                                    ds.getRef().setValue(tutor1);
-                                    yes = false;
+                                Tutor t = ds.getValue(Tutor.class);
+                                if(t.hasPsession(selected)) {
+                                    t.removePsession(selected);
+                                    Sessions tVer = selected;
+                                    tVer.setTverified(true);
+                                    t.addPsession(tVer);
+                                    ds.getRef().setValue(t);
+                                    selected.setTverified(false);
                                 }
                             }
                         }
@@ -130,24 +123,26 @@ public class PendingSessionsAdapter extends RecyclerView.Adapter<PendingSessions
                     });
                 }
                 else {
-                    //set sverified true in the tutor's session
-                    //this one seems to work
+                    final Sessions s1 = new Sessions(selected.getDate(), selected.getLocation(), selected.getLength(),
+                            selected.getTutor(), selected.getTutee(), true);
+                    final Sessions s2 = new Sessions(selected.getDate(), selected.getLocation(), selected.getLength(),
+                            selected.getTutor(), selected.getTutee(), selected.getImTutor());
+                    s2.setImTutor(false);
+
                     FirebaseDatabase fb = FirebaseDatabase.getInstance();
                     DatabaseReference dr = fb.getReference("tutors");
                     dr.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             for(DataSnapshot ds: dataSnapshot.getChildren()) {
-                                Tutor tutor1 = ds.getValue(Tutor.class);
-                                if(tutor1.getName().equals(selected.getTutor()) && yess) {
-                                    yess = false;
-                                    Sessions s = selected;
-                                    s.setImTutor(true);
-                                    tutor1.getPsessions().remove(s);
-                                    s.setSverified(true);
-                                    if(s.getTVerified()) { tutor1.addVsession(s); }
-                                    else { tutor1.addPsession(s); }
-                                    ds.getRef().setValue(tutor1);
+                                Tutor t = ds.getValue(Tutor.class);
+                                if(t.hasPsession(s2)) {
+                                    t.removePsession(s2);
+                                    ds.getRef().setValue(t);
+                                }
+                                if(t.hasPsession(s1)) {
+                                    t.psessionSverify(s1);
+                                    ds.getRef().setValue(t);
                                 }
                             }
                         }
@@ -157,8 +152,26 @@ public class PendingSessionsAdapter extends RecyclerView.Adapter<PendingSessions
 
                         }
                     });
-                    //delete from the tutee's sessions list
 
+                    //this also works
+                    DatabaseReference studentRef = fb.getReference("students");
+                    studentRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            for(DataSnapshot ds: dataSnapshot.getChildren()) {
+                                Student t = ds.getValue(Student.class);
+                                if(t.hasPsession(s2)) {
+                                    t.removePsession(s2);
+                                    ds.getRef().setValue(t);
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
                 }
             }
         });
@@ -200,6 +213,7 @@ public class PendingSessionsAdapter extends RecyclerView.Adapter<PendingSessions
                     }
                 });
 
+                //this also works
                 DatabaseReference studentRef = fb.getReference("students");
                 studentRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override

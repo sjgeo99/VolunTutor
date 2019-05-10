@@ -135,12 +135,6 @@ public class MakeUserFragment extends Fragment {
 
                         t.addSubject(subject);
 
-                        Calendar calendar = Calendar.getInstance();
-                        calendar.set(Calendar.DAY_OF_MONTH, 6);
-                        Sessions s = new Sessions(Long.toString(calendar.getTime().getTime()), "MAMS",
-                                45, "Alan", name, false);
-                        t.addSession(s);
-
                         Log.d("tutor", t.toString());
 
                         FirebaseDatabase fb = FirebaseDatabase.getInstance();
@@ -169,11 +163,6 @@ public class MakeUserFragment extends Fragment {
                         editor.commit();
 
                         Student s = new Student(name, school);
-
-                        Calendar calendar = Calendar.getInstance();
-                        Sessions sess = new Sessions(Long.toString(calendar.getTime().getTime()), "MAMS",
-                                45, "Alan", name, false);
-                        s.addSession(sess);
 
                         Log.d("student", s.toString());
 

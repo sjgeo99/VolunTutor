@@ -105,6 +105,15 @@ public class Tutor {
     public boolean hasSession(Sessions s) {
         return usessions.contains(s) || psessions.contains(s) || vsessions.contains(s);
     }
+
+    public void psessionSverify(Sessions s) {
+        for(int i = 0; i < psessions.size(); i++) {
+            if(psessions.get(i).equals(s)) {
+                s.setSverified(true);
+                psessions.set(i, s);
+            }
+        }
+    }
     /**
      * Sets the name of the tutor.
      */

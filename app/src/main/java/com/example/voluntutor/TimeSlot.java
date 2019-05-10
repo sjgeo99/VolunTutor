@@ -194,8 +194,8 @@ public class TimeSlot implements Comparable<TimeSlot>, Parcelable {
             return toReturn;
         }
 
-        public Student[] newArray(int size) {
-            return new Student[size];
+        public TimeSlot[] newArray(int size) {
+            return new TimeSlot[size];
         }
     };
 }
