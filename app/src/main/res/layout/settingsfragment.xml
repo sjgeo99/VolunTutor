@@ -17,7 +17,7 @@
         android:text="@string/title_settings"
         android:textColor="@android:color/black"
         android:textColorHighlight="@color/colorPrimaryDark"
-        android:textSize="18sp"
+        android:textSize="48sp"
         android:textStyle="bold"
         android:typeface="normal"
         app:layout_constraintEnd_toEndOf="parent"
@@ -91,7 +91,7 @@
                 android:layout_height="40dp"
                 android:layout_weight="1"
                 android:ems="10"
-                android:hint="_____ High School"
+                android:hint="@string/change_school_student"
                 android:inputType="text"
                 tools:layout_editor_absoluteX="16dp"
                 tools:layout_editor_absoluteY="158dp" />
@@ -139,7 +139,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center|left"
-                    android:text="Start time:" />
+                    android:text="@string/startDescr" />
 
                 <Spinner
                     android:id="@+id/spinnerSHAdd"
@@ -169,7 +169,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:gravity="center|left"
-                    android:text="End time:" />
+                    android:text="@string/end_descr" />
 
                 <Spinner
                     android:id="@+id/spinnerEHAdd"

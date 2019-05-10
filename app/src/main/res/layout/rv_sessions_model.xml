@@ -13,7 +13,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:clickable="true"
-        android:focusable="true">
+        android:focusable="true"
+        android:background="#e0f2f1">
 
         <LinearLayout
             android:id="@+id/sessions_layout"

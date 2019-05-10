@@ -102,7 +102,7 @@
         android:layout_height="40dp"
         android:layout_marginBottom="494dp"
         android:ems="10"
-        android:hint="_____ High School"
+        android:hint="@string/change_school_student"
         android:inputType="text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

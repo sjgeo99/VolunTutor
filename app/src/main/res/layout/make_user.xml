@@ -12,6 +12,7 @@
         android:layout_marginBottom="2dp"
         android:text="@string/welcome_text"
         android:textSize="36sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/direction_login"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -30,7 +31,7 @@
         android:text="@string/login_directions"
         app:layout_constraintBottom_toTopOf="@+id/name_label"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/greeting" />
 
@@ -46,6 +47,7 @@
         android:layout_marginBottom="8dp"
         android:text="@string/Name_descr"
         android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/enter_name"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -83,6 +85,7 @@
         android:layout_marginBottom="8dp"
         android:text="@string/School_descr"
         android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/enter_school"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
@@ -118,7 +121,9 @@
         android:layout_marginEnd="300dp"
         android:layout_marginRight="300dp"
         android:layout_marginBottom="8dp"
-        android:text="I want to be (select one):"
+        android:text="@string/select"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/linearLayout4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.013"
@@ -147,14 +152,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="A student" />
+                android:text="@string/student_option" />
 
             <RadioButton
                 android:id="@+id/tutor_option"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="A tutor" />
+                android:text="@string/tutor_option" />
         </RadioGroup>
 
     </LinearLayout>
@@ -173,7 +178,7 @@
         android:textSize="14sp"
         app:layout_constraintBottom_toTopOf="@+id/spinnerDay"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
 
@@ -216,7 +221,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center|left"
-            android:text="Start time:" />
+            android:text="@string/start_time" />
 
         <Spinner
             android:id="@+id/spinnerSH"
@@ -250,7 +255,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center|left"
-            android:text="End time:" />
+            android:text="@string/end_time" />
 
         <Spinner
             android:id="@+id/spinnerEH"
@@ -276,7 +281,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
-        android:text="Enter one subject you can tutor in. You will be able to add more later, using the Settings tab."
+        android:text="@string/subjects_label"
         app:layout_constraintBottom_toTopOf="@+id/chooseSubs"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.454"
@@ -309,7 +314,7 @@
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="92dp"
-        android:text="OK"
+        android:text="@string/make_user_obj"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
@@ -326,7 +331,7 @@
         android:layout_marginEnd="24dp"
         android:layout_marginRight="24dp"
         android:layout_marginBottom="60dp"
-        android:text="Proceed using the navigation bar below"
+        android:text="@string/proceed_text"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
