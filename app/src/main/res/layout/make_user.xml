@@ -174,11 +174,11 @@
         android:layout_marginEnd="40dp"
         android:layout_marginRight="40dp"
         android:layout_marginBottom="8dp"
-        android:text="@string/Slot_descr"
+        android:text="Please add in one day of the week and time (on a 24-hour scale) when you are available"
         android:textSize="14sp"
         app:layout_constraintBottom_toTopOf="@+id/spinnerDay"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.285"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
 
