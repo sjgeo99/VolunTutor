@@ -47,7 +47,7 @@ public class SettingsFragment extends Fragment {
         rSubs = new ArrayAdapter<String>(this.getContext(),
                 android.R.layout.simple_spinner_dropdown_item, subjects);
 
-        Resources res = getResources();
+        final Resources res = getResources();
         String[] subs = res.getStringArray(R.array.subjects);
         ArrayList<String> alSubs = new ArrayList<String>(Arrays.asList(subs));
 
@@ -86,23 +86,22 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        //fixed
         Button buttonAddS = (Button) view.findViewById(R.id.add_subj_confirm);
         buttonAddS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FirebaseDatabase fb = FirebaseDatabase.getInstance();
                 DatabaseReference ref = fb.getReference("tutors");
-                final DatabaseReference nameRef = ref.child(MakeUserFragment.getID()).getRef();
 
-                nameRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                ref.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for(DataSnapshot ds: dataSnapshot.getChildren()) {
-                            if(ds.getKey().equals("subjects")) {
-                                ArrayList<String> s = (ArrayList<String>) ds.getValue();
-                                s.add(addSubject);
-                                ds.getRef().setValue(s);
-                                break;
+                            Tutor t = ds.getValue(Tutor.class);
+                            if(!t.hasSubject(addSubject)) {
+                                t.addSubject(addSubject);
+                                ds.getRef().setValue(t);
                             }
                         }
                     }
@@ -116,28 +115,27 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        //fixed
         Button buttonAddTS = (Button) view.findViewById(R.id.add_slot_confirm);
         buttonAddTS.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 FirebaseDatabase fb = FirebaseDatabase.getInstance();
                 DatabaseReference ref = fb.getReference("tutors");
-                DatabaseReference nameRef = ref.child(MakeUserFragment.getID()).getRef();
 
-                TimeSlot toAdd = new TimeSlot(DOWA, addVals[0], addVals[1], addVals[2],
+                final TimeSlot toAdd = new TimeSlot(DOWA, addVals[0], addVals[1], addVals[2],
                         addVals[3]);
 
-                nameRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                ref.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for(DataSnapshot ds: dataSnapshot.getChildren()) {
-                            if(ds.getKey().equals("timeSlots")) {
-                                ArrayList<TimeSlot> s = (ArrayList<TimeSlot>) ds.getValue();
-                                TimeSlot toAdd = new TimeSlot(DOWA, addVals[0], addVals[1], addVals[2],
-                                        addVals[3]);
-                                s.add(toAdd);
-                                ds.getRef().setValue(s);
-                                break;
+                            if(ds.getKey().equals(MakeUserFragment.getID())) {
+                                Tutor t = ds.getValue(Tutor.class);
+                                if(!t.hasTs(toAdd)) {
+                                    t.addTimeSlots(toAdd);
+                                    ds.getRef().setValue(t);
+                                }
                             }
                         }
                     }
@@ -150,20 +148,23 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        //fixed
         Button buttonRemSubj = (Button) view.findViewById(R.id.rem_subj_confirm);
         buttonRemSubj.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 FirebaseDatabase fb = FirebaseDatabase.getInstance();
-                final DatabaseReference ref = fb.getReference("tutors");
-                DatabaseReference mySubs = ref.child(MakeUserFragment.getID()).getRef().child("subjects");
-                mySubs.addValueEventListener(new ValueEventListener() {
+                DatabaseReference ref = fb.getReference("tutors");
+                ref.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for(DataSnapshot ds: dataSnapshot.getChildren()) {
-                            String subj = ds.getValue(String.class);
-                            if(subj.equals(removeSubj)) ds.getRef().removeValue();
+                            Tutor t = ds.getValue(Tutor.class);
+                            if(t.hasSubject(removeSubj)) {
+                                t.removeSubject(removeSubj);
+                                ds.getRef().setValue(t);
+                            }
                         }
                     }
 
@@ -175,25 +176,24 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        //fixed
         Button buttonRemSlot = (Button) view.findViewById(R.id.remove_slot_confirm);
         buttonRemSlot.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d("timeslots", Arrays.toString(ts.toArray()));
                 Log.d("to remove", toRemove.toString());
-                Spinner s = (Spinner) view.findViewById(R.id.spinnerRemove);
 
                 FirebaseDatabase fb = FirebaseDatabase.getInstance();
                 DatabaseReference ref = fb.getReference("/tutors");
-                DatabaseReference mySlots = ref.child(MakeUserFragment.getID()).getRef().child("timeSlots");
-                mySlots.addValueEventListener(new ValueEventListener() {
+                ref.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for(DataSnapshot ds: dataSnapshot.getChildren()) {
-                            TimeSlot check = ds.getValue(TimeSlot.class);
-
-                            if(check.equals(toRemove)) {
-                                ds.getRef().removeValue();
+                            Tutor t = ds.getValue(Tutor.class);
+                            if(t.hasTs(toRemove)) {
+                                t.removeTimeSlot(toRemove);
+                                ds.getRef().setValue(t);
                             }
                         }
                     }

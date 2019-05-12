@@ -78,9 +78,25 @@ public class Tutor {
      * @param s the subject to be removed
      */
     public void removeSubject(String s) {
-        subjects.remove(s.toLowerCase());
+        for(int i = 0; i < subjects.size(); i++) {
+            if(subjects.get(i).equals(s)) {
+                subjects.remove(i);
+            }
+        }
     }
-
+    public boolean hasTs(TimeSlot t) {
+        for(int i = 0; i < timeSlots.size(); i++) {
+            if(timeSlots.get(i).equals(t)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public void removeTimeSlot(TimeSlot t) {
+        for(int i = 0; i < timeSlots.size(); i++) {
+            if(timeSlots.get(i).equals(t)) timeSlots.remove(i);
+        }
+    }
     public void addPsession(Sessions s) { psessions.add(s); }
 
     public void addVsession(Sessions s) { vsessions.add(s); }
@@ -113,6 +129,20 @@ public class Tutor {
                 psessions.set(i, s);
             }
         }
+    }
+    public boolean hasUsession(Sessions s) {
+        for(int i = 0; i < usessions.size(); i++) {
+            if(usessions.get(i).equals(s)) return true;
+        }
+        return false;
+    }
+    public boolean hasSubject(String s) {
+        for(int i = 0; i < subjects.size(); i++) {
+            if(subjects.get(i).equals(s)) {
+                return true;
+            }
+        }
+        return false;
     }
     /**
      * Sets the name of the tutor.

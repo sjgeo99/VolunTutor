@@ -235,8 +235,8 @@ public class MySlotsAdapter extends RecyclerView.Adapter<MySlotsHolder> {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                                        if (ds.getKey().equals(MakeUserFragment.getID()) && firstStu) {
-                                            Tutor t = ds.getValue(Tutor.class);
+                                        Tutor t = ds.getValue(Tutor.class);
+                                        if (!t.hasSession(s) && ds.getKey().equals(MakeUserFragment.getID()) && firstStu) {
                                             t.addSession(s);
                                             ds.getRef().setValue(t);
                                             firstStu = false;
@@ -249,14 +249,15 @@ public class MySlotsAdapter extends RecyclerView.Adapter<MySlotsHolder> {
 
                                 }
                             });
-                        } else {
+                        }
+                        else {
                             DatabaseReference dr = fb.getReference("students");
                             dr.addValueEventListener(new ValueEventListener() {
                                 @Override
                                 public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                     for (DataSnapshot ds : dataSnapshot.getChildren()) {
-                                        if (ds.getKey().equals(MakeUserFragment.getID()) && firstStu) {
-                                            Student stu = ds.getValue(Student.class);
+                                        Student stu = ds.getValue(Student.class);
+                                        if (!stu.hasPsession(s) && ds.getKey().equals(MakeUserFragment.getID()) && firstStu) {
                                             stu.addSession(s);
                                             ds.getRef().setValue(stu);
                                             firstStu = false;
@@ -276,9 +277,11 @@ public class MySlotsAdapter extends RecyclerView.Adapter<MySlotsHolder> {
                         tutors.addValueEventListener(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                Log.d("in correct listener", "yes");
                                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                                     Tutor t = ds.getValue(Tutor.class);
-                                    if (t.getName().equals(tutorName) && firstTut) {
+                                    if (t.getName().equals(tutorName) && firstTut && !t.hasUsession(s)) {
+                                        Log.d("found tutor", "yay");
                                         s.setImTutor(true);
                                         t.addSession(s);
                                         ds.getRef().setValue(t);
