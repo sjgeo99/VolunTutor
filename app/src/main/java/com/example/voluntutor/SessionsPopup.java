@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 public class SessionsPopup extends AppCompatActivity {
@@ -25,5 +27,13 @@ public class SessionsPopup extends AppCompatActivity {
         date_popup.setText(date);
         time_popup.setText(time);
         location_popup.setText(location);
+
+        Button button = (Button) findViewById(R.id.cancel_see_session);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SessionsPopup.super.onBackPressed();
+            }
+        });
     }
 }

@@ -5,6 +5,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import com.example.voluntutor.mRecycler.MySlotsAdapter;
 import java.util.ArrayList;
@@ -41,6 +43,14 @@ public class TutorPopup extends AppCompatActivity {
             rv.setLayoutManager(new LinearLayoutManager(this.getBaseContext()));
         MySlotsAdapter adapter = new MySlotsAdapter(this.getBaseContext(), timeSlots, name);
         rv.setAdapter(adapter);
+
+        Button b = (Button) findViewById(R.id.cancel_see_tutor);
+        b.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                TutorPopup.super.onBackPressed();
+            }
+        });
     }
 
 
