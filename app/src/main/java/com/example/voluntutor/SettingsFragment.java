@@ -98,10 +98,13 @@ public class SettingsFragment extends Fragment {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for(DataSnapshot ds: dataSnapshot.getChildren()) {
-                            Tutor t = ds.getValue(Tutor.class);
-                            if(!t.hasSubject(addSubject)) {
-                                t.addSubject(addSubject);
-                                ds.getRef().setValue(t);
+                            if(ds.getKey().equals(MakeUserFragment.getID())) {
+                                Tutor t = ds.getValue(Tutor.class);
+                                if (!t.hasSubject(addSubject)) {
+                                    t.addSubject(addSubject);
+                                    ds.getRef().setValue(t);
+                                    Log.d("adding subject", addSubject);
+                                }
                             }
                         }
                     }
@@ -161,9 +164,10 @@ public class SettingsFragment extends Fragment {
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for(DataSnapshot ds: dataSnapshot.getChildren()) {
                             Tutor t = ds.getValue(Tutor.class);
-                            if(t.hasSubject(removeSubj)) {
+                            if(t.hasSubject(removeSubj) && ds.getKey().equals(MakeUserFragment.getID())) {
                                 t.removeSubject(removeSubj);
                                 ds.getRef().setValue(t);
+                                Log.d("removing subject", removeSubj);
                             }
                         }
                     }
@@ -263,6 +267,7 @@ public class SettingsFragment extends Fragment {
         mySubs.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                rSubs.clear();
                 for(DataSnapshot ds: dataSnapshot.getChildren()) {
                     rSubs.add(ds.getValue(String.class));
                 }
@@ -396,11 +401,26 @@ public class SettingsFragment extends Fragment {
         final EditText changeName = (EditText) v.findViewById(R.id.change_name_student_field);
         final EditText changeSchool = (EditText) v.findViewById(R.id.change_school_student_field);
 
-        SharedPreferences sharedPref = getActivity().getSharedPreferences(getString(R.string.shared_pref_name), 0);
-        String nameHint = sharedPref.getString(getString(R.string.name), "");
-        String schoolHint = sharedPref.getString(getString(R.string.school), "");
+        FirebaseDatabase fb = FirebaseDatabase.getInstance();
+        DatabaseReference dr = fb.getReference("tutors");
 
-        changeName.setHint("Current name: " + nameHint);
-        changeSchool.setHint("Current school: " + schoolHint);
+        dr.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for(DataSnapshot ds: dataSnapshot.getChildren()) {
+                    if(ds.getKey().equals(MakeUserFragment.getID())) {
+                        Tutor t = ds.getValue(Tutor.class);
+                        Log.d("tutor name", t.getName());
+                        changeName.setHint("Current name: " + t.getName());
+                        changeSchool.setHint("Current school: " + t.getSchool());
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 }

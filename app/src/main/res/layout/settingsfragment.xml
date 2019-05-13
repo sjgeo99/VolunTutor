@@ -59,7 +59,7 @@
                 android:autofillHints=""
                 android:ems="10"
                 android:hint="@string/auto_name"
-                android:inputType="textPersonName"
+                android:inputType="textPersonName|textCapSentences"
                 tools:layout_editor_absoluteX="16dp"
                 tools:layout_editor_absoluteY="58dp" />
 
@@ -92,7 +92,7 @@
                 android:layout_weight="1"
                 android:ems="10"
                 android:hint="@string/change_school_student"
-                android:inputType="text"
+                android:inputType="text|textCapSentences"
                 tools:layout_editor_absoluteX="16dp"
                 tools:layout_editor_absoluteY="158dp" />
 

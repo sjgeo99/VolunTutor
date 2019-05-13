@@ -11,8 +11,11 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 /**
  * This class provides the tools accessed by the Search Page fragment
@@ -20,7 +23,6 @@ import com.google.firebase.database.FirebaseDatabase;
  * commands recieved from the bottom navigation bar
  */
 public class SettingsFragmentStudent extends Fragment {
-
     /**
      * Instantiates the UI view of a particular fragment
      * @param inflater inputted (Inflater) object which inflates views in a particular fragment
@@ -74,11 +76,26 @@ public class SettingsFragmentStudent extends Fragment {
         final EditText changeName = v.findViewById(R.id.change_name_student_field);
         final EditText changeSchool = v.findViewById(R.id.change_school_student_field);
 
-        SharedPreferences sharedPref = getActivity().getSharedPreferences(getString(R.string.shared_pref_name), 0);
-        String nameHint = sharedPref.getString(getString(R.string.name), "");
-        String schoolHint = sharedPref.getString(getString(R.string.school), "");
+        FirebaseDatabase fb = FirebaseDatabase.getInstance();
+        DatabaseReference dr = fb.getReference("tutors");
 
-        changeName.setHint("Current name: " + nameHint);
-        changeSchool.setHint("Current school: " + schoolHint);
+        dr.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                    if (ds.getKey().equals(MakeUserFragment.getID())) {
+                        Tutor t = ds.getValue(Tutor.class);
+                        changeName.setHint("Current name: " + t.getName());
+                        changeSchool.setHint("Current school: " + t.getSchool());
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
     }
 }
