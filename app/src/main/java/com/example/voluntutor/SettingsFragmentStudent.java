@@ -77,7 +77,7 @@ public class SettingsFragmentStudent extends Fragment {
         final EditText changeSchool = v.findViewById(R.id.change_school_student_field);
 
         FirebaseDatabase fb = FirebaseDatabase.getInstance();
-        DatabaseReference dr = fb.getReference("tutors");
+        DatabaseReference dr = fb.getReference("students");
 
         dr.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override

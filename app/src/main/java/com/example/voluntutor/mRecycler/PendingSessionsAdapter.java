@@ -40,6 +40,7 @@ public class PendingSessionsAdapter extends RecyclerView.Adapter<PendingSessions
     private boolean yess;
     private boolean tuteeDelete;
     private boolean tuteeDelete2;
+    private boolean firstTime = true;
 
 
     public PendingSessionsAdapter(Context c, ArrayList<Sessions> sess1)
@@ -96,7 +97,6 @@ public class PendingSessionsAdapter extends RecyclerView.Adapter<PendingSessions
                 final Sessions selected = sessions.get(pos);
                 Log.d("selected", selected.getSVerified() + " " + selected.getImTutor() +
                         " " + selected.getTVerified());
-                //this works
                 if(selected.getImTutor()) {
                     FirebaseDatabase fb = FirebaseDatabase.getInstance();
                     DatabaseReference dr = fb.getReference("tutors");
@@ -105,10 +105,13 @@ public class PendingSessionsAdapter extends RecyclerView.Adapter<PendingSessions
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             for(DataSnapshot ds: dataSnapshot.getChildren()) {
                                 Tutor t = ds.getValue(Tutor.class);
+                                Log.d("Tutor name", t.getName());
                                 if(t.hasPsession(selected)) {
                                     t.removePsession(selected);
-                                    Sessions tVer = selected;
+                                    Sessions tVer = new Sessions(selected.getDate(), selected.getLocation(), selected.getLength(),
+                                            selected.getTutor(), selected.getTutee(), true);
                                     tVer.setTverified(true);
+                                    tVer.setSverified(selected.getSVerified());
                                     t.addPsession(tVer);
                                     ds.getRef().setValue(t);
                                     selected.setTverified(false);
@@ -123,11 +126,13 @@ public class PendingSessionsAdapter extends RecyclerView.Adapter<PendingSessions
                     });
                 }
                 else {
+                    Log.d("in the else loop", "yes");
                     final Sessions s1 = new Sessions(selected.getDate(), selected.getLocation(), selected.getLength(),
                             selected.getTutor(), selected.getTutee(), true);
+                    s1.setTverified(selected.getTVerified());
                     final Sessions s2 = new Sessions(selected.getDate(), selected.getLocation(), selected.getLength(),
-                            selected.getTutor(), selected.getTutee(), selected.getImTutor());
-                    s2.setImTutor(false);
+                            selected.getTutor(), selected.getTutee(), false);
+                    s2.setTverified(selected.getTVerified());
 
                     FirebaseDatabase fb = FirebaseDatabase.getInstance();
                     DatabaseReference dr = fb.getReference("tutors");
@@ -136,17 +141,35 @@ public class PendingSessionsAdapter extends RecyclerView.Adapter<PendingSessions
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             for(DataSnapshot ds: dataSnapshot.getChildren()) {
                                 Tutor t = ds.getValue(Tutor.class);
-                                if(t.hasPsession(s2)) {
-                                    t.removePsession(s2);
+                                if(t.hasPsession(s1) && t.getName().equals(selected.getTutor())) {
+                                    Log.d("tutor name for sverify", t.getName());
+                                    t.removePsession(s1);
+                                    s1.setSverified(true);
+                                    t.addPsession(s1);
                                     ds.getRef().setValue(t);
-                                }
-                                if(t.hasPsession(s1)) {
-                                    t.psessionSverify(s1);
-                                    ds.getRef().setValue(t);
+                                    s1.setSverified(false);
                                 }
                             }
                         }
 
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                        }
+                    });
+
+                    dr.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            for (DataSnapshot ds : dataSnapshot.getChildren()) {
+                                Tutor t = ds.getValue(Tutor.class);
+                                if (t.hasPsession(s2) && t.getName().equals(selected.getTutee())) {
+                                    Log.d("tutor name for remove", t.getName());
+                                    t.removePsession(s2);
+                                    ds.getRef().setValue(t);
+                                }
+                            }
+                        }
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -160,7 +183,8 @@ public class PendingSessionsAdapter extends RecyclerView.Adapter<PendingSessions
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             for(DataSnapshot ds: dataSnapshot.getChildren()) {
                                 Student t = ds.getValue(Student.class);
-                                if(t.hasPsession(s2)) {
+                                if(t.hasPsession(s2) && t.getName().equals(selected.getTutee())) {
+                                    Log.d("student name for remove", t.getName());
                                     t.removePsession(s2);
                                     ds.getRef().setValue(t);
                                 }
@@ -180,27 +204,44 @@ public class PendingSessionsAdapter extends RecyclerView.Adapter<PendingSessions
             final Sessions selected = sessions.get(pos);
             @Override
             public void onClick(View v) {
-                //check through tutor list and delete any occurrences of the selected session
-                //delete whether the imTutor boolean is true or false (because we also want to
-                //delete the tutee's session)
-                //this seems to work
+
                 FirebaseDatabase fb = FirebaseDatabase.getInstance();
                 DatabaseReference dr = fb.getReference("tutors");
                 dr.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        Sessions s = new Sessions(selected.getDate(), selected.getLocation(), selected.getLength(),
+                                selected.getTutor(), selected.getTutee(), false);
+                        s.setTverified(selected.getTVerified());
+                        s.setSverified(selected.getSVerified());
+
                         for(DataSnapshot ds: dataSnapshot.getChildren()) {
-                            Sessions s = selected;
-                            s.setSverified(false);
-                            s.setImTutor(false);
-                            Sessions s2 = s;
-                            s.setImTutor(true);
                             Tutor t = ds.getValue(Tutor.class);
-                            if(t.hasPsession(s)) {
+                            if(t.hasPsession(s) && t.getName().equals(s.getTutee())) {
                                 t.removePsession(s);
                                 ds.getRef().setValue(t);
                             }
-                            else if(t.hasPsession(s2)) {
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+
+                dr.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        Sessions s2 = new Sessions(selected.getDate(), selected.getLocation(), selected.getLength(),
+                                selected.getTutor(), selected.getTutee(), true);
+                        s2.setTverified(selected.getTVerified());
+                        s2.setSverified(selected.getSVerified());
+
+                        for(DataSnapshot ds: dataSnapshot.getChildren()) {
+                            Tutor t = ds.getValue(Tutor.class);
+                            if(t.hasPsession(s2) && t.getName().equals(s.getTutor()) && firstTime) {
+                                firstTime = false;
                                 t.removePsession(s2);
                                 ds.getRef().setValue(t);
                             }
@@ -223,7 +264,7 @@ public class PendingSessionsAdapter extends RecyclerView.Adapter<PendingSessions
                             s.setSverified(false);
                             s.setImTutor(false);
                             Student t = ds.getValue(Student.class);
-                            if(t.hasPsession(s)) {
+                            if(t.hasPsession(s) && t.getName().equals(s.getTutee())) {
                                 t.removePsession(s);
                                 ds.getRef().setValue(t);
                             }

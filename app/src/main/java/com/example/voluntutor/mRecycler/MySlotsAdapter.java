@@ -274,7 +274,7 @@ public class MySlotsAdapter extends RecyclerView.Adapter<MySlotsHolder> {
 
                         //find tutor
                         DatabaseReference tutors = fb.getReference("tutors");
-                        tutors.addValueEventListener(new ValueEventListener() {
+                        tutors.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 Log.d("in correct listener", "yes");

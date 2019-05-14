@@ -72,6 +72,7 @@ public class Tutor {
      */
     public void addSubject(String s) {
         subjects.add(s);
+        Collections.sort(subjects);
     }
     /**
      * Takes a subject out of the list of subjects
@@ -97,9 +98,15 @@ public class Tutor {
             if(timeSlots.get(i).equals(t)) timeSlots.remove(i);
         }
     }
-    public void addPsession(Sessions s) { psessions.add(s); }
+    public void addPsession(Sessions s) {
+        psessions.add(s);
+        Collections.sort(psessions);
+    }
 
-    public void addVsession(Sessions s) { vsessions.add(s); }
+    public void addVsession(Sessions s) {
+        vsessions.add(s);
+        Collections.sort(vsessions);
+    }
 
     public void removePsession(Sessions s) {
         for(int i = 0; i < psessions.size(); i++) {
@@ -218,11 +225,16 @@ public class Tutor {
      * @param s the session
      */
     public void addSession(Sessions s) {
-        /*Calendar cal = Calendar.getInstance();
-        if(s.getDate().after(cal.getTime())) {*/
+        Date d = new Date(Long.parseLong(s.getDate()));
+        Calendar cal = Calendar.getInstance();
+        if(d.after(cal.getTime())) {
             usessions.add(s);
             Collections.sort(usessions);
-        /*}*/
+        }
+        else {
+            psessions.add(s);
+            Collections.sort(psessions);
+        }
     }
     /**
      * Gets the Time Slots of the tutor.
@@ -241,6 +253,7 @@ public class Tutor {
      */
     public void addTimeSlots(TimeSlot t) {
         timeSlots.add(t);
+        Collections.sort(timeSlots);
     }
     /**
      * Gets the subjects the tutor tutors in
