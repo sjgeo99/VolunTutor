@@ -55,7 +55,7 @@
             android:id="@+id/cancel_see_session"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Cancel" />
+            android:text="@string/sessions_cancel" />
 
     </LinearLayout>
 

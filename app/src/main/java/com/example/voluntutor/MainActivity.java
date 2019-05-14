@@ -14,7 +14,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 /**
- * This class allows for the UI to run in compliance with the individual fragments and the bottom navigation bar
+ * This class allows for the UI to run in compliance with the individual fragments and the bottom navigation bar as well as user activity
  */
 public class MainActivity extends AppCompatActivity {
     /**
@@ -57,6 +57,10 @@ public class MainActivity extends AppCompatActivity {
         bottomNav.setOnNavigationItemSelectedListener(navListener);
 
     }
+
+    /**
+     * Preserves information for when the user pauses app activity
+     */
     @Override
     protected void onPause() {
         super.onPause();

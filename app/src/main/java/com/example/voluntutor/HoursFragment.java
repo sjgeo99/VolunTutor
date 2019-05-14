@@ -53,6 +53,11 @@ public class HoursFragment extends Fragment {
         FirebaseDatabase fb = FirebaseDatabase.getInstance();
         DatabaseReference dr = fb.getReference("tutors");
         dr.addValueEventListener(new ValueEventListener() {
+
+            /**
+             * Adds a completed session to the RecyclerView adapter for the Hours class
+             * @param dataSnapshot copy of most recent Sessions data in Firebase
+             */
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 hoursAdapter.clear();
@@ -67,6 +72,10 @@ public class HoursFragment extends Fragment {
                 }
             }
 
+            /**
+             * This method is called if the onDataChange method cannot be executed for any reason
+             * @param databaseError error produced by the onDataChange method not being able to run
+             */
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -75,6 +84,10 @@ public class HoursFragment extends Fragment {
 
         Button button = (Button) view.findViewById(R.id.update_hours);
         button.setOnClickListener(new View.OnClickListener() {
+            /**
+             *
+             * @param v
+             */
             @Override
             public void onClick(View v) {
                 Log.d("button clicked", "yes");
@@ -82,6 +95,11 @@ public class HoursFragment extends Fragment {
                 DatabaseReference ref = fb.getReference("tutors");
                 DatabaseReference nameRef = ref.child(MakeUserFragment.getID()).getRef().child("vsessions").getRef();
                 nameRef.addListenerForSingleValueEvent(new ValueEventListener() {
+
+                    /**
+                     * Returns updated hours count based on updated Session information
+                     * @param dataSnapshot copy of current Sessions data in Firebase
+                     */
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         Log.d("in ondatachange", "yes");
@@ -95,6 +113,10 @@ public class HoursFragment extends Fragment {
                         t.setText(set);
                     }
 
+                    /**
+                     * This method is called if the onDataChange method cannot be executed for any reason
+                     * @param databaseError error produced by the onDataChange method not being able to run
+                     */
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
 

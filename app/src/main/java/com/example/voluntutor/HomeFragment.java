@@ -71,6 +71,11 @@ public class HomeFragment extends Fragment {
         DatabaseReference myPsessions = dr.child(MakeUserFragment.getID()).getRef().child("psessions").getRef();
         //checks if upcoming sessions are in the past and moves them to psessions
         dr.addValueEventListener(new ValueEventListener() {
+
+            /**
+             * Removes an expired session from Upcoming Sessions into Pending Sessions for session verification
+             * @param dataSnapshot updated Sessions data
+             */
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot ds: dataSnapshot.getChildren()) {
@@ -101,13 +106,22 @@ public class HomeFragment extends Fragment {
                 }
             }
 
+            /**
+             * This method is called if the onDataChange method cannot be executed for any reason
+             * @param databaseError error produced by the onDataChange method not being able to run
+             */
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
             }
         });
-        //populates upcoming sessions
         myUsessions.addValueEventListener(new ValueEventListener() {
+
+            /**
+             * Populates the upcoming sessions adapter class,
+             * so that the recycler view can be populated with Upcoming Sessions
+             * @param dataSnapshot updated Sessions data
+             */
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 uadapter.clear();
@@ -117,6 +131,10 @@ public class HomeFragment extends Fragment {
                 }
             }
 
+            /**
+             * This method is called if the onDataChange method cannot be executed
+             * @param databaseError error produced by the onDataChange method not being able to run
+             */
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -124,12 +142,24 @@ public class HomeFragment extends Fragment {
         });
 
         myPsessions.addChildEventListener(new ChildEventListener() {
+
+            /**
+             * Adds a new Pending Session into the pending sessions adapter class,
+             * so that the recycler view can be populated with Pending Sessions
+             * @param dataSnapshot updated Sessions data
+             * @param s key name of previous child
+             */
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Sessions sess = dataSnapshot.getValue(Sessions.class);
                 padapter.add(sess);
             }
 
+            /**
+             * Adds and removes changed pending sessions to the pending session adapter
+             * @param dataSnapshot updated Sessions data
+             * @param s key name of previous child
+             */
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                     int key = 0;
@@ -142,17 +172,30 @@ public class HomeFragment extends Fragment {
                     padapter.add(newSess);
             }
 
+            /**
+             * Removes a Pending Session from the pending session adapter
+             * @param dataSnapshot updated Pending Session data
+             */
             @Override
             public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
                 Sessions sess = dataSnapshot.getValue(Sessions.class);
                 padapter.remove(sess);
             }
 
+            /**
+             * Called when the location priority of the Pending Session has changed
+             * @param dataSnapshot updated Sessions data
+             * @param s key name of previous child
+             */
             @Override
             public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
             }
 
+            /**
+             * This method is called if the onDataChange method cannot be executed
+             * @param databaseError error produced by the onDataChange method not being able to run
+             */
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 

@@ -1,18 +1,12 @@
 package com.example.voluntutor;
 
-import android.app.Activity;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
-import android.text.Editable;
-import android.text.TextUtils;
-import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -27,25 +21,38 @@ import android.widget.Toast;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.Calendar;
-import java.util.Date;
-
-
+/**
+ * This class provides the functionality for the Make User fragment, where users enter their preliminary information and are
+ * instantiated into the application
+ */
 public class MakeUserFragment extends Fragment {
     public static String id;
     public int[] values = new int[4];
     public String dayOfWeek;
     public String subject;
+
     /**
-     * returns the path to the tutor object of the person
+     * This method returns the path to the tutor object of the person
      * @return the path
      */
     public static String getID() {
         return id;
     }
     public View view;
+
+    /**
+     * This method sets the
+     * @param s
+     */
     public static void setID(String s) { id = s; }
-    //initializes the Settings Fragment
+
+    /**
+     * This method initializes the Settings Fragment
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -69,9 +76,13 @@ public class MakeUserFragment extends Fragment {
         v5.setVisibility(View.GONE);
         v6.setVisibility(View.GONE);
 
-        //check student or tutor is checked
         RadioGroup radioGroup = (RadioGroup) view.findViewById(R.id.student_or_tutor);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            /**
+             * This method checks if the user has chosen to be a student or tutor
+             * @param group
+             * @param checkedId
+             */
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 if(checkedId == R.id.student_option) {

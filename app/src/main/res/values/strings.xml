@@ -189,4 +189,7 @@
     <string name="change_school_student">_____ High School</string>
     <string name="startDescr">Start time:</string>
     <string name="end_descr">End time:</string>
+    <string name="back_button">Return to Browse</string>
+    <string name="sessions_cancel">Cancel</string>
+    <string name="available_1">Please add in one day of the week and time (on a 24-hour scale) when you are available</string>
 </resources>
