@@ -44,10 +44,27 @@ public class Student {
      */
     public String getSchool() {return school;}
 
+    /**
+     * Finds a session in the psessions list and sets it to sverified = true
+     * @param s the session being changes
+     */
     public void psessionSverify(Sessions s) {
         for(int i = 0; i < psessions.size(); i++) {
             if(psessions.get(i).equals(s)) {
                 s.setSverified(true);
+                psessions.set(i, s);
+            }
+        }
+    }
+
+    /**
+     * Finds a session in the psessions list and sets it to tverified = true
+     * @param s the session being changes
+     */
+    public void psessionTverify(Sessions s) {
+        for(int i = 0; i < psessions.size(); i++) {
+            if(psessions.get(i).equals(s)) {
+                s.setTverified(true);
                 psessions.set(i, s);
             }
         }

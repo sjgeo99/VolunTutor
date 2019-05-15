@@ -21,6 +21,8 @@ import android.widget.Toast;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Calendar;
+
 /**
  * This class provides the functionality for the Make User fragment, where users enter their preliminary information and are
  * instantiated into the application
@@ -147,6 +149,8 @@ public class MakeUserFragment extends Fragment {
                         t.addTimeSlots(ts);
 
                         t.addSubject(subject);
+
+                        Calendar cal = Calendar.getInstance();
 
                         Log.d("tutor", t.toString());
 

@@ -22,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 /**
  * This class provides the tools accessed by the Home Page fragment
@@ -83,23 +84,33 @@ public class HomeFragment extends Fragment {
                         if(isTutor) {
                             Tutor t = ds.getValue(Tutor.class);
                             ArrayList<Sessions> usessionsT = t.getUsessions();
+                            ArrayList<Sessions> toRemove = new ArrayList<Sessions>();
                             for(Sessions sess: usessionsT) {
                                 if(Long.parseLong(sess.getDate()) < Calendar.getInstance().getTime().getTime()) {
-                                    t.removeUsession(sess);
-                                    t.addPsession(sess);
+                                    toRemove.add(sess);
                                 }
                             }
+                            usessionsT.removeAll(toRemove);
+                            ArrayList<Sessions> psessionsS = t.getPsessions();
+                            psessionsS.addAll(toRemove);
+                            t.setUsessions(usessionsT);
+                            t.setPsessions(psessionsS);
                             ds.getRef().setValue(t);
                         }
                         else {
                             Student s = ds.getValue(Student.class);
                             ArrayList<Sessions> usessionsS = s.getUSessions();
+                            ArrayList<Sessions> toRemove = new ArrayList<Sessions>();
                             for(Sessions sess: usessionsS) {
                                 if(Long.parseLong(sess.getDate()) < Calendar.getInstance().getTime().getTime()) {
-                                    s.removeUsession(sess);
-                                    s.addPsession(sess);
+                                    toRemove.add(sess);
                                 }
                             }
+                            usessionsS.removeAll(toRemove);
+                            ArrayList<Sessions> psessionsS = s.getPSessions();
+                            psessionsS.addAll(toRemove);
+                            s.setUsessions(usessionsS);
+                            s.setPsessions(psessionsS);
                             ds.getRef().setValue(s);
                         }
                     }
@@ -115,6 +126,34 @@ public class HomeFragment extends Fragment {
 
             }
         });
+
+        //checks if any of the psessions are t and s verified and if they are moves the psession to vsessions
+        if(isTutor) {
+            dr.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for(DataSnapshot ds: dataSnapshot.getChildren()) {
+                        if(ds.getKey().equals(MakeUserFragment.getID())) {
+                            Tutor t = ds.getValue(Tutor.class);
+                            ArrayList<Sessions> myPsessions = t.getPsessions();
+                            for(Sessions s: myPsessions) {
+                                if(s.getTVerified() && s.getSVerified()) {
+                                    t.removePsession(s);
+                                    t.addVsession(s);
+                                }
+                            }
+                            ds.getRef().setValue(t);
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+        }
+
         myUsessions.addValueEventListener(new ValueEventListener() {
 
             /**

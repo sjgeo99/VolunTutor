@@ -155,6 +155,6 @@ public class Sessions implements Comparable<Sessions> {
      */
     public boolean equals(Sessions s) {
         return date.equals(s.getDate()) && location.equals(s.getLocation()) && length == s.getLength() && sverified == s.getSVerified()
-                && tverified == s.getTVerified() && tutor.equals(s.getTutor()) && tutee.equals(s.getTutee());
+                && tverified == s.getTVerified() && tutor.equals(s.getTutor()) && tutee.equals(s.getTutee()) && imTutor == s.getImTutor();
     }
 }

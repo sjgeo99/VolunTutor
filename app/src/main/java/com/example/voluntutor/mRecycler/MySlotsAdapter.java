@@ -230,6 +230,7 @@ public class MySlotsAdapter extends RecyclerView.Adapter<MySlotsHolder> {
                     if(t.isValid(s)) {
 
                         if (sharedPref.getBoolean("isTutor", false)) {
+                            Log.d("add session to tutor", "yes");
                             DatabaseReference dr = fb.getReference("tutors");
                             dr.addValueEventListener(new ValueEventListener() {
                                 @Override
@@ -251,6 +252,7 @@ public class MySlotsAdapter extends RecyclerView.Adapter<MySlotsHolder> {
                             });
                         }
                         else {
+                            Log.d("add session to student", "yes");
                             DatabaseReference dr = fb.getReference("students");
                             dr.addValueEventListener(new ValueEventListener() {
                                 @Override
@@ -273,6 +275,7 @@ public class MySlotsAdapter extends RecyclerView.Adapter<MySlotsHolder> {
                         }
 
                         //find tutor
+                        Log.d("arrived at find tutor", "yes");
                         DatabaseReference tutors = fb.getReference("tutors");
                         tutors.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
@@ -281,11 +284,14 @@ public class MySlotsAdapter extends RecyclerView.Adapter<MySlotsHolder> {
                                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                                     Tutor t = ds.getValue(Tutor.class);
                                     if (t.getName().equals(tutorName) && firstTut && !t.hasUsession(s)) {
-                                        Log.d("found tutor", "yay");
-                                        s.setImTutor(true);
-                                        t.addSession(s);
-                                        ds.getRef().setValue(t);
                                         firstTut = false;
+                                        Log.d("found tutor", "yay");
+                                        Log.d("found tutor", t.getName());
+                                        Log.d("session", s.toString());
+                                        s.setImTutor(true);
+                                        t.addUsession(s);
+                                        Log.d("u sessions length", t.getUsessions().size() + "");
+                                        ds.getRef().setValue(t);
                                     }
                                 }
                             }

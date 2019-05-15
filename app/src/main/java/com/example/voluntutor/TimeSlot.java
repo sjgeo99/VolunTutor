@@ -41,7 +41,7 @@ public class TimeSlot implements Comparable<TimeSlot>, Parcelable {
     }
     //methods
     /**
-     * This takes in a session to see if the session fits within the time slot
+     * This takes in a session to see if the session fits within the time slot and checks if it's after right now
      * @param s the session
      * @return whether the session is in the time slot
      */
@@ -53,6 +53,7 @@ public class TimeSlot implements Comparable<TimeSlot>, Parcelable {
         boolean onDay = (dow.equals(dayOfWeek));
 
         Calendar c = Calendar.getInstance();
+        Date now = c.getTime();
         c.setTime(d);
         c.set(Calendar.HOUR_OF_DAY, sHour);
         c.set(Calendar.MINUTE, sMinute);
@@ -67,8 +68,9 @@ public class TimeSlot implements Comparable<TimeSlot>, Parcelable {
 
         boolean startWithin = (d.after(startSlot) || d.equals(startSlot));
         boolean endWithin = (endSession.before(endSlot) || endSession.equals(endSlot));
+        boolean afterNow = !d.before(now);
 
-        return onDay && startWithin && endWithin;
+        return onDay && startWithin && endWithin && afterNow;
     }
 
     /**
