@@ -55,6 +55,12 @@ public class Tutor {
         }
         return false;
     }
+
+    /**
+     * Checks to see if
+     * @param s
+     * @return
+     */
     public boolean hasPsession(Sessions s) {
         for(int i = 0; i < psessions.size(); i++) {
             if(psessions.get(i).equals(s)) return true;
@@ -85,6 +91,12 @@ public class Tutor {
             }
         }
     }
+
+    /**
+     * Checks to see if a Tutor possesses a chosen TimeSlot
+     * @param t TimeSlot chosen by user
+     * @return whether or not a Tutor object contains the particular TimeSlot
+     */
     public boolean hasTs(TimeSlot t) {
         for(int i = 0; i < timeSlots.size(); i++) {
             if(timeSlots.get(i).equals(t)) {
@@ -93,21 +105,30 @@ public class Tutor {
         }
         return false;
     }
+
+    /**
+     * Removes a TimeSlot from a Tutor object
+     * @param t TimeSlot that needs to be removed
+     */
     public void removeTimeSlot(TimeSlot t) {
         for(int i = 0; i < timeSlots.size(); i++) {
             if(timeSlots.get(i).equals(t)) timeSlots.remove(i);
         }
     }
+
+    /**
+     * Adds a Session object to the pending sessions list
+     * @param s session object
+     */
     public void addPsession(Sessions s) {
         psessions.add(s);
         Collections.sort(psessions);
     }
 
-    public void addVsession(Sessions s) {
-        vsessions.add(s);
-        Collections.sort(vsessions);
-    }
-
+    /**
+     *
+     * @param s
+     */
     public void removePsession(Sessions s) {
         for(int i = 0; i < psessions.size(); i++) {
             if(psessions.get(i).equals(s)) {
@@ -125,24 +146,32 @@ public class Tutor {
         return name;
     }
 
+    /**
+     * Checks to see if a session belongs to any Session-containing list
+     * @param s session object
+     * @return whether or not it belongs to upcoming, pending, or verified sessions lists
+     */
     public boolean hasSession(Sessions s) {
         return usessions.contains(s) || psessions.contains(s) || vsessions.contains(s);
     }
 
-    public void psessionSverify(Sessions s) {
-        for(int i = 0; i < psessions.size(); i++) {
-            if(psessions.get(i).equals(s)) {
-                s.setSverified(true);
-                psessions.set(i, s);
-            }
-        }
-    }
+    /**
+     * Checks to see if upcoming sessions ArrayList contains a certain session
+     * @param s session object
+     * @return whether or not the upcoming sessions ArrayList contains the specified session
+     */
     public boolean hasUsession(Sessions s) {
         for(int i = 0; i < usessions.size(); i++) {
             if(usessions.get(i).equals(s)) return true;
         }
         return false;
     }
+
+    /**
+     *
+     * @param s
+     * @return
+     */
     public boolean hasSubject(String s) {
         for(int i = 0; i < subjects.size(); i++) {
             if(subjects.get(i).equals(s)) {
@@ -151,12 +180,14 @@ public class Tutor {
         }
         return false;
     }
+
     /**
      * Sets the name of the tutor.
      */
     public void setName(String name) {
         this.name = name;
     }
+
     /**
      * Gets the school of the tutor.
      * @return String representation of school.
@@ -203,21 +234,18 @@ public class Tutor {
     public ArrayList<Sessions> getUsessions() {
         return usessions;
     }
-    public void removeUsession(Sessions s) { usessions.remove(s); }
-    public void setUsessions(ArrayList<Sessions> usessions) {
-        this.usessions = usessions;
-    }
 
+    /**
+     * Removes an Upcoming Session from the upcoming sessions ArrayList
+     * @param s session object
+     */
+    public void removeUsession(Sessions s) { usessions.remove(s); }
     /**
      * Gets the sessions that are already verified
      * @return the sessions that are verified in an arraylist
      */
     public ArrayList<Sessions> getVsessions() {
         return vsessions;
-    }
-
-    public void setVsessions(ArrayList<Sessions> vsessions) {
-        this.vsessions = vsessions;
     }
 
     /**
@@ -244,9 +272,6 @@ public class Tutor {
         return timeSlots;
     }
 
-    public void setTimeSlots(ArrayList<TimeSlot> timeSlots) {
-        this.timeSlots = timeSlots;
-    }
 
     /**
      * Adds a time slot during which the tutor is available
@@ -262,9 +287,7 @@ public class Tutor {
     public ArrayList<String> getSubjects() {
         return subjects;
     }
-    public void setSubjects(ArrayList<String> subjects) {
-        this.subjects = subjects;
-    }
+
 
     /**
      * toString method that prints info about the tutor

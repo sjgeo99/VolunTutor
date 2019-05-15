@@ -9,6 +9,11 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class SessionsPopup extends AppCompatActivity {
+
+    /**
+     * Populates empty xml layout with appropriate Session information
+     * @param savedInstanceState Bundle, saves user choices for next onCreate
+     */
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle b = getIntent().getExtras();
@@ -30,6 +35,11 @@ public class SessionsPopup extends AppCompatActivity {
 
         Button button = (Button) findViewById(R.id.cancel_see_session);
         button.setOnClickListener(new View.OnClickListener() {
+            /**
+             * Instantiates functionality for button on Sessions Popup
+             * allows for changing of pages when button is pressed (sessions popup back to browse page)
+             * @param v current view where Popup is located
+             */
             @Override
             public void onClick(View v) {
                 SessionsPopup.super.onBackPressed();
