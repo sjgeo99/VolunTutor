@@ -3,8 +3,10 @@ package com.example.voluntutor;
 /**
  * This class models time slots that the tutor chooses to say they are available during.
  */
+import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.RequiresApi;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;

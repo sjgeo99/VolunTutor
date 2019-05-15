@@ -117,6 +117,12 @@ public class MakeUserFragment extends Fragment {
         //deal with making tutor or student object
         Button button = (Button) view.findViewById(R.id.make_user_obj);
         button.setOnClickListener(new View.OnClickListener() {
+
+            /**
+             * This method exhibits the functionality for the button associated with creating a tutor or student after all fields in the
+             * Make User screen are filled/not filled
+             * @param v view in which the Make User functionality is displayed
+             */
             @Override
             public void onClick(View v) {
                 Log.d("click", "click");
@@ -206,6 +212,10 @@ public class MakeUserFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Creates and populates the spinners utilized in the MakeUser fragment
+     * @param v View object used for the MakeUser fragment
+     */
     private void makeSpinner(View v) {
         Spinner spinnerD = (Spinner) v.findViewById(R.id.spinnerDay);
         ArrayAdapter<CharSequence> adapt = ArrayAdapter.createFromResource(this.getContext(),
@@ -214,11 +224,23 @@ public class MakeUserFragment extends Fragment {
         spinnerD.setAdapter(adapt);
 
         spinnerD.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            /**
+             * This method is called when an item in the DAYS spinner has been selected.
+             * @param parent AdapterView where the selection within the spinner occurred
+             * @param view  view within AdapterView that was clicked
+             * @param position position view in the adapter
+             * @param id row id of selected item
+             */
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String s = (String) parent.getItemAtPosition(position);
                 dayOfWeek = s;
             }
+
+            /**
+             * This method is called when the DAYS spinner selection disappears from a view
+             * @param parent view in which the selection disappeared
+             */
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
@@ -232,10 +254,22 @@ public class MakeUserFragment extends Fragment {
         spinnerSH.setAdapter(adapter);
 
         spinnerSH.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            /**
+             * This method is called when an item in the HOURS spinner has been selected.
+             * @param parent  AdapterView where the selection within the spinner occurred
+             * @param view view within AdapterView that was clicked
+             * @param position position view in the adapter
+             * @param id row id of selected item
+             */
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 values[0] = position;
             }
+
+            /**
+             * This method is called when the HOURS spinner selection disappears from a view
+             * @param parent view in which the selection disappeared
+             */
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
@@ -249,10 +283,23 @@ public class MakeUserFragment extends Fragment {
         spinnerSM.setAdapter(adapter2);
 
         spinnerSM.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            /**
+             * This method is called when an item in the MINUTES spinner has been selected.
+             * @param parent AdapterView where the selection within the spinner occurred
+             * @param view view within AdapterView that was clicked
+             * @param position position view in the adapter
+             * @param id row id of selected item
+             */
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 values[1] = position;
             }
+
+            /**
+             * This method is called when the MINUTES spinner selection disappears from a view
+             * @param parent view in which the selection disappeared
+             */
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
@@ -266,10 +313,22 @@ public class MakeUserFragment extends Fragment {
         spinnerEH.setAdapter(adapter3);
 
         spinnerEH.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            /**
+             * This method is called when an item in the HOURS spinner has been selected.
+             * @param parent AdapterView where the selection within the spinner occurred
+             * @param view view within AdapterView that was clicked
+             * @param position position view in the adapter
+             * @param id row id of selected item
+             */
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 values[2] = position;
             }
+
+            /**
+             * This method is called when the HOURS spinner selection disappears from a view
+             * @param parent view in which the selection disappeared
+             */
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
@@ -283,10 +342,23 @@ public class MakeUserFragment extends Fragment {
         spinnerEM.setAdapter(adapter4);
 
         spinnerEM.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            /**
+             * This method is called when an item in the MINUTES spinner has been selected.
+             * @param parent AdapterView where the selection within the spinner occurred
+             * @param view view within AdapterView that was clicked
+             * @param position position view in the adapter
+             * @param id row id of selected item
+             */
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 values[3] = position;
             }
+
+            /**
+             * This method is called when the MINUTES spinner selection disappears from a view
+             * @param parent view in which the selection disappeared
+             */
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
@@ -299,12 +371,24 @@ public class MakeUserFragment extends Fragment {
         adapter5.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         subs.setAdapter(adapter5);
         subs.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+
+            /**
+             * This method is called when an item in the SUBJECTS spinner has been selected.
+             * @param parent AdapterView where the selection within the spinner occurred
+             * @param view view within AdapterView that was clicked
+             * @param position position view in the adapter
+             * @param id row id of selected item
+             */
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String s = (String) parent.getItemAtPosition(position);
                 subject = s;
             }
 
+            /**
+             * This method is called when the MINUTES spinner selection disappears from a view
+             * @param parent view in which the selection disappeared
+             */
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
