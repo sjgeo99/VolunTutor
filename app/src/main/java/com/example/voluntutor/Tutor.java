@@ -269,6 +269,13 @@ public class Tutor {
         usessions.add(s);
         Collections.sort(usessions);
     }
+    public void setUsessions(ArrayList<Sessions> s) {
+        usessions = s;
+    }
+    public void addVsession(Sessions s) {
+        vsessions.add(s);
+        Collections.sort(vsessions);
+    }
     /**
      * Gets the Time Slots of the tutor.
      * @return ArrayList of Dates the tutor is available

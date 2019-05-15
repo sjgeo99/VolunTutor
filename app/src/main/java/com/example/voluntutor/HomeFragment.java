@@ -93,7 +93,8 @@ public class HomeFragment extends Fragment {
                             usessionsT.removeAll(toRemove);
                             ArrayList<Sessions> psessionsS = t.getPsessions();
                             psessionsS.addAll(toRemove);
-                            t.setUsessions(usessionsT);
+                            t
+                                    .setUsessions(usessionsT);
                             t.setPsessions(psessionsS);
                             ds.getRef().setValue(t);
                         }
