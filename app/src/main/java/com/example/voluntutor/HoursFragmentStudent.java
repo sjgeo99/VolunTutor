@@ -12,6 +12,8 @@ import android.view.ViewGroup;
  * This class provides the tools accessed by the Search Page fragment
  * and also allows for it to be displayed in accordance with the
  * commands recieved from the bottom navigation bar
+ *
+ * It informs that student that they do not have hours
  */
 public class HoursFragmentStudent extends Fragment {
 

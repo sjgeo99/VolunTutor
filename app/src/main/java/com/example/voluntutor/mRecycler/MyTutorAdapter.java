@@ -16,6 +16,10 @@ import com.example.voluntutor.TutorPopup;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * Creates each of the individual views in the recycler view that displays tutors
+ */
+
 public class MyTutorAdapter extends RecyclerView.Adapter<myTutorHolder> {
 
     private Context c;
@@ -27,6 +31,12 @@ public class MyTutorAdapter extends RecyclerView.Adapter<myTutorHolder> {
         this.tutors = tutors;
     }
 
+    /**
+     * Initializes the ViewHolder for each element being displayed
+     * @param parent the user will not have to put this in (it is automatically called)
+     * @param viewType this will also be automatically called
+     * @return the holder
+     */
     @NonNull
     @Override
     public myTutorHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -34,12 +44,18 @@ public class MyTutorAdapter extends RecyclerView.Adapter<myTutorHolder> {
         return new myTutorHolder(v);
     }
 
+    /**
+     * Populates each individual aspect of the holder, contains the onclick as well
+     * @param holder the holder to be populated
+     * @param position which element of the holder is being put in
+     */
     @Override
     public void onBindViewHolder(@NonNull myTutorHolder holder, final int position) {
+        //populates the general tutor view with general info
         String n = "Name: " + tutors.get(position).getName();
-        holder.nametxt.setText(n);
+        holder.getNametxt().setText(n);
         String s = "School: " + tutors.get(position).getSchool();
-        holder.schooltxt.setText(s);
+        holder.getSchooltxt().setText(s);
 
         String subs = "Subject(s): ";
         ArrayList<String> subjects = tutors.get(position).getSubjects();
@@ -53,9 +69,10 @@ public class MyTutorAdapter extends RecyclerView.Adapter<myTutorHolder> {
             subs = subs.concat("and " + subjects.get(subjects.size() - 1));
         }
         else if(subjects.size() == 1) subs = subs.concat(subjects.get(0));
-        holder.subjectstxt.setText(subs);
+        holder.getSubjectstxt().setText(subs);
 
-        holder.rl.setOnClickListener(new View.OnClickListener() {
+        //opens the tutor popup page if the tutor gets clicked on
+        holder.getRl().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Tutor t = tutors.get(position);
@@ -69,15 +86,28 @@ public class MyTutorAdapter extends RecyclerView.Adapter<myTutorHolder> {
             }
         });
     }
+
+    /**
+     * Gets the number of items in the adapter
+     * @return the number of items in the adapter
+     */
     @Override
     public int getItemCount() {
         return tutors.size();
     }
 
+    /**
+     * Adds a tutor to the adapter
+     * @param s the new tutor
+     */
     public void add(Tutor s) {
         tutors.add(s);
         notifyDataSetChanged();
     }
+
+    /**
+     * Clears the adapter of all tutors
+     */
     public void clear() {
         tutors = new ArrayList<Tutor>();
         notifyDataSetChanged();

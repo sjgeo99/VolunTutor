@@ -26,13 +26,17 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
+
+/**
+ * Creates each of the individual views in the recycler views that display time slots
+ */
 
 public class MySlotsAdapter extends RecyclerView.Adapter<MySlotsHolder> {
     private Context c;
     private ArrayList<TimeSlot> slots;
     private ArrayList<String> datesList = new ArrayList<String>();
     private ArrayList<String> timesList = new ArrayList<String>();
+
     private String selectedDay;
     private String selectedTime;
     private String tutorName;
@@ -46,6 +50,12 @@ public class MySlotsAdapter extends RecyclerView.Adapter<MySlotsHolder> {
         tutorName = name;
     }
 
+    /**
+     * Initializes the ViewHolder for each element being displayed
+     * @param viewGroup the user will not have to put this in (it is automatically called)
+     * @param i this will also be automatically called
+     * @return the holder
+     */
     @NonNull
     @Override
     public MySlotsHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -53,8 +63,14 @@ public class MySlotsAdapter extends RecyclerView.Adapter<MySlotsHolder> {
         return new MySlotsHolder(v);
     }
 
+    /**
+     * Populates each individual aspect of the holder, contains the onclicks as well
+     * @param mySlotsHolder the holder to be populated
+     * @param i which element of the holder is being put in
+     */
     @Override
     public void onBindViewHolder(@NonNull final MySlotsHolder mySlotsHolder, int i) {
+        //populates the view
         final int position = i;
         mySlotsHolder.getDaytxt().setText(slots.get(i).getDayOfWeek());
         int sHour = slots.get(i).getsHour();
@@ -107,7 +123,6 @@ public class MySlotsAdapter extends RecyclerView.Adapter<MySlotsHolder> {
                 dow = 7;
                 break;
         }
-        Log.d("Day of week number", slots.get(i).getDayOfWeek() + " " + dow);
         SimpleDateFormat sdf2 = new SimpleDateFormat("MMMM dd");
         boolean found = false;
         Calendar findFirst = Calendar.getInstance();
@@ -121,11 +136,13 @@ public class MySlotsAdapter extends RecyclerView.Adapter<MySlotsHolder> {
                 findFirst.add(Calendar.DAY_OF_MONTH, 1);
             }
         }
+        //populates spinner with days that are on the correct day of the week
         int year = findFirst.get(Calendar.YEAR);
         while(findFirst.get(Calendar.YEAR) == year) {
             findFirst.add(Calendar.DAY_OF_YEAR, 7);
             dates.add(sdf2.format(findFirst.getTime()));
         }
+        //finds what day has been selected
         mySlotsHolder.getDay().setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -138,6 +155,7 @@ public class MySlotsAdapter extends RecyclerView.Adapter<MySlotsHolder> {
             }
         });
 
+        //populates the spinner with each minute between the start and end of the time slot
         ArrayAdapter<String> times = new ArrayAdapter<String>(c, android.R.layout.simple_spinner_item,
                 timesList);
         times.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -160,12 +178,15 @@ public class MySlotsAdapter extends RecyclerView.Adapter<MySlotsHolder> {
             }
         });
 
+        //on click for if the user clicks go to make the session
         mySlotsHolder.getGo().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                if(mySlotsHolder.getLocation().getText() != null && mySlotsHolder.getEt().getText() != null
+                //checks that the location and length fields have text in them
+                if(!mySlotsHolder.getLocation().getText().equals("") && !mySlotsHolder.getEt().getText().equals("")
                 && selectedDay != null && selectedTime != null) {
+                    //figures out all the data to do with the session, does parsing etc.
                     String location = mySlotsHolder.getLocation().getText().toString();
                     String len = mySlotsHolder.getEt().getText().toString();
                     int length = Integer.parseInt(len);
@@ -227,10 +248,12 @@ public class MySlotsAdapter extends RecyclerView.Adapter<MySlotsHolder> {
                     Log.d("key", MakeUserFragment.getID());
 
                     TimeSlot t = slots.get(position);
+
+                    //pushes the session to firebase
                     if(t.isValid(s)) {
 
                         if (sharedPref.getBoolean("isTutor", false)) {
-                            Log.d("add session to tutor", "yes");
+                            //pushes session to the tutee if the tutee is a tutor object
                             DatabaseReference dr = fb.getReference("tutors");
                             dr.addValueEventListener(new ValueEventListener() {
                                 @Override
@@ -252,7 +275,7 @@ public class MySlotsAdapter extends RecyclerView.Adapter<MySlotsHolder> {
                             });
                         }
                         else {
-                            Log.d("add session to student", "yes");
+                            //pushes session to the tutee if the tutee is a student object
                             DatabaseReference dr = fb.getReference("students");
                             dr.addValueEventListener(new ValueEventListener() {
                                 @Override
@@ -274,23 +297,17 @@ public class MySlotsAdapter extends RecyclerView.Adapter<MySlotsHolder> {
                             });
                         }
 
-                        //find tutor
-                        Log.d("arrived at find tutor", "yes");
+                        //finds tutor and pushes session to them
                         DatabaseReference tutors = fb.getReference("tutors");
                         tutors.addListenerForSingleValueEvent(new ValueEventListener() {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                Log.d("in correct listener", "yes");
                                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
                                     Tutor t = ds.getValue(Tutor.class);
                                     if (t.getName().equals(tutorName) && firstTut && !t.hasUsession(s)) {
                                         firstTut = false;
-                                        Log.d("found tutor", "yay");
-                                        Log.d("found tutor", t.getName());
-                                        Log.d("session", s.toString());
                                         s.setImTutor(true);
                                         t.addUsession(s);
-                                        Log.d("u sessions length", t.getUsessions().size() + "");
                                         ds.getRef().setValue(t);
                                     }
                                 }
@@ -302,6 +319,7 @@ public class MySlotsAdapter extends RecyclerView.Adapter<MySlotsHolder> {
                             }
                         });
 
+                        //tells user if the session has been made after all the code for pushing and making the session has been called
                         CharSequence text = "Session successful!";
                         int duration = Toast.LENGTH_SHORT;
 
@@ -309,7 +327,8 @@ public class MySlotsAdapter extends RecyclerView.Adapter<MySlotsHolder> {
                         toast.show();
                     }
                     else {
-                        CharSequence text = "This session does not fit within the given time slot";
+                        //informs the user if the session is not valid
+                        CharSequence text = "This session does not fit within the given time slot or starts before the time you created the session";
                         int duration = Toast.LENGTH_SHORT;
 
                         Toast toast = Toast.makeText(c, text, duration);
@@ -317,6 +336,7 @@ public class MySlotsAdapter extends RecyclerView.Adapter<MySlotsHolder> {
                     }
                 }
                 else {
+                    //informs the user if they did not fill out everything required
                     CharSequence text = "Please fill out all the fields to make a session";
                     int duration = Toast.LENGTH_SHORT;
 
@@ -327,16 +347,27 @@ public class MySlotsAdapter extends RecyclerView.Adapter<MySlotsHolder> {
         });
     }
 
+    /**
+     * Gives the number of objects to be displayed
+     * @return the number of time slots being displayed
+     */
     @Override
     public int getItemCount() {
         return slots.size();
     }
 
+    /**
+     * Adds a slot to the adapter
+     * @param t the new time slot
+     */
     public void addSlot(TimeSlot t) {
         slots.add(t);
         notifyDataSetChanged();
     }
 
+    /**
+     * Clears the adapter
+     */
     public void clear() {
         slots = new ArrayList<TimeSlot>();
     }

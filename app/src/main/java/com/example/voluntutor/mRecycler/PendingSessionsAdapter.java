@@ -2,14 +2,12 @@ package com.example.voluntutor.mRecycler;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import com.example.voluntutor.MakeUserFragment;
 import com.example.voluntutor.R;
 import com.example.voluntutor.Sessions;
@@ -21,13 +19,15 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+
+/**
+ * Creates each of the individual views in the recycler view that displays pending sessions
+ */
 
 public class PendingSessionsAdapter extends RecyclerView.Adapter<PendingSessionsHolder> {
 
@@ -49,6 +49,12 @@ public class PendingSessionsAdapter extends RecyclerView.Adapter<PendingSessions
         sessions = sess1;
     }
 
+    /**
+     * Initializes the ViewHolder for each element being displayed
+     * @param viewGroup the user will not have to put this in (it is automatically called)
+     * @param i this will also be automatically called
+     * @return the holder
+     */
     @NonNull
     @Override
     public PendingSessionsHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -56,8 +62,14 @@ public class PendingSessionsAdapter extends RecyclerView.Adapter<PendingSessions
         return new PendingSessionsHolder(v);
     }
 
+    /**
+     * Populates each individual aspect of the holder, contains the onclicks for verify
+     * @param holder the holder to be populated
+     * @param position which element of the holder is being put in
+     */
     @Override
     public void onBindViewHolder(@NonNull final PendingSessionsHolder holder, int position) {
+        //displays information about the pending session
         final int pos = position;
         final Sessions s = sessions.get(position);
 
@@ -90,14 +102,13 @@ public class PendingSessionsAdapter extends RecyclerView.Adapter<PendingSessions
         tuteeDelete = true;
         tuteeDelete2 = true;
 
-        //TODO: check if this actually works
+        //controls what happens if the button yes is clicked for verify
         holder.getYes().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final Sessions selected = sessions.get(pos);
-                Log.d("selected", selected.getSVerified() + " " + selected.getImTutor() +
-                        " " + selected.getTVerified());
                 if(selected.getImTutor()) {
+                    //if the tutor clicks yes changes tverified in the tutor and student's session to true
                     FirebaseDatabase fb = FirebaseDatabase.getInstance();
                     DatabaseReference dr = fb.getReference("tutors");
                     dr.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -175,7 +186,8 @@ public class PendingSessionsAdapter extends RecyclerView.Adapter<PendingSessions
                     });
                 }
                 else {
-                    Log.d("in the else loop", "yes");
+                    //if the tutee clicks yes deletes the session from the student's pending list
+                    //and changes sverified to true in the tutor's list
                     final Sessions s1 = new Sessions(selected.getDate(), selected.getLocation(), selected.getLength(),
                             selected.getTutor(), selected.getTutee(), true);
                     s1.setTverified(selected.getTVerified());
@@ -191,7 +203,6 @@ public class PendingSessionsAdapter extends RecyclerView.Adapter<PendingSessions
                             for(DataSnapshot ds: dataSnapshot.getChildren()) {
                                 Tutor t = ds.getValue(Tutor.class);
                                 if(t.hasPsession(s1) && t.getName().equals(selected.getTutor())) {
-                                    Log.d("tutor name for sverify", t.getName());
                                     t.removePsession(s1);
                                     s1.setSverified(true);
                                     t.addPsession(s1);
@@ -213,14 +224,11 @@ public class PendingSessionsAdapter extends RecyclerView.Adapter<PendingSessions
                             for (DataSnapshot ds : dataSnapshot.getChildren()) {
                                 Tutor t = ds.getValue(Tutor.class);
                                 if (t.hasPsession(s2) && t.getName().equals(selected.getTutee())) {
-                                    Log.d("tutor name for remove", t.getName());
                                     t.removePsession(s2);
-                                    Log.d("tutor", Arrays.toString(t.getPsessions().toArray()));
                                     ds.getRef().removeValue();
                                     DatabaseReference reference = dr.getRef().push();
                                     reference.setValue(t);
                                     MakeUserFragment.setID(reference.getKey());
-                                    //ds.getRef().setValue(t);
                                 }
                             }
                         }
@@ -230,7 +238,6 @@ public class PendingSessionsAdapter extends RecyclerView.Adapter<PendingSessions
                         }
                     });
 
-                    //this also works
                     DatabaseReference studentRef = fb.getReference("students");
                     studentRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
@@ -238,7 +245,6 @@ public class PendingSessionsAdapter extends RecyclerView.Adapter<PendingSessions
                             for(DataSnapshot ds: dataSnapshot.getChildren()) {
                                 Student t = ds.getValue(Student.class);
                                 if(t.hasPsession(s2) && t.getName().equals(selected.getTutee())) {
-                                    Log.d("student name for remove", t.getName());
                                     t.removePsession(s2);
                                     ds.getRef().setValue(t);
                                 }
@@ -253,7 +259,7 @@ public class PendingSessionsAdapter extends RecyclerView.Adapter<PendingSessions
                 }
             }
         });
-
+        //if one of the people clicks no deletes the session from both tutor's and tutee's list
         holder.getNo().setOnClickListener(new View.OnClickListener() {
             final Sessions selected = sessions.get(pos);
             @Override
@@ -308,7 +314,6 @@ public class PendingSessionsAdapter extends RecyclerView.Adapter<PendingSessions
                     }
                 });
 
-                //this also works
                 DatabaseReference studentRef = fb.getReference("students");
                 studentRef.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
@@ -333,6 +338,7 @@ public class PendingSessionsAdapter extends RecyclerView.Adapter<PendingSessions
             }
         });
 
+        //if the user clicks on the pending session opens a sessions popup with more info
         holder.getC().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -346,25 +352,45 @@ public class PendingSessionsAdapter extends RecyclerView.Adapter<PendingSessions
         });
     }
 
+    /**
+     * Removes a session from a certain position in the list
+     * @param n the position in the list
+     */
     public void remove(int n) {
         sessions.remove(n);
         notifyDataSetChanged();
     }
 
+    /**
+     * Removes a session that is the same as the session object passed in
+     * @param s the session object to be deleted
+     */
     public void remove(Sessions s) {
         sessions.remove(s);
         notifyDataSetChanged();
     }
+
+    /**
+     * Gets the amount of sessions in the adapter
+     * @return the number of sessions in the adapter
+     */
     @Override
     public int getItemCount() {
         return sessions.size();
     }
 
+    /**
+     * Adds a session to the adapter
+     * @param t the session to be added to the adapter
+     */
     public void add(Sessions t) {
         sessions.add(t);
         notifyDataSetChanged();
     }
 
+    /**
+     * Empties the adapter
+     */
     public void clear() {
         sessions = new ArrayList<Sessions>();
     }

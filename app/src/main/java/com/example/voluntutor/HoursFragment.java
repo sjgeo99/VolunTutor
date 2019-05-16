@@ -48,14 +48,13 @@ public class HoursFragment extends Fragment {
         rv.setLayoutManager(new LinearLayoutManager(this.getContext()));
         hoursAdapter = new MySessionsAdapter(this.getContext(), verified);
         rv.setAdapter(hoursAdapter);
-        Log.d("Making adapter", "yes");
 
         FirebaseDatabase fb = FirebaseDatabase.getInstance();
         DatabaseReference dr = fb.getReference("tutors");
         dr.addValueEventListener(new ValueEventListener() {
 
             /**
-             * Adds a completed session to the RecyclerView adapter for the Hours class
+             * Populates the RecyclerView with all the vsessions (sessions that have been verified) of the tutor
              * @param dataSnapshot copy of most recent Sessions data in Firebase
              */
             @Override
@@ -90,7 +89,6 @@ public class HoursFragment extends Fragment {
              */
             @Override
             public void onClick(View v) {
-                Log.d("button clicked", "yes");
                 FirebaseDatabase fb = FirebaseDatabase.getInstance();
                 DatabaseReference ref = fb.getReference("tutors");
                 DatabaseReference nameRef = ref.child(MakeUserFragment.getID()).getRef().child("vsessions").getRef();
@@ -102,7 +100,6 @@ public class HoursFragment extends Fragment {
                      */
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        Log.d("in ondatachange", "yes");
                         int count = 0;
                         for(DataSnapshot ds: dataSnapshot.getChildren()) {
                             Sessions s = ds.getValue(Sessions.class);

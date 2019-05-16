@@ -4,11 +4,9 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +20,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 /**
  * This class provides the tools accessed by the Home Page fragment
@@ -128,7 +125,9 @@ public class HomeFragment extends Fragment {
             }
         });
 
-        //checks if any of the psessions are t and s verified and if they are moves the psession to vsessions
+        /**
+         * checks if any of the psessions are t and s verified and if they are moves the psession to vsessions
+         */
         if(isTutor) {
             dr.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override

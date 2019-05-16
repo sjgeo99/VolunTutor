@@ -5,12 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentContainer;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.Button;
 import android.widget.Toast;
 
 /**
@@ -37,7 +33,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     /**
-     * This method sets the content views, opens the settings button, sets the content views
+     * This method sets the content views and controls if the make user page gets displayed
+     * Also sets the bottom navigation listener to allow the user to navigate
      * @param savedInstanceState
      */
     @Override
@@ -80,6 +77,9 @@ public class MainActivity extends AppCompatActivity {
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
+                    /**
+                     * Prevents the user from moving on from the make user page if they did not finish entering info
+                     */
                     Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
                     if(currentFragment instanceof MakeUserFragment) {
                         Toast.makeText(getBaseContext(), "Please enter your information first", Toast.LENGTH_LONG).show();

@@ -7,12 +7,16 @@ import android.widget.TextView;
 
 import com.example.voluntutor.R;
 
+/**
+ * Holds all the components of the view to be populated in the sessions adapter
+ */
+
 public class MySessionsHolder extends RecyclerView.ViewHolder{
 
-    TextView nametxt;
-    TextView date;
-    TextView time;
-    ConstraintLayout c;
+    private TextView nametxt;
+    private TextView date;
+    private TextView time;
+    private ConstraintLayout c;
 
     public MySessionsHolder(View itemView)
     {
@@ -23,4 +27,35 @@ public class MySessionsHolder extends RecyclerView.ViewHolder{
         c = itemView.findViewById(R.id.click_me);
     }
 
+    /**
+     * gets the TextView that holds the name of the person the session is with
+     * @return the TextView that holds the name of the person the session is with
+     */
+    public TextView getNametxt() {
+        return nametxt;
+    }
+
+    /**
+     * Gets the TextView that holds the date of the session
+     * @return the TextView that holds the date of the session
+     */
+    public TextView getDate() {
+        return date;
+    }
+
+    /**
+     * Gets the TextView that holds the time of the session
+     * @return the TextView that holds the time of the session
+     */
+    public TextView getTime() {
+        return time;
+    }
+
+    /**
+     * Gets the constraint layout that holds the session
+     * @return the constraint layout that holds the session
+     */
+    public ConstraintLayout getC() {
+        return c;
+    }
 }

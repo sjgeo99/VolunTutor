@@ -26,49 +26,52 @@ public class PendingSessionsHolder extends RecyclerView.ViewHolder {
         no = view.findViewById(R.id.no_verify_button);
         c = view.findViewById(R.id.psessions_constraint);
     }
+
+    /**
+     * Gets the constraint layout holding the pending session
+     * @return the layout holding the session
+     */
     public ConstraintLayout getC() {
         return c;
     }
-    public void setC(ConstraintLayout c) {
-        this.c = c;
-    }
+
+    /**
+     * Gets the Text View holding the name of the person the session is with
+     * @return the Text View holding the name of the person the session is with
+     */
     public TextView getName() {
         return name;
     }
 
+    /**
+     * Gets the Text View holding the day of the session
+     * @return the Text View holding the day of the session
+     */
     public TextView getDay() {
         return day;
     }
 
+    /**
+     * Gets the Text View holding the time of the session
+     * @return the Text View holding the time of the session
+     */
     public TextView getTime() {
         return time;
     }
 
+    /**
+     * Gets the button that says yes
+     * @return the button that says yes
+     */
     public Button getYes() {
         return yes;
     }
 
+    /**
+     * Gets the button that says no
+     * @return the button that says no
+     */
     public Button getNo() {
         return no;
-    }
-
-    public void setName(TextView name) {
-        this.name = name;
-    }
-
-    public void setDay(TextView day) {
-        this.day = day;
-    }
-
-    public void setTime(TextView time) {
-        this.time = time;
-    }
-
-    public void setYes(Button yes) {
-        this.yes = yes;
-    }
-
-    public void setNo(Button no) {
-        this.no = no;
     }
 }

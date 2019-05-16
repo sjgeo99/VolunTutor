@@ -1,6 +1,5 @@
 package com.example.voluntutor;
-import android.app.Activity;
-import android.content.SharedPreferences;
+
 import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -50,6 +49,7 @@ public class SettingsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable final Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.settingsfragment, container, false);
+        //instantiates some of the adapters for the spinners
         ada = new ArrayAdapter<TimeSlot>(this.getContext(),
                 android.R.layout.simple_spinner_dropdown_item, ts);
         rSubs = new ArrayAdapter<String>(this.getContext(),

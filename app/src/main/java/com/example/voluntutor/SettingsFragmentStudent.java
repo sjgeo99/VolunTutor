@@ -18,7 +18,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 /**
- * This class provides the tools accessed by the Search Page fragment
+ * This class provides the tools accessed by the Settings Page fragment
  * and also allows for it to be displayed in accordance with the
  * commands recieved from the bottom navigation bar
  */
@@ -37,8 +37,10 @@ public class SettingsFragmentStudent extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View view = inflater.inflate(R.layout.settingsfragmentstudent, container, false);
 
+        //sets the hints with current name and school
         setHints(view);
 
+        //controls onClick for changing the student's name
         Button buttonName = view.findViewById(R.id.name_change_student_confirm);
         buttonName.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -54,6 +56,7 @@ public class SettingsFragmentStudent extends Fragment {
             }
         });
 
+        //controls onClick for changing the student's school
         Button buttonSchool = view.findViewById(R.id.school_change_student_confirm);
         buttonSchool.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,8 +76,8 @@ public class SettingsFragmentStudent extends Fragment {
     }
 
     /**
-     * This method facilitates a name or school change
-     * @param v
+     * This method shows the hints in the edit texts
+     * @param v the view of the page
      */
     private void setHints(View v) {
         final EditText changeName = v.findViewById(R.id.change_name_student_field);

@@ -3,11 +3,9 @@ package com.example.voluntutor;
 /**
  * This class models time slots that the tutor chooses to say they are available during.
  */
-import android.os.Build;
+
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.support.annotation.RequiresApi;
-
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -160,9 +158,9 @@ public class TimeSlot implements Comparable<TimeSlot>, Parcelable {
     }
 
     /**
-     *
-     * @param dest
-     * @param flags
+     * Writes the information about the time slot to a parcel
+     * @param dest the parcel
+     * @param flags flags that may be passed in
      */
     @Override
     public void writeToParcel(Parcel dest, int flags) {
@@ -170,13 +168,26 @@ public class TimeSlot implements Comparable<TimeSlot>, Parcelable {
         Integer.toString(eHour), Integer.toString(eMinute)});
     }
 
+    /**
+     * Tells the parcel how to create an object of class TimeSlot
+     */
     public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        /**
+         * Takes the parcel and unwraps it to make the TimeSlot
+         * @param in the parcel
+         * @return a TimeSlot
+         */
         public TimeSlot createFromParcel(Parcel in) {
             String[] s = in.createStringArray();
             TimeSlot toReturn = new TimeSlot(s[0], Integer.parseInt(s[1]), Integer.parseInt(s[2]), Integer.parseInt(s[3]), Integer.parseInt(s[4]));
             return toReturn;
         }
 
+        /**
+         * Makes an arraylist of TimeSlots
+         * @param size the size of the array
+         * @return
+         */
         public TimeSlot[] newArray(int size) {
             return new TimeSlot[size];
         }

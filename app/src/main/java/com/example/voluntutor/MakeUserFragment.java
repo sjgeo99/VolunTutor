@@ -17,10 +17,8 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
 import java.util.Calendar;
 
 /**
@@ -43,8 +41,8 @@ public class MakeUserFragment extends Fragment {
     public View view;
 
     /**
-     * This method sets the
-     * @param s
+     * This method sets the path to the tutor object of the person if it changes
+     * @param s the path
      */
     public static void setID(String s) { id = s; }
 
@@ -78,6 +76,8 @@ public class MakeUserFragment extends Fragment {
         v5.setVisibility(View.GONE);
         v6.setVisibility(View.GONE);
 
+        //if the student button is clicked: puts into shared pref
+        //if tutor button is clicked: puts into shared pref, displays hidden tutor input stuff
         RadioGroup radioGroup = (RadioGroup) view.findViewById(R.id.student_or_tutor);
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             /**
@@ -125,19 +125,18 @@ public class MakeUserFragment extends Fragment {
              */
             @Override
             public void onClick(View v) {
-                Log.d("click", "click");
+
                 EditText txtName = (EditText) view.findViewById(R.id.enter_name);
                 EditText txtSchool = (EditText) view.findViewById(R.id.enter_school);
 
+                //prevent the user from moving on if they do not enter the school and name
                 if (txtName.getText().toString().equals("") || txtSchool.getText().toString().equals("")) {
-                    Log.d("null", "Null");
                     Toast.makeText(getContext(), "You did not enter a name and school. Please fill out both.", Toast.LENGTH_LONG).show();
                 }
                 else {
                     SharedPreferences sharedPref = getActivity().getSharedPreferences(getString(R.string.shared_pref_name), 0);
                     boolean isTutor = sharedPref.getBoolean(getString(R.string.isTutor), false);
                     if (isTutor) {
-                        Log.d("is tutor", "yes");
                         String name = txtName.getText().toString();
                         String school = txtSchool.getText().toString();
                         int startHr = values[0];
@@ -156,10 +155,6 @@ public class MakeUserFragment extends Fragment {
 
                         t.addSubject(subject);
 
-                        Calendar cal = Calendar.getInstance();
-
-                        Log.d("tutor", t.toString());
-
                         FirebaseDatabase fb = FirebaseDatabase.getInstance();
                         DatabaseReference ref = fb.getReference("tutors");
                         DatabaseReference nRef = ref.push();
@@ -167,8 +162,7 @@ public class MakeUserFragment extends Fragment {
                         nRef.setValue(t);
                         id = nRef.getKey();
 
-                        Log.d("tutor key", id);
-
+                        //opens home fragment after the tutor gets pushed
                         HomeFragment nextFrag= new HomeFragment();
                         getActivity().getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.fragment_container, nextFrag)
@@ -176,7 +170,6 @@ public class MakeUserFragment extends Fragment {
                                 .commit();
                     }
                     else {
-                        Log.d("is tutor", "no");
                         String name = txtName.getText().toString();
                         String school = txtSchool.getText().toString();
 
@@ -188,8 +181,6 @@ public class MakeUserFragment extends Fragment {
 
                         Student s = new Student(name, school);
 
-                        Log.d("student", s.toString());
-
                         FirebaseDatabase fb = FirebaseDatabase.getInstance();
                         DatabaseReference ref = fb.getReference("/students");
                         DatabaseReference nRef = ref.push();
@@ -197,8 +188,7 @@ public class MakeUserFragment extends Fragment {
                         nRef.setValue(s);
                         id = nRef.getKey();
 
-                        Log.d("student key", id);
-
+                        //opens home fragment after student gets pushed
                         HomeFragment nextFrag= new HomeFragment();
                         getActivity().getSupportFragmentManager().beginTransaction()
                                 .replace(R.id.fragment_container, nextFrag)

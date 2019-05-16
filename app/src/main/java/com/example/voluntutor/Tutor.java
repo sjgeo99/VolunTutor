@@ -63,9 +63,9 @@ public class Tutor {
     }
 
     /**
-     * Checks to see if
-     * @param s
-     * @return
+     * Checks to see if the tutor has the session in their psessions list
+     * @param s the session
+     * @return true if the tutor has the session in the psessions list
      */
     public boolean hasPsession(Sessions s) {
         for(int i = 0; i < psessions.size(); i++) {
@@ -132,8 +132,8 @@ public class Tutor {
     }
 
     /**
-     *
-     * @param s
+     * Removes a session from the pending sessions list
+     * @param s the session to remove
      */
     public void removePsession(Sessions s) {
         for(int i = 0; i < psessions.size(); i++) {
@@ -174,9 +174,9 @@ public class Tutor {
     }
 
     /**
-     *
-     * @param s
-     * @return
+     * Checks if the tutor has a specific subject in their list
+     * @param s the subject
+     * @return true if the tutor has the subject, false if not
      */
     public boolean hasSubject(String s) {
         for(int i = 0; i < subjects.size(); i++) {
@@ -290,7 +290,7 @@ public class Tutor {
 
     /**
      * Adds a session object to the Pending Session ArrayList, and sorts the ArrayList
-     * @param s
+     * @param s the session
      */
     public void addVsession(Sessions s) {
         vsessions.add(s);

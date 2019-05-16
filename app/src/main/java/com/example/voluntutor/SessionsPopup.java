@@ -18,10 +18,10 @@ public class SessionsPopup extends AppCompatActivity {
      */
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //receives the information from the session being clicked on
         Bundle b = getIntent().getExtras();
         String name = (String) b.get("Name");
         String date = (String) b.get("Date");
-        Log.d("Date? II", date);
         String time = (String) b.get("Time");
         String location = (String) b.get("Location");
         setContentView(R.layout.sessions_popup);
@@ -30,6 +30,7 @@ public class SessionsPopup extends AppCompatActivity {
         TextView time_popup = (TextView) findViewById(R.id.sess_popup_time);
         TextView location_popup = (TextView) findViewById(R.id.sess_popup_location);
 
+        //sets the text views on the page using information from the session that was clicked on
         name_popup.setText(name);
         date_popup.setText(date);
         time_popup.setText(time);

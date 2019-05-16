@@ -52,11 +52,13 @@ public class SearchFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.searchfragment, container, false);
+        //instantiates recyclerview displaying tutors of a specific subject, making it empty at first
         RecyclerView recyclerView = rootView.findViewById(R.id.searchRV);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         searchAdapter = new MyTutorAdapter(this.getActivity(), tutors);
         recyclerView.setAdapter(searchAdapter);
 
+        //makes the spinner and populates it with the subjects from resources
         Spinner s = rootView.findViewById(R.id.subj_search);
         Resources res = getResources();
         String[] subs = res.getStringArray(R.array.subjects);
@@ -75,7 +77,6 @@ public class SearchFragment extends Fragment {
              */
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Log.d("First time", firstTime + "");
                 if(!firstTime) {
                     final String selected = (String) parent.getItemAtPosition(position);
                     FirebaseDatabase fb2 = FirebaseDatabase.getInstance();

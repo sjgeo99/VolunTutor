@@ -37,10 +37,19 @@ public class Sessions implements Comparable<Sessions> {
         tutor = "me";
         tutee = "you";
     }
-    //methods
+
+    /**
+     * Gets the imTutor variable
+     * @return the imTutor variable (if the possessor of the session is the tutor)
+     */
     public boolean getImTutor() {
         return imTutor;
     }
+
+    /**
+     * Sets the imTutor variable
+     * @param b the new value of imTutor
+     */
     public void setImTutor(boolean b) {
         imTutor = b;
     }
