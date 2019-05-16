@@ -17,12 +17,22 @@ public class Student {
     private ArrayList<Sessions> usessions;
 
     //Constructor(s)
+
+    /**
+     * Constructs a student object with given name and school string parameters
+     * @param n String name of student
+     * @param s String school of student
+     */
     public Student(String n, String s) {
         name = n;
         school = s;
         psessions = new ArrayList<Sessions>();
         usessions = new ArrayList<Sessions>();
     }
+
+    /**
+     * Default constructor of a Student object without parameters
+     */
     public Student() {
         name = "";
         school = "";
@@ -76,6 +86,10 @@ public class Student {
      */
     public ArrayList<Sessions> getPSessions() {return psessions;}
 
+    /**
+     * Remoces a session from the Pending Sessions ArrayLsit
+     * @param s Session object to be removed
+     */
     public void removePsession(Sessions s) {
         for(int i = 0; i < psessions.size(); i++) {
             if(psessions.get(i).equals(s)) {
@@ -84,7 +98,11 @@ public class Student {
             }
         }
     }
-    public void removeUsession(Sessions s) { usessions.remove(s); }
+
+    /**
+     * Adds a session to the Pending Sessions ArrayList
+     * @param s Session object to be added
+     */
     public void addPsession(Sessions s) { psessions.add(s); }
 
     /**
@@ -124,19 +142,34 @@ public class Student {
      */
     public void setName(String name) {this.name = name;}
 
+    /**
+     * Checks to see if a session object is part of the Pending Sessions ArrayList
+     * @param s session object to be checked
+     * @return if the session is part of the Pending Sessions ArrayList
+     */
     public boolean hasPsession(Sessions s) {
         for(int i = 0; i < psessions.size(); i++) {
             if(psessions.get(i).equals(s)) return true;
         }
         return false;
     }
+
     /**
-     * Sets the school of the student to the inputted parameter (String
-     * @param school String name of the school
+     * Updates the existing pending sessions ArrayList
+     * @param psessions Pending Sessions ArrayList that needs to be updated
      */
-    public void setSchool(String school) {this.school = school;}
     public void setPsessions(ArrayList<Sessions> psessions) {this.psessions = psessions;}
+
+    /**
+     * Updates the existing upcoming sessions ArrayList
+     * @param usessions Upcoming Sessions ArrayList that needs to be updated
+     */
     public void setUsessions(ArrayList<Sessions> usessions) {this.usessions = usessions;}
+
+    /**
+     * toString method for displaying Student object information
+     * @return Student obejct name and school
+     */
     @Override
     public String toString() {
         return name + " from " + school;

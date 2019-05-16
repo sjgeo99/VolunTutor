@@ -66,6 +66,13 @@ public class SearchFragment extends Fragment {
         s.setAdapter(a);
 
         s.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            /**
+             *
+             * @param parent
+             * @param view
+             * @param position
+             * @param id
+             */
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 Log.d("First time", firstTime + "");
@@ -74,6 +81,10 @@ public class SearchFragment extends Fragment {
                     FirebaseDatabase fb2 = FirebaseDatabase.getInstance();
                     DatabaseReference dr2 = fb2.getReference("tutors");
                     dr2.addValueEventListener(new ValueEventListener() {
+                        /**
+                         *
+                         * @param dataSnapshot
+                         */
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                             searchAdapter.clear();
@@ -85,6 +96,10 @@ public class SearchFragment extends Fragment {
                             }
                         }
 
+                        /**
+                         *
+                         * @param databaseError
+                         */
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -93,6 +108,7 @@ public class SearchFragment extends Fragment {
                 }
                 else { firstTime = false; }
             }
+
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
