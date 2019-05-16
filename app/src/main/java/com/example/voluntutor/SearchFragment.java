@@ -82,8 +82,8 @@ public class SearchFragment extends Fragment {
                     DatabaseReference dr2 = fb2.getReference("tutors");
                     dr2.addValueEventListener(new ValueEventListener() {
                         /**
-                         *
-                         * @param dataSnapshot
+                         * This method allows the searchAdapter to show all tutors with the specified subject
+                         * @param dataSnapshot copy of most recent Tutor data in Firebase
                          */
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -97,8 +97,8 @@ public class SearchFragment extends Fragment {
                         }
 
                         /**
-                         *
-                         * @param databaseError
+                         * This method is called if the onDataChange method cannot be executed for any reason
+                         * @param databaseError error produced by the onDataChange method not being able to run
                          */
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
@@ -109,9 +109,12 @@ public class SearchFragment extends Fragment {
                 else { firstTime = false; }
             }
 
-
-            @Override
-            public void onNothingSelected(AdapterView<?> parent) {
+            /**
+             * This method is called if there is no item selected
+             * @param parent
+             */
+                        @Override
+                        public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });

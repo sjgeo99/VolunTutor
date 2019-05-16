@@ -72,6 +72,10 @@ public class SettingsFragmentStudent extends Fragment {
         return view;
     }
 
+    /**
+     * This method facilitates a name or school change
+     * @param v
+     */
     private void setHints(View v) {
         final EditText changeName = v.findViewById(R.id.change_name_student_field);
         final EditText changeSchool = v.findViewById(R.id.change_school_student_field);
@@ -80,6 +84,10 @@ public class SettingsFragmentStudent extends Fragment {
         DatabaseReference dr = fb.getReference("students");
 
         dr.addListenerForSingleValueEvent(new ValueEventListener() {
+            /**
+             * This method changes the name and school of a user if data is changed.
+             * @param dataSnapshot Latest instance of Tutor data from Firebase
+             */
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for (DataSnapshot ds : dataSnapshot.getChildren()) {
@@ -91,6 +99,10 @@ public class SettingsFragmentStudent extends Fragment {
                 }
             }
 
+            /**
+             * This method is called if the onDataChange method cannot be executed for any reason
+             * @param databaseError error produced by the onDataChange method not being able to run
+             */
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 

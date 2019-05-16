@@ -37,7 +37,15 @@ public class SettingsFragment extends Fragment {
     public ArrayAdapter<String> aSubs;
     public String addSubject;
 
-    //initializes the Settings Fragment
+    /**
+     * Instantiates the UI view of a particular fragment
+     * @param inflater inputted (Inflater) object which inflates views in a particular fragment
+     * @param container inputted (ViewGroup) object which, when non-null, consists of
+     * the parent view attached to a particular fragment
+     * @param savedInstanceState inputted (Bundle) object which, when not-null, constructs a
+     * particular fragment from a previously saved state
+     * @return the View for the UI of a particular fragment, or NULL
+     */
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable final Bundle savedInstanceState) {
@@ -55,7 +63,7 @@ public class SettingsFragment extends Fragment {
 
         makeSpinners(view);
         setHints(view);
-
+        //Allows user to change their name
         Button buttonName = (Button) view.findViewById(R.id.name_change_student_confirm);
         buttonName.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,6 +79,7 @@ public class SettingsFragment extends Fragment {
             }
         });
 
+        //Allows user to change their school
         Button buttonSchool = (Button) view.findViewById(R.id.school_change_student_confirm);
         buttonSchool.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,7 +95,7 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        //fixed
+        //Lets a tutor add a subject to their subjects list
         Button buttonAddS = (Button) view.findViewById(R.id.add_subj_confirm);
         buttonAddS.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -95,6 +104,10 @@ public class SettingsFragment extends Fragment {
                 DatabaseReference ref = fb.getReference("tutors");
 
                 ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                    /**
+                     * Adds a new subject to a tutor's subject list
+                     * @param dataSnapshot copy of most recent Tutor data in Firebase
+                     */
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for(DataSnapshot ds: dataSnapshot.getChildren()) {
@@ -108,7 +121,10 @@ public class SettingsFragment extends Fragment {
                             }
                         }
                     }
-
+                    /**
+                     * This method is called if the onDataChange method cannot be executed for any reason
+                     * @param databaseError error produced by the onDataChange method not being able to run
+                     */
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -118,7 +134,7 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        //fixed
+        //Lets a tutor add a time slot to their preexisting list.
         Button buttonAddTS = (Button) view.findViewById(R.id.add_slot_confirm);
         buttonAddTS.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -130,6 +146,10 @@ public class SettingsFragment extends Fragment {
                         addVals[3]);
 
                 ref.addListenerForSingleValueEvent(new ValueEventListener() {
+                    /**
+                     * Adds a new TimeSlot to a tutor's TimeSlot list
+                     * @param dataSnapshot copy of most recent Tutor data in Firebase
+                     */
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for(DataSnapshot ds: dataSnapshot.getChildren()) {
@@ -143,6 +163,10 @@ public class SettingsFragment extends Fragment {
                         }
                     }
 
+                    /**
+                     * This method is called if the onDataChange method cannot be executed for any reason
+                     * @param databaseError error produced by the onDataChange method not being able to run
+                     */
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -151,7 +175,7 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        //fixed
+        //Lets a tutor remove a subject from their preexisting list.
         Button buttonRemSubj = (Button) view.findViewById(R.id.rem_subj_confirm);
         buttonRemSubj.setOnClickListener(new View.OnClickListener() {
 
@@ -160,6 +184,10 @@ public class SettingsFragment extends Fragment {
                 FirebaseDatabase fb = FirebaseDatabase.getInstance();
                 DatabaseReference ref = fb.getReference("tutors");
                 ref.addValueEventListener(new ValueEventListener() {
+                    /**
+                     * Removes a subject from a tutor's subject list
+                     * @param dataSnapshot copy of most recent Tutor data in Firebase
+                     */
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for(DataSnapshot ds: dataSnapshot.getChildren()) {
@@ -171,7 +199,10 @@ public class SettingsFragment extends Fragment {
                             }
                         }
                     }
-
+                    /**
+                     * This method is called if the onDataChange method cannot be executed for any reason
+                     * @param databaseError error produced by the onDataChange method not being able to run
+                     */
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -180,7 +211,7 @@ public class SettingsFragment extends Fragment {
             }
         });
 
-        //fixed
+        //Lets a tutor remove a time slot from their preexisting list.
         Button buttonRemSlot = (Button) view.findViewById(R.id.remove_slot_confirm);
         buttonRemSlot.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -191,6 +222,10 @@ public class SettingsFragment extends Fragment {
                 FirebaseDatabase fb = FirebaseDatabase.getInstance();
                 DatabaseReference ref = fb.getReference("/tutors");
                 ref.addValueEventListener(new ValueEventListener() {
+                    /**
+                     * Removes a TimeSlot from a tutor's TimeSlot list
+                     * @param dataSnapshot copy of most recent Tutor data in Firebase
+                     */
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                         for(DataSnapshot ds: dataSnapshot.getChildren()) {
@@ -201,7 +236,10 @@ public class SettingsFragment extends Fragment {
                             }
                         }
                     }
-
+                    /**
+                     * This method is called if the onDataChange method cannot be executed for any reason
+                     * @param databaseError error produced by the onDataChange method not being able to run
+                     */
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -213,6 +251,7 @@ public class SettingsFragment extends Fragment {
         return view;
     }
 
+    //Creates a spinner object with all of the subjects
     private void makeSpinners(View v) {
         FirebaseDatabase fb = FirebaseDatabase.getInstance();
         DatabaseReference ref = fb.getReference("/tutors");
@@ -222,6 +261,10 @@ public class SettingsFragment extends Fragment {
         aSubs.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         addSub.setAdapter(aSubs);
         mySubs.addValueEventListener(new ValueEventListener() {
+            /**
+             * Removes a Subject from a tutor's TimeSlot list
+             * @param dataSnapshot copy of most recent Tutor data in Firebase
+             */
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot ds: dataSnapshot.getChildren()) {
@@ -229,7 +272,10 @@ public class SettingsFragment extends Fragment {
                     aSubs.remove(s);
                 }
             }
-
+            /**
+             * This method is called if the onDataChange method cannot be executed for any reason
+             * @param databaseError error produced by the onDataChange method not being able to run
+             */
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -237,11 +283,22 @@ public class SettingsFragment extends Fragment {
         });
 
         addSub.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            /**
+             *This method receives the user input when a specific subject is selected
+             * in the add subject dropdown
+             * @param parent
+             * @param view
+             * @param position
+             * @param id
+             */
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 addSubject = (String) parent.getItemAtPosition(position);
             }
-
+            /**
+             * This method is called if there is no item selected
+             * @param parent
+             */
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
@@ -254,16 +311,27 @@ public class SettingsFragment extends Fragment {
 
         spinnerRSubs.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
+            /**
+             *This method receives the user input when a specific subject is selected
+             * in the remove subject dropdown
+             * @param parent
+             * @param view
+             * @param position
+             * @param id
+             */
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 removeSubj = (String) parent.getItemAtPosition(position);
             }
-
+            /**
+             * This method is called if there is no item selected
+             * @param parent
+             */
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
             }
         });
-
+        //Gets the list of removed subjects from Firebase into a list.
         mySubs.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -272,7 +340,10 @@ public class SettingsFragment extends Fragment {
                     rSubs.add(ds.getValue(String.class));
                 }
             }
-
+            /**
+             * This method is called if the onDataChange method cannot be executed for any reason
+             * @param databaseError error produced by the onDataChange method not being able to run
+             */
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -284,10 +355,22 @@ public class SettingsFragment extends Fragment {
         spinnerRemove.setAdapter(ada);
 
         spinnerRemove.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            /**
+             *This method receives the user input when a specific TimeSlot is selected
+             * in the remove subject dropdown
+             * @param parent
+             * @param view
+             * @param position
+             * @param id
+             */
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 toRemove = (TimeSlot) parent.getItemAtPosition(position);
             }
+            /**
+             * This method is called if there is no item selected
+             * @param parent
+             */
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
@@ -303,7 +386,10 @@ public class SettingsFragment extends Fragment {
                     ada.add(ds.getValue(TimeSlot.class));
                 }
             }
-
+            /**
+             * This method is called if the onDataChange method cannot be executed for any reason
+             * @param databaseError error produced by the onDataChange method not being able to run
+             */
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -322,6 +408,10 @@ public class SettingsFragment extends Fragment {
                 String s = (String) parent.getItemAtPosition(position);
                 DOWA = s;
             }
+            /**
+             * This method is called if there is no item selected
+             * @param parent
+             */
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
@@ -339,6 +429,10 @@ public class SettingsFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 addVals[0] = position;
             }
+            /**
+             * This method is called if there is no item selected
+             * @param parent
+             */
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
@@ -356,6 +450,10 @@ public class SettingsFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 addVals[1] = position;
             }
+            /**
+             * This method is called if there is no item selected
+             * @param parent
+             */
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
@@ -373,6 +471,10 @@ public class SettingsFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 addVals[2] = position;
             }
+            /**
+             * This method is called if there is no item selected
+             * @param parent
+             */
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
@@ -390,6 +492,10 @@ public class SettingsFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 addVals[3] = position;
             }
+            /**
+             * This method is called if there is no item selected
+             * @param parent
+             */
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
@@ -405,6 +511,10 @@ public class SettingsFragment extends Fragment {
         DatabaseReference dr = fb.getReference("tutors");
 
         dr.addListenerForSingleValueEvent(new ValueEventListener() {
+            /**
+             * This changes the name and school of a user in Firebase
+             * @param dataSnapshot
+             */
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot ds: dataSnapshot.getChildren()) {
@@ -416,7 +526,10 @@ public class SettingsFragment extends Fragment {
                     }
                 }
             }
-
+            /**
+             * This method is called if the onDataChange method cannot be executed for any reason
+             * @param databaseError error produced by the onDataChange method not being able to run
+             */
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 

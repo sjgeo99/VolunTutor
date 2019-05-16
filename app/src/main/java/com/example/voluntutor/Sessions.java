@@ -78,10 +78,15 @@ public class Sessions implements Comparable<Sessions> {
     public int getLength() {return length;}
 
     /**
-     * Gets whether the session is verified
-     * @return whether the session is verified
+     * Gets whether the session is verified by the student
+     * @return whether the session is verified by the student
      */
     public boolean getSVerified() { return sverified; }
+
+    /**
+     * Gets whether the session is verified by the tutor
+     * @return whether the session is verified by tutor
+     */
     public boolean getTVerified() { return tverified; }
 
     /**
@@ -99,55 +104,19 @@ public class Sessions implements Comparable<Sessions> {
     /**
      * Sets verified status to true for the tutor
      */
-    public void tverify() {tverified = true;}
+
     public void setTverified(boolean b) { tverified = b; }
 
     /**
      * Sets the verified status to true for the student
      */
-    public void sverify() {sverified = true;}
+
     public void setSverified(boolean b) { sverified = b; }
-    /**
-     * Sets the date of the session
-     * @param d the date of the session
-     */
-    public void setDate(String d) {date = d;}
-
-    /**
-     * Sets the location of the session
-     * @param loc the location of the session
-     */
-    public void setLocation(String loc) {location = loc;}
-
-    /**
-     * Sets the length of the session in minutes
-     * @param len the length of the session in minutes
-     */
-    public void setLength(int len) {length = len;}
-
     /**
      * Sets the name of the tutor
      * @param t the name of the tutor
      */
     public void setTutor(String t) {tutor = t;}
-
-    /**
-     * Sets the name of the tutee
-     * @param s the name of the tutee
-     */
-    public void setTutee(String s) {tutee = s;}
-    public boolean getVerified() {
-        if(tverified && sverified) {
-            return true;
-        }
-        else { return false; }
-    }
-    public void setVerified(boolean b) {
-        if(b) {
-            sverified = true;
-            tverified = true;
-        }
-    }
     /**
      * equals method for sessions
      * @param s the other session to compare to
