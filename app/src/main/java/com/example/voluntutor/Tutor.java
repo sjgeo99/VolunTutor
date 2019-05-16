@@ -18,6 +18,12 @@ public class Tutor {
     private ArrayList<TimeSlot> timeSlots;
     private ArrayList<String> subjects;
     //constructor(s)
+
+    /**
+     * Constructs a Tutor object with specified parameters
+     * @param n name (String)
+     * @param s school (String)
+     */
     public Tutor(String n, String s) {
         name = n;
         school = s;
@@ -29,7 +35,7 @@ public class Tutor {
     }
 
     /**
-     * Empty constructor
+     * Default constructor, constructs Tutor object without any parameters
      */
     public Tutor() {
         name = "";
@@ -265,13 +271,27 @@ public class Tutor {
         }
     }
 
+    /**
+     * Adds a session object to the Upcoming Session ArrayList, and sorts the ArrayList
+     * @param s session object to be added
+     */
     public void addUsession(Sessions s) {
         usessions.add(s);
         Collections.sort(usessions);
     }
+
+    /**
+     * Sets the Upcoming Sessions ArrayList to a specified parameter ArrayList
+     * @param s ArrayList of Sessions
+     */
     public void setUsessions(ArrayList<Sessions> s) {
         usessions = s;
     }
+
+    /**
+     * Adds a session object to the Pending Session ArrayList, and sorts the ArrayList
+     * @param s
+     */
     public void addVsession(Sessions s) {
         vsessions.add(s);
         Collections.sort(vsessions);

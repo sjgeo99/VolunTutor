@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+//This class models the functionality of the popup window that contains more information about a Session object
+
 public class SessionsPopup extends AppCompatActivity {
 
     /**

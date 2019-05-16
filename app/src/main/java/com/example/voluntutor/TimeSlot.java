@@ -24,6 +24,15 @@ public class TimeSlot implements Comparable<TimeSlot>, Parcelable {
     private int eHour;
     private int eMinute;
     //constructor(s)
+
+    /**
+     * Constructs a TimeSlot object with provided parameters
+     * @param d Day (String object)
+     * @param sh Start Hour (int)
+     * @param sm Start Minute (int)
+     * @param eh End Hour (int)
+     * @param em End Minute (int)
+     */
     public TimeSlot(String d, int sh, int sm, int eh, int em) {
         dayOfWeek = d;
         sHour = sh;
@@ -31,8 +40,9 @@ public class TimeSlot implements Comparable<TimeSlot>, Parcelable {
         eHour = eh;
         eMinute = em;
     }
+
     /**
-     * Empty constructor
+     * Default constructor for the TimeSlot class without any entered parameters
      */
     public TimeSlot() {
         dayOfWeek = "";
@@ -73,46 +83,6 @@ public class TimeSlot implements Comparable<TimeSlot>, Parcelable {
         boolean afterNow = !d.before(now);
 
         return onDay && startWithin && endWithin && afterNow;
-    }
-
-    /**
-     * Sets the day of the week
-     * @param dayOfWeek string describing the day of the week
-     */
-    public void setDayOfWeek(String dayOfWeek) {
-        this.dayOfWeek = dayOfWeek;
-    }
-
-    /**
-     * Sets the start hour
-     * @param sHour an integer
-     */
-    public void setsHour(int sHour) {
-        this.sHour = sHour;
-    }
-
-    /**
-     * Sets the start minute
-     * @param sMinute the start minute as an int
-     */
-    public void setsMinute(int sMinute) {
-        this.sMinute = sMinute;
-    }
-
-    /**
-     * Sets the end hour
-     * @param eHour the end hour as an int
-     */
-    public void seteHour(int eHour) {
-        this.eHour = eHour;
-    }
-
-    /**
-     * Sets the end minute
-     * @param eMinute the end minute as an int
-     */
-    public void seteMinute(int eMinute) {
-        this.eMinute = eMinute;
     }
 
     /**
@@ -180,11 +150,20 @@ public class TimeSlot implements Comparable<TimeSlot>, Parcelable {
                 && eMinute == ts.geteMinute();
     }
 
+    /**
+     *
+     * @return
+     */
     @Override
     public int describeContents() {
         return 0;
     }
 
+    /**
+     *
+     * @param dest
+     * @param flags
+     */
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeStringArray(new String[] {dayOfWeek, Integer.toString(sHour), Integer.toString(sMinute),

@@ -11,7 +11,13 @@ import android.widget.TextView;
 import com.example.voluntutor.mRecycler.MySlotsAdapter;
 import java.util.ArrayList;
 
+//This class models the functionality of the popup window that contains more information about a Tutor object
+
 public class TutorPopup extends AppCompatActivity {
+    /**
+     * Populates empty xml layout with appropriate Tutor information
+     * @param savedInstanceState Bundle, saves user choices for next onCreate
+     */
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle bundle = getIntent().getExtras();
@@ -46,6 +52,11 @@ public class TutorPopup extends AppCompatActivity {
 
         Button b = (Button) findViewById(R.id.cancel_see_tutor);
         b.setOnClickListener(new View.OnClickListener() {
+
+            /**
+             * Shifts xml views when the back button is pressed
+             * @param v current view the popup is on
+             */
             @Override
             public void onClick(View v) {
                 TutorPopup.super.onBackPressed();
