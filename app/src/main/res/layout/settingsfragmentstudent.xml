@@ -126,3 +126,6 @@
         app:layout_constraintVertical_bias="0.0" />
 
 </android.support.constraint.ConstraintLayout>
+
+    <!-- RecyclerView code and functionality adapted from https://youtu.be/06UFnvHbr10-->
+    <!-- Bottom Navigation bar code and functionality adapted from https://youtu.be/tPV8xA7m-iw-->

@@ -50,3 +50,6 @@
             app:layout_constraintStart_toStartOf="parent" />
     </android.support.constraint.ConstraintLayout>
 </RelativeLayout>
+
+    <!-- RecyclerView code and functionality adapted from https://youtu.be/06UFnvHbr10-->
+    <!-- Bottom Navigation bar code and functionality adapted from https://youtu.be/tPV8xA7m-iw-->
